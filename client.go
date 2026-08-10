@@ -69,6 +69,8 @@ type APIClient struct {
 
 	FacebookAPI *FacebookAPIService
 
+	GeminiAPI *GeminiAPIService
+
 	GoogleAPI *GoogleAPIService
 
 	IdealistaAPI *IdealistaAPIService
@@ -82,6 +84,8 @@ type APIClient struct {
 	LinkedInAPI *LinkedInAPIService
 
 	LoopNetAPI *LoopNetAPIService
+
+	PerplexityAPI *PerplexityAPIService
 
 	RealtorAPI *RealtorAPIService
 
@@ -134,6 +138,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DuckDuckGoAPI = (*DuckDuckGoAPIService)(&c.common)
 	c.EBayAPI = (*EBayAPIService)(&c.common)
 	c.FacebookAPI = (*FacebookAPIService)(&c.common)
+	c.GeminiAPI = (*GeminiAPIService)(&c.common)
 	c.GoogleAPI = (*GoogleAPIService)(&c.common)
 	c.IdealistaAPI = (*IdealistaAPIService)(&c.common)
 	c.ImmobiliareAPI = (*ImmobiliareAPIService)(&c.common)
@@ -141,6 +146,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LeboncoinAPI = (*LeboncoinAPIService)(&c.common)
 	c.LinkedInAPI = (*LinkedInAPIService)(&c.common)
 	c.LoopNetAPI = (*LoopNetAPIService)(&c.common)
+	c.PerplexityAPI = (*PerplexityAPIService)(&c.common)
 	c.RealtorAPI = (*RealtorAPIService)(&c.common)
 	c.RedditAPI = (*RedditAPIService)(&c.common)
 	c.RedfinAPI = (*RedfinAPIService)(&c.common)

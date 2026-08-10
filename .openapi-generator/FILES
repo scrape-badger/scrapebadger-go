@@ -13,6 +13,7 @@ api_depop.go
 api_duck_duck_go.go
 api_e_bay.go
 api_facebook.go
+api_gemini.go
 api_google.go
 api_idealista.go
 api_immobiliare.go
@@ -20,6 +21,7 @@ api_instagram.go
 api_leboncoin.go
 api_linked_in.go
 api_loop_net.go
+api_perplexity.go
 api_realtor.go
 api_reddit.go
 api_redfin.go
@@ -55,6 +57,7 @@ docs/FilterRuleResponse.md
 docs/FilterRuleUpdate.md
 docs/FilterRuleValidateRequest.md
 docs/FilterRuleValidateResponse.md
+docs/GeminiAPI.md
 docs/GoogleAPI.md
 docs/HTTPValidationError.md
 docs/IdealistaAPI.md
@@ -63,6 +66,7 @@ docs/InstagramAPI.md
 docs/LeboncoinAPI.md
 docs/LinkedInAPI.md
 docs/LoopNetAPI.md
+docs/PerplexityAPI.md
 docs/PortalApiRoutersV1TwitterFilterRulesFilterRulePricingResponse.md
 docs/RealtorAPI.md
 docs/RedditAPI.md
@@ -133,6 +137,7 @@ test/api_depop_test.go
 test/api_duck_duck_go_test.go
 test/api_e_bay_test.go
 test/api_facebook_test.go
+test/api_gemini_test.go
 test/api_google_test.go
 test/api_idealista_test.go
 test/api_immobiliare_test.go
@@ -140,6 +145,7 @@ test/api_instagram_test.go
 test/api_leboncoin_test.go
 test/api_linked_in_test.go
 test/api_loop_net_test.go
+test/api_perplexity_test.go
 test/api_realtor_test.go
 test/api_reddit_test.go
 test/api_redfin_test.go
