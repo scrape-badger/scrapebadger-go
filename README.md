@@ -1,3 +1,61 @@
+# ScrapeBadger Go SDK
+
+[![version](https://img.shields.io/github/v/release/scrape-badger/scrapebadger-go?label=version)](https://pkg.go.dev/github.com/scrape-badger/scrapebadger-go) [![CI](https://img.shields.io/github/actions/workflow/status/scrape-badger/scrapebadger-go/ci.yml?label=CI)](https://github.com/scrape-badger/scrapebadger-go/actions) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+Official **Go** SDK for [ScrapeBadger](https://scrapebadger.com) — one API key for
+30+ scraping APIs: Twitter/X, Reddit, Facebook, Instagram, TikTok, YouTube, Amazon, eBay,
+Walmart, Vinted, Google (18 products), Bing, Yahoo, ChatGPT, Perplexity, real estate, and
+any URL via the general Web Scraping API. Generated from the ScrapeBadger OpenAPI spec —
+always in sync with the API. ⚠️ This repository is regenerated automatically; don't send
+PRs here, request changes via the [roadmap](https://github.com/scrape-badger/roadmap).
+
+📚 [API docs](https://docs.scrapebadger.com) · 🧰 [All SDKs](https://scrapebadger.com/sdks) · 🔑 [Get an API key](https://scrapebadger.com/auth/signup) — 1,000 free credits
+
+## 🚀 Install
+
+```
+go get github.com/scrape-badger/scrapebadger-go
+```
+
+## ⚡ Quick start
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+
+    scrapebadger "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+    cfg := scrapebadger.NewConfiguration()
+    cfg.AddDefaultHeader("x-api-key", "YOUR_API_KEY")
+    client := scrapebadger.NewAPIClient(cfg)
+
+    user, _, err := client.TwitterAPI.
+        TwitterGetUserByUsername(context.Background(), "elonmusk").Execute()
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(user)
+}
+```
+
+Every scraper is available as its own API class (`TwitterApi`, `AmazonApi`, `GoogleApi`, …)
+with one method per endpoint — the full list is in the reference below.
+
+## 🛠 Development
+
+```sh
+go build ./...   # compile
+go vet ./...     # lint
+go test ./...    # tests
+```
+
+---
+
 # Go API client for scrapebadger
 
 Unified credit-based scraping API. https://docs.scrapebadger.com
