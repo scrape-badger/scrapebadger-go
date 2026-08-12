@@ -55,6 +55,8 @@ type APIClient struct {
 
 	ApartmentsAPI *ApartmentsAPIService
 
+	AppStoreAPI *AppStoreAPIService
+
 	BaiduAPI *BaiduAPIService
 
 	BingAPI *BingAPIService
@@ -72,6 +74,8 @@ type APIClient struct {
 	GeminiAPI *GeminiAPIService
 
 	GoogleAPI *GoogleAPIService
+
+	GooglePlayAPI *GooglePlayAPIService
 
 	IdealistaAPI *IdealistaAPIService
 
@@ -131,6 +135,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AccountAPI = (*AccountAPIService)(&c.common)
 	c.AmazonAPI = (*AmazonAPIService)(&c.common)
 	c.ApartmentsAPI = (*ApartmentsAPIService)(&c.common)
+	c.AppStoreAPI = (*AppStoreAPIService)(&c.common)
 	c.BaiduAPI = (*BaiduAPIService)(&c.common)
 	c.BingAPI = (*BingAPIService)(&c.common)
 	c.ChatGPTAPI = (*ChatGPTAPIService)(&c.common)
@@ -140,6 +145,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.FacebookAPI = (*FacebookAPIService)(&c.common)
 	c.GeminiAPI = (*GeminiAPIService)(&c.common)
 	c.GoogleAPI = (*GoogleAPIService)(&c.common)
+	c.GooglePlayAPI = (*GooglePlayAPIService)(&c.common)
 	c.IdealistaAPI = (*IdealistaAPIService)(&c.common)
 	c.ImmobiliareAPI = (*ImmobiliareAPIService)(&c.common)
 	c.InstagramAPI = (*InstagramAPIService)(&c.common)

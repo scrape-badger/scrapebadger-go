@@ -166,6 +166,13 @@ Class | Method | HTTP request | Description
 *ApartmentsAPI* | [**ApartmentsGetPropertyDetailBySlugId**](docs/ApartmentsAPI.md#apartmentsgetpropertydetailbyslugid) | **Get** /v1/apartments/properties/{slug}/{property_id} | Get property detail by slug + id
 *ApartmentsAPI* | [**ApartmentsGetPropertyDetailByUrl**](docs/ApartmentsAPI.md#apartmentsgetpropertydetailbyurl) | **Get** /v1/apartments/property | Get property detail by URL
 *ApartmentsAPI* | [**ApartmentsSearchRentalListings**](docs/ApartmentsAPI.md#apartmentssearchrentallistings) | **Get** /v1/apartments/search | Search rental listings
+*AppStoreAPI* | [**AppStoreGetAppDetail**](docs/AppStoreAPI.md#appstoregetappdetail) | **Get** /v1/app-store/apps/{app_id} | Get app detail
+*AppStoreAPI* | [**AppStoreGetAppReviews**](docs/AppStoreAPI.md#appstoregetappreviews) | **Get** /v1/app-store/apps/{app_id}/reviews | Get app reviews
+*AppStoreAPI* | [**AppStoreGetDeveloperApps**](docs/AppStoreAPI.md#appstoregetdeveloperapps) | **Get** /v1/app-store/developers/{artist_id} | Get developer apps
+*AppStoreAPI* | [**AppStoreListGenres**](docs/AppStoreAPI.md#appstorelistgenres) | **Get** /v1/app-store/genres | List genres
+*AppStoreAPI* | [**AppStoreListMarkets**](docs/AppStoreAPI.md#appstorelistmarkets) | **Get** /v1/app-store/markets | List markets
+*AppStoreAPI* | [**AppStoreSearchApps**](docs/AppStoreAPI.md#appstoresearchapps) | **Get** /v1/app-store/search | Search apps
+*AppStoreAPI* | [**AppStoreTopCharts**](docs/AppStoreAPI.md#appstoretopcharts) | **Get** /v1/app-store/charts | Top charts
 *BaiduAPI* | [**BaiduBaiduImageSearch**](docs/BaiduAPI.md#baidubaiduimagesearch) | **Get** /v1/baidu/images | Baidu image search
 *BaiduAPI* | [**BaiduBaiduNewsSearch**](docs/BaiduAPI.md#baidubaidunewssearch) | **Get** /v1/baidu/news | Baidu news search
 *BaiduAPI* | [**BaiduBaiduScraperHealthCheck**](docs/BaiduAPI.md#baidubaiduscraperhealthcheck) | **Get** /v1/baidu/health | Baidu scraper health check
@@ -283,6 +290,16 @@ Class | Method | HTTP request | Description
 *GoogleAPI* | [**GoogleTrendingNews**](docs/GoogleAPI.md#googletrendingnews) | **Get** /v1/google/news/trending | Trending news
 *GoogleAPI* | [**GoogleTrendingSearches**](docs/GoogleAPI.md#googletrendingsearches) | **Get** /v1/google/trends/trending | Trending searches
 *GoogleAPI* | [**GoogleTrendsTopicAutocomplete**](docs/GoogleAPI.md#googletrendstopicautocomplete) | **Get** /v1/google/trends/autocomplete | Trends topic autocomplete
+*GooglePlayAPI* | [**GooglePlayBrowseACategory**](docs/GooglePlayAPI.md#googleplaybrowseacategory) | **Get** /v1/google-play/categories/{category_id} | Browse a category
+*GooglePlayAPI* | [**GooglePlayGetAppDetail**](docs/GooglePlayAPI.md#googleplaygetappdetail) | **Get** /v1/google-play/apps/{app_id} | Get app detail
+*GooglePlayAPI* | [**GooglePlayGetAppPermissions**](docs/GooglePlayAPI.md#googleplaygetapppermissions) | **Get** /v1/google-play/apps/{app_id}/permissions | Get app permissions
+*GooglePlayAPI* | [**GooglePlayGetAppReviews**](docs/GooglePlayAPI.md#googleplaygetappreviews) | **Get** /v1/google-play/apps/{app_id}/reviews | Get app reviews
+*GooglePlayAPI* | [**GooglePlayGetDeveloperApps**](docs/GooglePlayAPI.md#googleplaygetdeveloperapps) | **Get** /v1/google-play/developers/{developer} | Get developer apps
+*GooglePlayAPI* | [**GooglePlayGetSimilarApps**](docs/GooglePlayAPI.md#googleplaygetsimilarapps) | **Get** /v1/google-play/apps/{app_id}/similar | Get similar apps
+*GooglePlayAPI* | [**GooglePlayListCategories**](docs/GooglePlayAPI.md#googleplaylistcategories) | **Get** /v1/google-play/categories | List categories
+*GooglePlayAPI* | [**GooglePlayListMarkets**](docs/GooglePlayAPI.md#googleplaylistmarkets) | **Get** /v1/google-play/markets | List markets
+*GooglePlayAPI* | [**GooglePlaySearchApps**](docs/GooglePlayAPI.md#googleplaysearchapps) | **Get** /v1/google-play/search | Search apps
+*GooglePlayAPI* | [**GooglePlayTopCharts**](docs/GooglePlayAPI.md#googleplaytopcharts) | **Get** /v1/google-play/collections/{collection} | Top charts
 *IdealistaAPI* | [**IdealistaAgencyByPhone**](docs/IdealistaAPI.md#idealistaagencybyphone) | **Get** /v1/idealista/agency/by-phone/{phone} | Agency by phone
 *IdealistaAPI* | [**IdealistaAgencyProfileListings**](docs/IdealistaAPI.md#idealistaagencyprofilelistings) | **Get** /v1/idealista/agency/{short_name} | Agency profile + listings
 *IdealistaAPI* | [**IdealistaGetListingEngagementStats**](docs/IdealistaAPI.md#idealistagetlistingengagementstats) | **Get** /v1/idealista/properties/{property_code}/stats | Get listing engagement stats
