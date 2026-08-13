@@ -51,6 +51,8 @@ type APIClient struct {
 
 	AccountAPI *AccountAPIService
 
+	AirbnbAPI *AirbnbAPIService
+
 	AmazonAPI *AmazonAPIService
 
 	ApartmentsAPI *ApartmentsAPIService
@@ -133,6 +135,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AccountAPI = (*AccountAPIService)(&c.common)
+	c.AirbnbAPI = (*AirbnbAPIService)(&c.common)
 	c.AmazonAPI = (*AmazonAPIService)(&c.common)
 	c.ApartmentsAPI = (*ApartmentsAPIService)(&c.common)
 	c.AppStoreAPI = (*AppStoreAPIService)(&c.common)

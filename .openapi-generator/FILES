@@ -4,6 +4,7 @@
 README.md
 api/openapi.yaml
 api_account.go
+api_airbnb.go
 api_amazon.go
 api_apartments.go
 api_app_store.go
@@ -40,6 +41,7 @@ client.go
 configuration.go
 docs/AccountAPI.md
 docs/AccountInfo.md
+docs/AirbnbAPI.md
 docs/AmazonAPI.md
 docs/ApartmentsAPI.md
 docs/AppStoreAPI.md
@@ -132,6 +134,7 @@ model_webhook_test_request.go
 model_webhook_test_response.go
 response.go
 test/api_account_test.go
+test/api_airbnb_test.go
 test/api_amazon_test.go
 test/api_apartments_test.go
 test/api_app_store_test.go
