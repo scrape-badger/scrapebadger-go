@@ -29,6 +29,7 @@ type ApiGooglePlayBrowseACategoryRequest struct {
 	categoryId string
 	country *string
 	lang *string
+	num *int32
 }
 
 // Play storefront country (gl), ISO 3166-1 alpha-2, e.g. &#39;US&#39;
@@ -40,6 +41,12 @@ func (r ApiGooglePlayBrowseACategoryRequest) Country(country string) ApiGooglePl
 // Play content language (hl), e.g. &#39;en&#39; or &#39;pt-BR&#39;
 func (r ApiGooglePlayBrowseACategoryRequest) Lang(lang string) ApiGooglePlayBrowseACategoryRequest {
 	r.lang = &lang
+	return r
+}
+
+// Max apps; follows each rail&#39;s &#39;see more&#39; continuation above the ~40-120 the page renders directly
+func (r ApiGooglePlayBrowseACategoryRequest) Num(num int32) ApiGooglePlayBrowseACategoryRequest {
+	r.num = &num
 	return r
 }
 
@@ -97,6 +104,12 @@ func (a *GooglePlayAPIService) GooglePlayBrowseACategoryExecute(r ApiGooglePlayB
 	} else {
 		var defaultValue string = "en"
 		r.lang = &defaultValue
+	}
+	if r.num != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "num", r.num, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.num = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -664,6 +677,7 @@ type ApiGooglePlayGetDeveloperAppsRequest struct {
 	developer string
 	country *string
 	lang *string
+	num *int32
 }
 
 // Play storefront country (gl), ISO 3166-1 alpha-2, e.g. &#39;US&#39;
@@ -675,6 +689,12 @@ func (r ApiGooglePlayGetDeveloperAppsRequest) Country(country string) ApiGoogleP
 // Play content language (hl), e.g. &#39;en&#39; or &#39;pt-BR&#39;
 func (r ApiGooglePlayGetDeveloperAppsRequest) Lang(lang string) ApiGooglePlayGetDeveloperAppsRequest {
 	r.lang = &lang
+	return r
+}
+
+// Max apps; follows rail continuations above the page&#39;s directly-rendered slice
+func (r ApiGooglePlayGetDeveloperAppsRequest) Num(num int32) ApiGooglePlayGetDeveloperAppsRequest {
+	r.num = &num
 	return r
 }
 
@@ -732,6 +752,12 @@ func (a *GooglePlayAPIService) GooglePlayGetDeveloperAppsExecute(r ApiGooglePlay
 	} else {
 		var defaultValue string = "en"
 		r.lang = &defaultValue
+	}
+	if r.num != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "num", r.num, "form", "")
+	} else {
+		var defaultValue int32 = 100
+		r.num = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

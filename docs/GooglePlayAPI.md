@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## GooglePlayBrowseACategory
 
-> interface{} GooglePlayBrowseACategory(ctx, categoryId).Country(country).Lang(lang).Execute()
+> interface{} GooglePlayBrowseACategory(ctx, categoryId).Country(country).Lang(lang).Num(num).Execute()
 
 Browse a category
 
@@ -41,10 +41,11 @@ func main() {
 	categoryId := "categoryId_example" // string | Play category id, e.g. 'GAME_PUZZLE' or 'SOCIAL'
 	country := "country_example" // string | Play storefront country (gl), ISO 3166-1 alpha-2, e.g. 'US' (optional) (default to "US")
 	lang := "lang_example" // string | Play content language (hl), e.g. 'en' or 'pt-BR' (optional) (default to "en")
+	num := int32(56) // int32 | Max apps; follows each rail's 'see more' continuation above the ~40-120 the page renders directly (optional) (default to 100)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GooglePlayAPI.GooglePlayBrowseACategory(context.Background(), categoryId).Country(country).Lang(lang).Execute()
+	resp, r, err := apiClient.GooglePlayAPI.GooglePlayBrowseACategory(context.Background(), categoryId).Country(country).Lang(lang).Num(num).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GooglePlayAPI.GooglePlayBrowseACategory``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -72,6 +73,7 @@ Name | Type | Description  | Notes
 
  **country** | **string** | Play storefront country (gl), ISO 3166-1 alpha-2, e.g. &#39;US&#39; | [default to &quot;US&quot;]
  **lang** | **string** | Play content language (hl), e.g. &#39;en&#39; or &#39;pt-BR&#39; | [default to &quot;en&quot;]
+ **num** | **int32** | Max apps; follows each rail&#39;s &#39;see more&#39; continuation above the ~40-120 the page renders directly | [default to 100]
 
 ### Return type
 
@@ -319,7 +321,7 @@ Name | Type | Description  | Notes
 
 ## GooglePlayGetDeveloperApps
 
-> interface{} GooglePlayGetDeveloperApps(ctx, developer).Country(country).Lang(lang).Execute()
+> interface{} GooglePlayGetDeveloperApps(ctx, developer).Country(country).Lang(lang).Num(num).Execute()
 
 Get developer apps
 
@@ -341,10 +343,11 @@ func main() {
 	developer := "developer_example" // string | Developer name or numeric id
 	country := "country_example" // string | Play storefront country (gl), ISO 3166-1 alpha-2, e.g. 'US' (optional) (default to "US")
 	lang := "lang_example" // string | Play content language (hl), e.g. 'en' or 'pt-BR' (optional) (default to "en")
+	num := int32(56) // int32 | Max apps; follows rail continuations above the page's directly-rendered slice (optional) (default to 100)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GooglePlayAPI.GooglePlayGetDeveloperApps(context.Background(), developer).Country(country).Lang(lang).Execute()
+	resp, r, err := apiClient.GooglePlayAPI.GooglePlayGetDeveloperApps(context.Background(), developer).Country(country).Lang(lang).Num(num).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GooglePlayAPI.GooglePlayGetDeveloperApps``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -372,6 +375,7 @@ Name | Type | Description  | Notes
 
  **country** | **string** | Play storefront country (gl), ISO 3166-1 alpha-2, e.g. &#39;US&#39; | [default to &quot;US&quot;]
  **lang** | **string** | Play content language (hl), e.g. &#39;en&#39; or &#39;pt-BR&#39; | [default to &quot;en&quot;]
+ **num** | **int32** | Max apps; follows rail continuations above the page&#39;s directly-rendered slice | [default to 100]
 
 ### Return type
 
