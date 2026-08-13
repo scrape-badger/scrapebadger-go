@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**TiktokGetOembedMetadata**](TikTokAPI.md#TiktokGetOembedMetadata) | **Get** /v1/tiktok/oembed | Get oEmbed metadata
 [**TiktokGetRelatedVideos**](TikTokAPI.md#TiktokGetRelatedVideos) | **Get** /v1/tiktok/videos/{video_id}/related | Get related videos
 [**TiktokGetReposts**](TikTokAPI.md#TiktokGetReposts) | **Get** /v1/tiktok/users/{username}/reposts | Get reposts
+[**TiktokGetTiktokAdDetail**](TikTokAPI.md#TiktokGetTiktokAdDetail) | **Get** /v1/tiktok/ads/{ad_id} | Get TikTok ad detail
 [**TiktokGetTranscript**](TikTokAPI.md#TiktokGetTranscript) | **Get** /v1/tiktok/videos/{video_id}/transcript | Get transcript
 [**TiktokGetUserProfile**](TikTokAPI.md#TiktokGetUserProfile) | **Get** /v1/tiktok/users/{username} | Get user profile
 [**TiktokGetUserVideos**](TikTokAPI.md#TiktokGetUserVideos) | **Get** /v1/tiktok/users/{username}/videos | Get user videos
@@ -26,6 +27,7 @@ Method | HTTP request | Description
 [**TiktokListRegions**](TikTokAPI.md#TiktokListRegions) | **Get** /v1/tiktok/regions | List regions
 [**TiktokSearchHashtags**](TikTokAPI.md#TiktokSearchHashtags) | **Get** /v1/tiktok/search/hashtags | Search hashtags
 [**TiktokSearchTheTiktokAdLibrary**](TikTokAPI.md#TiktokSearchTheTiktokAdLibrary) | **Get** /v1/tiktok/ads/search | Search the TikTok Ad Library
+[**TiktokSearchTiktokAdvertisers**](TikTokAPI.md#TiktokSearchTiktokAdvertisers) | **Get** /v1/tiktok/ads/advertisers | Search TikTok advertisers
 [**TiktokSearchUsers**](TikTokAPI.md#TiktokSearchUsers) | **Get** /v1/tiktok/search/users | Search users
 [**TiktokSearchVideos**](TikTokAPI.md#TiktokSearchVideos) | **Get** /v1/tiktok/search/videos | Search videos
 [**TiktokTrendingHashtags**](TikTokAPI.md#TiktokTrendingHashtags) | **Get** /v1/tiktok/trending/hashtags | Trending hashtags
@@ -994,6 +996,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## TiktokGetTiktokAdDetail
+
+> interface{} TiktokGetTiktokAdDetail(ctx, adId).Region(region).Execute()
+
+Get TikTok ad detail
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	adId := "adId_example" // string | 
+	region := "region_example" // string | EU region code (the Ad Library is EU-only) (optional) (default to "DE")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokGetTiktokAdDetail(context.Background(), adId).Region(region).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetTiktokAdDetail``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokGetTiktokAdDetail`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetTiktokAdDetail`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**adId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokGetTiktokAdDetailRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **region** | **string** | EU region code (the Ad Library is EU-only) | [default to &quot;DE&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## TiktokGetTranscript
 
 > interface{} TiktokGetTranscript(ctx, videoId).Region(region).Execute()
@@ -1604,6 +1678,76 @@ Name | Type | Description  | Notes
  **offset** | **int32** |  | [default to 0]
  **searchId** | **string** |  | [default to &quot;&quot;]
  **count** | **int32** |  | [default to 20]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TiktokSearchTiktokAdvertisers
+
+> interface{} TiktokSearchTiktokAdvertisers(ctx).Query(query).Region(region).Count(count).Execute()
+
+Search TikTok advertisers
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	query := "query_example" // string | Advertiser name (or partial) to look up
+	region := "region_example" // string | EU region code (the Ad Library is EU-only) (optional) (default to "DE")
+	count := int32(56) // int32 |  (optional) (default to 10)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokSearchTiktokAdvertisers(context.Background()).Query(query).Region(region).Count(count).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokSearchTiktokAdvertisers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokSearchTiktokAdvertisers`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokSearchTiktokAdvertisers`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokSearchTiktokAdvertisersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | **string** | Advertiser name (or partial) to look up | 
+ **region** | **string** | EU region code (the Ad Library is EU-only) | [default to &quot;DE&quot;]
+ **count** | **int32** |  | [default to 10]
 
 ### Return type
 

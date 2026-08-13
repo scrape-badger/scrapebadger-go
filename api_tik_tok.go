@@ -2034,6 +2034,146 @@ func (a *TikTokAPIService) TiktokGetRepostsExecute(r ApiTiktokGetRepostsRequest)
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiTiktokGetTiktokAdDetailRequest struct {
+	ctx context.Context
+	ApiService *TikTokAPIService
+	adId string
+	region *string
+}
+
+// EU region code (the Ad Library is EU-only)
+func (r ApiTiktokGetTiktokAdDetailRequest) Region(region string) ApiTiktokGetTiktokAdDetailRequest {
+	r.region = &region
+	return r
+}
+
+func (r ApiTiktokGetTiktokAdDetailRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokGetTiktokAdDetailExecute(r)
+}
+
+/*
+TiktokGetTiktokAdDetail Get TikTok ad detail
+
+Get a single ad's advertiser, creatives, and targeting/impression breakdown.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param adId
+ @return ApiTiktokGetTiktokAdDetailRequest
+*/
+func (a *TikTokAPIService) TiktokGetTiktokAdDetail(ctx context.Context, adId string) ApiTiktokGetTiktokAdDetailRequest {
+	return ApiTiktokGetTiktokAdDetailRequest{
+		ApiService: a,
+		ctx: ctx,
+		adId: adId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *TikTokAPIService) TiktokGetTiktokAdDetailExecute(r ApiTiktokGetTiktokAdDetailRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetTiktokAdDetail")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/tiktok/ads/{ad_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"ad_id"+"}", url.PathEscape(parameterValueToString(r.adId, "adId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "DE"
+		r.region = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiTiktokGetTranscriptRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
@@ -3272,6 +3412,168 @@ func (a *TikTokAPIService) TiktokSearchTheTiktokAdLibraryExecute(r ApiTiktokSear
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
 		var defaultValue int32 = 20
+		r.count = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTiktokSearchTiktokAdvertisersRequest struct {
+	ctx context.Context
+	ApiService *TikTokAPIService
+	query *string
+	region *string
+	count *int32
+}
+
+// Advertiser name (or partial) to look up
+func (r ApiTiktokSearchTiktokAdvertisersRequest) Query(query string) ApiTiktokSearchTiktokAdvertisersRequest {
+	r.query = &query
+	return r
+}
+
+// EU region code (the Ad Library is EU-only)
+func (r ApiTiktokSearchTiktokAdvertisersRequest) Region(region string) ApiTiktokSearchTiktokAdvertisersRequest {
+	r.region = &region
+	return r
+}
+
+func (r ApiTiktokSearchTiktokAdvertisersRequest) Count(count int32) ApiTiktokSearchTiktokAdvertisersRequest {
+	r.count = &count
+	return r
+}
+
+func (r ApiTiktokSearchTiktokAdvertisersRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokSearchTiktokAdvertisersExecute(r)
+}
+
+/*
+TiktokSearchTiktokAdvertisers Search TikTok advertisers
+
+Look up TikTok advertiser business ids by name (feeds ads/search?advertiser_id=).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiTiktokSearchTiktokAdvertisersRequest
+*/
+func (a *TikTokAPIService) TiktokSearchTiktokAdvertisers(ctx context.Context) ApiTiktokSearchTiktokAdvertisersRequest {
+	return ApiTiktokSearchTiktokAdvertisersRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *TikTokAPIService) TiktokSearchTiktokAdvertisersExecute(r ApiTiktokSearchTiktokAdvertisersRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokSearchTiktokAdvertisers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/tiktok/ads/advertisers"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.query == nil {
+		return localVarReturnValue, nil, reportError("query is required and must be specified")
+	}
+	if strlen(*r.query) < 1 {
+		return localVarReturnValue, nil, reportError("query must have at least 1 elements")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "DE"
+		r.region = &defaultValue
+	}
+	if r.count != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
+	} else {
+		var defaultValue int32 = 10
 		r.count = &defaultValue
 	}
 	// to determine the Content-Type header

@@ -200,6 +200,20 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test TikTokAPIService TiktokGetTiktokAdDetail", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var adId string
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetTiktokAdDetail(context.Background(), adId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TikTokAPIService TiktokGetTranscript", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -309,6 +323,18 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.TikTokAPI.TiktokSearchTheTiktokAdLibrary(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TikTokAPIService TiktokSearchTiktokAdvertisers", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokSearchTiktokAdvertisers(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
