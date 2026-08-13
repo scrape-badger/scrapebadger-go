@@ -50,6 +50,20 @@ func Test_scrapebadger_FacebookAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test FacebookAPIService FacebookGetAdvertiserPageInfo", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pageId string
+
+		resp, httpRes, err := apiClient.FacebookAPI.FacebookGetAdvertiserPageInfo(context.Background(), pageId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test FacebookAPIService FacebookGetAnAd", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -193,6 +207,18 @@ func Test_scrapebadger_FacebookAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.FacebookAPI.FacebookListLocations(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test FacebookAPIService FacebookSearchAdvertiserPages", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.FacebookAPI.FacebookSearchAdvertiserPages(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

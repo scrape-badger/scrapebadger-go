@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**FacebookBrowseAMarketplaceCategory**](FacebookAPI.md#FacebookBrowseAMarketplaceCategory) | **Get** /v1/facebook/marketplace/category/{category} | Browse a Marketplace category
 [**FacebookGetAMarketplaceItem**](FacebookAPI.md#FacebookGetAMarketplaceItem) | **Get** /v1/facebook/marketplace/item/{item_id} | Get a Marketplace item
+[**FacebookGetAdvertiserPageInfo**](FacebookAPI.md#FacebookGetAdvertiserPageInfo) | **Get** /v1/facebook/ads/pages/{page_id} | Get advertiser page info
 [**FacebookGetAnAd**](FacebookAPI.md#FacebookGetAnAd) | **Get** /v1/facebook/ads/{ad_archive_id} | Get an ad
 [**FacebookGetGroupDetail**](FacebookAPI.md#FacebookGetGroupDetail) | **Get** /v1/facebook/groups/{group_id} | Get group detail
 [**FacebookGetGroupPosts**](FacebookAPI.md#FacebookGetGroupPosts) | **Get** /v1/facebook/groups/{group_id}/posts | Get group posts
@@ -17,6 +18,7 @@ Method | HTTP request | Description
 [**FacebookGetProfilePosts**](FacebookAPI.md#FacebookGetProfilePosts) | **Get** /v1/facebook/profiles/{identifier}/posts | Get profile posts
 [**FacebookListCategories**](FacebookAPI.md#FacebookListCategories) | **Get** /v1/facebook/marketplace/categories | List categories
 [**FacebookListLocations**](FacebookAPI.md#FacebookListLocations) | **Get** /v1/facebook/marketplace/locations | List locations
+[**FacebookSearchAdvertiserPages**](FacebookAPI.md#FacebookSearchAdvertiserPages) | **Get** /v1/facebook/ads/pages/search | Search advertiser pages
 [**FacebookSearchEvents**](FacebookAPI.md#FacebookSearchEvents) | **Get** /v1/facebook/search/events | Search events
 [**FacebookSearchEverything**](FacebookAPI.md#FacebookSearchEverything) | **Get** /v1/facebook/search | Search everything
 [**FacebookSearchGroups**](FacebookAPI.md#FacebookSearchGroups) | **Get** /v1/facebook/search/groups | Search groups
@@ -179,9 +181,81 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## FacebookGetAdvertiserPageInfo
+
+> interface{} FacebookGetAdvertiserPageInfo(ctx, pageId).Country(country).Execute()
+
+Get advertiser page info
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	pageId := "pageId_example" // string | 
+	country := "country_example" // string |  (optional) (default to "US")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.FacebookAPI.FacebookGetAdvertiserPageInfo(context.Background(), pageId).Country(country).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookGetAdvertiserPageInfo``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `FacebookGetAdvertiserPageInfo`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `FacebookAPI.FacebookGetAdvertiserPageInfo`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**pageId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiFacebookGetAdvertiserPageInfoRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **country** | **string** |  | [default to &quot;US&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## FacebookGetAnAd
 
-> interface{} FacebookGetAnAd(ctx, adArchiveId).Execute()
+> interface{} FacebookGetAnAd(ctx, adArchiveId).Country(country).Execute()
 
 Get an ad
 
@@ -201,10 +275,11 @@ import (
 
 func main() {
 	adArchiveId := "adArchiveId_example" // string | 
+	country := "country_example" // string | ISO country code (an EU code returns EU transparency) (optional) (default to "US")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookGetAnAd(context.Background(), adArchiveId).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookGetAnAd(context.Background(), adArchiveId).Country(country).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookGetAnAd``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -230,6 +305,7 @@ Other parameters are passed through a pointer to a apiFacebookGetAnAdRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **country** | **string** | ISO country code (an EU code returns EU transparency) | [default to &quot;US&quot;]
 
 ### Return type
 
@@ -922,6 +998,74 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiFacebookListLocationsRequest struct via the builder pattern
 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## FacebookSearchAdvertiserPages
+
+> interface{} FacebookSearchAdvertiserPages(ctx).Query(query).Country(country).Execute()
+
+Search advertiser pages
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	query := "query_example" // string | Advertiser name or keyword
+	country := "country_example" // string |  (optional) (default to "US")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.FacebookAPI.FacebookSearchAdvertiserPages(context.Background()).Query(query).Country(country).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookSearchAdvertiserPages``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `FacebookSearchAdvertiserPages`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `FacebookAPI.FacebookSearchAdvertiserPages`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiFacebookSearchAdvertiserPagesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | **string** | Advertiser name or keyword | 
+ **country** | **string** |  | [default to &quot;US&quot;]
 
 ### Return type
 
