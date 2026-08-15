@@ -406,9 +406,9 @@ import (
 
 func main() {
 	dataId := "dataId_example" // string | Maps data ID
-	sortBy := "sortBy_example" // string |  (optional) (default to "qualityScore")
+	sortBy := "sortBy_example" // string | qualityScore | newestFirst | ratingHigh | ratingLow (optional) (default to "qualityScore")
 	hl := "hl_example" // string |  (optional) (default to "en")
-	nextPageToken := "nextPageToken_example" // string |  (optional)
+	nextPageToken := "nextPageToken_example" // string | Cursor from the previous response's pagination.next; omit for page 1. (optional)
 	results := int32(56) // int32 |  (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
@@ -435,9 +435,9 @@ Other parameters are passed through a pointer to a apiGoogleGetPlaceReviewsReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dataId** | **string** | Maps data ID | 
- **sortBy** | **string** |  | [default to &quot;qualityScore&quot;]
+ **sortBy** | **string** | qualityScore | newestFirst | ratingHigh | ratingLow | [default to &quot;qualityScore&quot;]
  **hl** | **string** |  | [default to &quot;en&quot;]
- **nextPageToken** | **string** |  | 
+ **nextPageToken** | **string** | Cursor from the previous response&#39;s pagination.next; omit for page 1. | 
  **results** | **int32** |  | [default to 10]
 
 ### Return type

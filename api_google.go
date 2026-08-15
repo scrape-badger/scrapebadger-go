@@ -789,6 +789,7 @@ func (r ApiGoogleGetPlaceReviewsRequest) DataId(dataId string) ApiGoogleGetPlace
 	return r
 }
 
+// qualityScore | newestFirst | ratingHigh | ratingLow
 func (r ApiGoogleGetPlaceReviewsRequest) SortBy(sortBy string) ApiGoogleGetPlaceReviewsRequest {
 	r.sortBy = &sortBy
 	return r
@@ -799,6 +800,7 @@ func (r ApiGoogleGetPlaceReviewsRequest) Hl(hl string) ApiGoogleGetPlaceReviewsR
 	return r
 }
 
+// Cursor from the previous response&#39;s pagination.next; omit for page 1.
 func (r ApiGoogleGetPlaceReviewsRequest) NextPageToken(nextPageToken string) ApiGoogleGetPlaceReviewsRequest {
 	r.nextPageToken = &nextPageToken
 	return r
