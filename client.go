@@ -63,6 +63,8 @@ type APIClient struct {
 
 	BingAPI *BingAPIService
 
+	BookingAPI *BookingAPIService
+
 	ChatGPTAPI *ChatGPTAPIService
 
 	DepopAPI *DepopAPIService
@@ -141,6 +143,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AppStoreAPI = (*AppStoreAPIService)(&c.common)
 	c.BaiduAPI = (*BaiduAPIService)(&c.common)
 	c.BingAPI = (*BingAPIService)(&c.common)
+	c.BookingAPI = (*BookingAPIService)(&c.common)
 	c.ChatGPTAPI = (*ChatGPTAPIService)(&c.common)
 	c.DepopAPI = (*DepopAPIService)(&c.common)
 	c.DuckDuckGoAPI = (*DuckDuckGoAPIService)(&c.common)

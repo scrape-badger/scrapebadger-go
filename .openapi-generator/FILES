@@ -10,6 +10,7 @@ api_apartments.go
 api_app_store.go
 api_baidu.go
 api_bing.go
+api_booking.go
 api_chat_gpt.go
 api_depop.go
 api_duck_duck_go.go
@@ -49,6 +50,7 @@ docs/BaiduAPI.md
 docs/BillingLogListResponse.md
 docs/BillingLogResponse.md
 docs/BingAPI.md
+docs/BookingAPI.md
 docs/ChatGPTAPI.md
 docs/DepopAPI.md
 docs/DuckDuckGoAPI.md
@@ -140,6 +142,7 @@ test/api_apartments_test.go
 test/api_app_store_test.go
 test/api_baidu_test.go
 test/api_bing_test.go
+test/api_booking_test.go
 test/api_chat_gpt_test.go
 test/api_depop_test.go
 test/api_duck_duck_go_test.go

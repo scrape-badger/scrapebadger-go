@@ -195,6 +195,12 @@ Class | Method | HTTP request | Description
 *BingAPI* | [**BingSearchSuggestions**](docs/BingAPI.md#bingsearchsuggestions) | **Get** /v1/bing/autocomplete | Search suggestions
 *BingAPI* | [**BingVideoSearch**](docs/BingAPI.md#bingvideosearch) | **Get** /v1/bing/videos | Video search
 *BingAPI* | [**BingWebSearch**](docs/BingAPI.md#bingwebsearch) | **Get** /v1/bing/search | Web search
+*BookingAPI* | [**BookingBookingScraperHealthCheck**](docs/BookingAPI.md#bookingbookingscraperhealthcheck) | **Get** /v1/booking/health | Booking scraper health check
+*BookingAPI* | [**BookingBookingScraperHealthCheckHead**](docs/BookingAPI.md#bookingbookingscraperhealthcheckhead) | **Head** /v1/booking/health | Booking scraper health check
+*BookingAPI* | [**BookingGetPropertyDetail**](docs/BookingAPI.md#bookinggetpropertydetail) | **Get** /v1/booking/properties/{country_code}/{slug} | Get property detail
+*BookingAPI* | [**BookingGetPropertyReviews**](docs/BookingAPI.md#bookinggetpropertyreviews) | **Get** /v1/booking/properties/{country_code}/{slug}/reviews | Get property reviews
+*BookingAPI* | [**BookingSearchDestinations**](docs/BookingAPI.md#bookingsearchdestinations) | **Get** /v1/booking/destinations | Search destinations
+*BookingAPI* | [**BookingSearchProperties**](docs/BookingAPI.md#bookingsearchproperties) | **Get** /v1/booking/search | Search properties
 *ChatGPTAPI* | [**ChatgptAskChatgptAQuestion**](docs/ChatGPTAPI.md#chatgptaskchatgptaquestion) | **Get** /v1/chatgpt/ask | Ask ChatGPT a question
 *ChatGPTAPI* | [**ChatgptAskChatgptAQuestionPost**](docs/ChatGPTAPI.md#chatgptaskchatgptaquestionpost) | **Post** /v1/chatgpt/ask | Ask ChatGPT a question (POST)
 *ChatGPTAPI* | [**ChatgptChatgptScraperHealthCheck**](docs/ChatGPTAPI.md#chatgptchatgptscraperhealthcheck) | **Get** /v1/chatgpt/health | ChatGPT scraper health check
