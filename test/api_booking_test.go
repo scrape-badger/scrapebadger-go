@@ -76,6 +76,21 @@ func Test_scrapebadger_BookingAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test BookingAPIService BookingGetRoomTypesAndLiveRates", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var countryCode string
+		var slug string
+
+		resp, httpRes, err := apiClient.BookingAPI.BookingGetRoomTypesAndLiveRates(context.Background(), countryCode, slug).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test BookingAPIService BookingSearchDestinations", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

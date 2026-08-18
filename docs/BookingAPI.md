@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**BookingBookingScraperHealthCheckHead**](BookingAPI.md#BookingBookingScraperHealthCheckHead) | **Head** /v1/booking/health | Booking scraper health check
 [**BookingGetPropertyDetail**](BookingAPI.md#BookingGetPropertyDetail) | **Get** /v1/booking/properties/{country_code}/{slug} | Get property detail
 [**BookingGetPropertyReviews**](BookingAPI.md#BookingGetPropertyReviews) | **Get** /v1/booking/properties/{country_code}/{slug}/reviews | Get property reviews
+[**BookingGetRoomTypesAndLiveRates**](BookingAPI.md#BookingGetRoomTypesAndLiveRates) | **Get** /v1/booking/properties/{country_code}/{slug}/rooms | Get room types and live rates
 [**BookingSearchDestinations**](BookingAPI.md#BookingSearchDestinations) | **Get** /v1/booking/destinations | Search destinations
 [**BookingSearchProperties**](BookingAPI.md#BookingSearchProperties) | **Get** /v1/booking/search | Search properties
 
@@ -280,6 +281,93 @@ Name | Type | Description  | Notes
  **reviewLanguage** | **string** | Only reviews written in this language, e.g. &#39;fr&#39; | 
  **guestType** | **string** | FAMILIES | COUPLES | GROUP_OF_FRIENDS | SOLO_TRAVELLERS | BUSINESS_TRAVELLERS | 
  **language** | **string** | Locale for labels, e.g. en-us | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## BookingGetRoomTypesAndLiveRates
+
+> interface{} BookingGetRoomTypesAndLiveRates(ctx, countryCode, slug).Checkin(checkin).Checkout(checkout).Adults(adults).Children(children).Rooms(rooms).Currency(currency).Language(language).Execute()
+
+Get room types and live rates
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	countryCode := "countryCode_example" // string | Two-letter country code, e.g. 'it'
+	slug := "slug_example" // string | Booking page name, e.g. 'hotel-artemide'
+	checkin := "checkin_example" // string | Check-in date YYYY-MM-DD
+	checkout := "checkout_example" // string | Check-out date YYYY-MM-DD
+	adults := int32(56) // int32 |  (optional) (default to 2)
+	children := "children_example" // string | Comma-separated children ages, e.g. '4,9' (optional)
+	rooms := int32(56) // int32 |  (optional) (default to 1)
+	currency := "currency_example" // string | ISO currency, e.g. EUR, USD, GBP (optional)
+	language := "language_example" // string | Locale, e.g. en-us, fr, de (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.BookingAPI.BookingGetRoomTypesAndLiveRates(context.Background(), countryCode, slug).Checkin(checkin).Checkout(checkout).Adults(adults).Children(children).Rooms(rooms).Currency(currency).Language(language).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `BookingAPI.BookingGetRoomTypesAndLiveRates``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BookingGetRoomTypesAndLiveRates`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `BookingAPI.BookingGetRoomTypesAndLiveRates`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**countryCode** | **string** | Two-letter country code, e.g. &#39;it&#39; | 
+**slug** | **string** | Booking page name, e.g. &#39;hotel-artemide&#39; | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBookingGetRoomTypesAndLiveRatesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **checkin** | **string** | Check-in date YYYY-MM-DD | 
+ **checkout** | **string** | Check-out date YYYY-MM-DD | 
+ **adults** | **int32** |  | [default to 2]
+ **children** | **string** | Comma-separated children ages, e.g. &#39;4,9&#39; | 
+ **rooms** | **int32** |  | [default to 1]
+ **currency** | **string** | ISO currency, e.g. EUR, USD, GBP | 
+ **language** | **string** | Locale, e.g. en-us, fr, de | 
 
 ### Return type
 

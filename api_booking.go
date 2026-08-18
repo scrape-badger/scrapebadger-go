@@ -635,6 +635,226 @@ func (a *BookingAPIService) BookingGetPropertyReviewsExecute(r ApiBookingGetProp
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiBookingGetRoomTypesAndLiveRatesRequest struct {
+	ctx context.Context
+	ApiService *BookingAPIService
+	countryCode string
+	slug string
+	checkin *string
+	checkout *string
+	adults *int32
+	children *string
+	rooms *int32
+	currency *string
+	language *string
+}
+
+// Check-in date YYYY-MM-DD
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Checkin(checkin string) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.checkin = &checkin
+	return r
+}
+
+// Check-out date YYYY-MM-DD
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Checkout(checkout string) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.checkout = &checkout
+	return r
+}
+
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Adults(adults int32) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.adults = &adults
+	return r
+}
+
+// Comma-separated children ages, e.g. &#39;4,9&#39;
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Children(children string) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.children = &children
+	return r
+}
+
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Rooms(rooms int32) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.rooms = &rooms
+	return r
+}
+
+// ISO currency, e.g. EUR, USD, GBP
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Currency(currency string) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.currency = &currency
+	return r
+}
+
+// Locale, e.g. en-us, fr, de
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Language(language string) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	r.language = &language
+	return r
+}
+
+func (r ApiBookingGetRoomTypesAndLiveRatesRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.BookingGetRoomTypesAndLiveRatesExecute(r)
+}
+
+/*
+BookingGetRoomTypesAndLiveRates Get room types and live rates
+
+Every room type at one property with every rate bookable on it for the
+given dates — price, price before discount, price per night, discounts and
+badges — plus per-room facilities, bed layouts, occupancy and photos.
+/search returns only the cheapest rate per property; this returns the whole
+table.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param countryCode Two-letter country code, e.g. 'it'
+ @param slug Booking page name, e.g. 'hotel-artemide'
+ @return ApiBookingGetRoomTypesAndLiveRatesRequest
+*/
+func (a *BookingAPIService) BookingGetRoomTypesAndLiveRates(ctx context.Context, countryCode string, slug string) ApiBookingGetRoomTypesAndLiveRatesRequest {
+	return ApiBookingGetRoomTypesAndLiveRatesRequest{
+		ApiService: a,
+		ctx: ctx,
+		countryCode: countryCode,
+		slug: slug,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *BookingAPIService) BookingGetRoomTypesAndLiveRatesExecute(r ApiBookingGetRoomTypesAndLiveRatesRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookingAPIService.BookingGetRoomTypesAndLiveRates")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/booking/properties/{country_code}/{slug}/rooms"
+	localVarPath = strings.Replace(localVarPath, "{"+"country_code"+"}", url.PathEscape(parameterValueToString(r.countryCode, "countryCode")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slug"+"}", url.PathEscape(parameterValueToString(r.slug, "slug")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.countryCode) < 2 {
+		return localVarReturnValue, nil, reportError("countryCode must have at least 2 elements")
+	}
+	if strlen(r.countryCode) > 2 {
+		return localVarReturnValue, nil, reportError("countryCode must have less than 2 elements")
+	}
+	if strlen(r.slug) < 1 {
+		return localVarReturnValue, nil, reportError("slug must have at least 1 elements")
+	}
+	if r.checkin == nil {
+		return localVarReturnValue, nil, reportError("checkin is required and must be specified")
+	}
+	if r.checkout == nil {
+		return localVarReturnValue, nil, reportError("checkout is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "checkin", r.checkin, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "checkout", r.checkout, "form", "")
+	if r.adults != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "adults", r.adults, "form", "")
+	} else {
+		var defaultValue int32 = 2
+		r.adults = &defaultValue
+	}
+	if r.children != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "children", r.children, "form", "")
+	}
+	if r.rooms != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "rooms", r.rooms, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		r.rooms = &defaultValue
+	}
+	if r.currency != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "currency", r.currency, "form", "")
+	}
+	if r.language != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "language", r.language, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiBookingSearchDestinationsRequest struct {
 	ctx context.Context
 	ApiService *BookingAPIService
