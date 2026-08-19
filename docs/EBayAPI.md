@@ -5,7 +5,7 @@ All URIs are relative to *https://scrapebadger.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**EbayBrowseACategory**](EBayAPI.md#EbayBrowseACategory) | **Get** /v1/ebay/categories/{category_id}/items | Browse a category
-[**EbayCompletedSoldListings**](EBayAPI.md#EbayCompletedSoldListings) | **Get** /v1/ebay/completed | Completed / sold listings
+[**EbayCompletedSoldListingsDeprecated**](EBayAPI.md#EbayCompletedSoldListingsDeprecated) | **Get** /v1/ebay/completed | Completed / sold listings (deprecated)
 [**EbayEbayScraperHealthCheck**](EBayAPI.md#EbayEbayScraperHealthCheck) | **Get** /v1/ebay/health | eBay scraper health check
 [**EbayEbayScraperHealthCheckHead**](EBayAPI.md#EbayEbayScraperHealthCheckHead) | **Head** /v1/ebay/health | eBay scraper health check
 [**EbayGetItemDetail**](EBayAPI.md#EbayGetItemDetail) | **Get** /v1/ebay/items/{item_id} | Get item detail
@@ -102,11 +102,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## EbayCompletedSoldListings
+## EbayCompletedSoldListingsDeprecated
 
-> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
+> interface{} EbayCompletedSoldListingsDeprecated(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
 
-Completed / sold listings
+Completed / sold listings (deprecated)
 
 
 
@@ -135,13 +135,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
+	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListingsDeprecated(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListingsDeprecated``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EbayCompletedSoldListings`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `EBayAPI.EbayCompletedSoldListings`: %v\n", resp)
+	// response from `EbayCompletedSoldListingsDeprecated`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `EBayAPI.EbayCompletedSoldListingsDeprecated`: %v\n", resp)
 }
 ```
 
@@ -151,7 +151,7 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiEbayCompletedSoldListingsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiEbayCompletedSoldListingsDeprecatedRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
