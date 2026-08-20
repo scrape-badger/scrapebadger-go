@@ -214,7 +214,7 @@ func (a *EBayAPIService) EbayBrowseACategoryExecute(r ApiEbayBrowseACategoryRequ
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiEbayCompletedSoldListingsDeprecatedRequest struct {
+type ApiEbayCompletedSoldListingsRequest struct {
 	ctx context.Context
 	ApiService *EBayAPIService
 	query *string
@@ -229,69 +229,70 @@ type ApiEbayCompletedSoldListingsDeprecatedRequest struct {
 }
 
 // Search keywords
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) Query(query string) ApiEbayCompletedSoldListingsDeprecatedRequest {
+func (r ApiEbayCompletedSoldListingsRequest) Query(query string) ApiEbayCompletedSoldListingsRequest {
 	r.query = &query
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) Domain(domain string) ApiEbayCompletedSoldListingsDeprecatedRequest {
+// Marketplace domain (com, co.uk, de …)
+func (r ApiEbayCompletedSoldListingsRequest) Domain(domain string) ApiEbayCompletedSoldListingsRequest {
 	r.domain = &domain
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) CategoryId(categoryId string) ApiEbayCompletedSoldListingsDeprecatedRequest {
+// Restrict to a category id
+func (r ApiEbayCompletedSoldListingsRequest) CategoryId(categoryId string) ApiEbayCompletedSoldListingsRequest {
 	r.categoryId = &categoryId
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) Page(page int32) ApiEbayCompletedSoldListingsDeprecatedRequest {
+func (r ApiEbayCompletedSoldListingsRequest) Page(page int32) ApiEbayCompletedSoldListingsRequest {
 	r.page = &page
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) PerPage(perPage int32) ApiEbayCompletedSoldListingsDeprecatedRequest {
+// 60, 120 or 240
+func (r ApiEbayCompletedSoldListingsRequest) PerPage(perPage int32) ApiEbayCompletedSoldListingsRequest {
 	r.perPage = &perPage
 	return r
 }
 
 // best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) SortBy(sortBy string) ApiEbayCompletedSoldListingsDeprecatedRequest {
+func (r ApiEbayCompletedSoldListingsRequest) SortBy(sortBy string) ApiEbayCompletedSoldListingsRequest {
 	r.sortBy = &sortBy
 	return r
 }
 
 // new|open_box|refurbished|used|for_parts
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) Condition(condition string) ApiEbayCompletedSoldListingsDeprecatedRequest {
+func (r ApiEbayCompletedSoldListingsRequest) Condition(condition string) ApiEbayCompletedSoldListingsRequest {
 	r.condition = &condition
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) MinPrice(minPrice float32) ApiEbayCompletedSoldListingsDeprecatedRequest {
+func (r ApiEbayCompletedSoldListingsRequest) MinPrice(minPrice float32) ApiEbayCompletedSoldListingsRequest {
 	r.minPrice = &minPrice
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) MaxPrice(maxPrice float32) ApiEbayCompletedSoldListingsDeprecatedRequest {
+func (r ApiEbayCompletedSoldListingsRequest) MaxPrice(maxPrice float32) ApiEbayCompletedSoldListingsRequest {
 	r.maxPrice = &maxPrice
 	return r
 }
 
-func (r ApiEbayCompletedSoldListingsDeprecatedRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.EbayCompletedSoldListingsDeprecatedExecute(r)
+func (r ApiEbayCompletedSoldListingsRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.EbayCompletedSoldListingsExecute(r)
 }
 
 /*
-EbayCompletedSoldListingsDeprecated Completed / sold listings (deprecated)
+EbayCompletedSoldListings Completed / sold listings
 
-Deprecated — eBay requires a signed-in account for sold listings. Returns 410.
+Search completed/sold listings — eBay's sold-price history.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiEbayCompletedSoldListingsDeprecatedRequest
-
-Deprecated
+ @return ApiEbayCompletedSoldListingsRequest
 */
-func (a *EBayAPIService) EbayCompletedSoldListingsDeprecated(ctx context.Context) ApiEbayCompletedSoldListingsDeprecatedRequest {
-	return ApiEbayCompletedSoldListingsDeprecatedRequest{
+func (a *EBayAPIService) EbayCompletedSoldListings(ctx context.Context) ApiEbayCompletedSoldListingsRequest {
+	return ApiEbayCompletedSoldListingsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
@@ -299,8 +300,7 @@ func (a *EBayAPIService) EbayCompletedSoldListingsDeprecated(ctx context.Context
 
 // Execute executes the request
 //  @return interface{}
-// Deprecated
-func (a *EBayAPIService) EbayCompletedSoldListingsDeprecatedExecute(r ApiEbayCompletedSoldListingsDeprecatedRequest) (interface{}, *http.Response, error) {
+func (a *EBayAPIService) EbayCompletedSoldListingsExecute(r ApiEbayCompletedSoldListingsRequest) (interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -308,7 +308,7 @@ func (a *EBayAPIService) EbayCompletedSoldListingsDeprecatedExecute(r ApiEbayCom
 		localVarReturnValue  interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EBayAPIService.EbayCompletedSoldListingsDeprecated")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "EBayAPIService.EbayCompletedSoldListings")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

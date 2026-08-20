@@ -5,7 +5,7 @@ All URIs are relative to *https://scrapebadger.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**EbayBrowseACategory**](EBayAPI.md#EbayBrowseACategory) | **Get** /v1/ebay/categories/{category_id}/items | Browse a category
-[**EbayCompletedSoldListingsDeprecated**](EBayAPI.md#EbayCompletedSoldListingsDeprecated) | **Get** /v1/ebay/completed | Completed / sold listings (deprecated)
+[**EbayCompletedSoldListings**](EBayAPI.md#EbayCompletedSoldListings) | **Get** /v1/ebay/completed | Completed / sold listings
 [**EbayEbayScraperHealthCheck**](EBayAPI.md#EbayEbayScraperHealthCheck) | **Get** /v1/ebay/health | eBay scraper health check
 [**EbayEbayScraperHealthCheckHead**](EBayAPI.md#EbayEbayScraperHealthCheckHead) | **Head** /v1/ebay/health | eBay scraper health check
 [**EbayGetItemDetail**](EBayAPI.md#EbayGetItemDetail) | **Get** /v1/ebay/items/{item_id} | Get item detail
@@ -102,11 +102,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## EbayCompletedSoldListingsDeprecated
+## EbayCompletedSoldListings
 
-> interface{} EbayCompletedSoldListingsDeprecated(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
+> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
 
-Completed / sold listings (deprecated)
+Completed / sold listings
 
 
 
@@ -124,10 +124,10 @@ import (
 
 func main() {
 	query := "query_example" // string | Search keywords
-	domain := "domain_example" // string |  (optional) (default to "com")
-	categoryId := "categoryId_example" // string |  (optional)
+	domain := "domain_example" // string | Marketplace domain (com, co.uk, de …) (optional) (default to "com")
+	categoryId := "categoryId_example" // string | Restrict to a category id (optional)
 	page := int32(56) // int32 |  (optional) (default to 1)
-	perPage := int32(56) // int32 |  (optional)
+	perPage := int32(56) // int32 | 60, 120 or 240 (optional)
 	sortBy := "sortBy_example" // string | best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low (optional) (default to "best_match")
 	condition := "condition_example" // string | new|open_box|refurbished|used|for_parts (optional)
 	minPrice := float32(8.14) // float32 |  (optional)
@@ -135,13 +135,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListingsDeprecated(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
+	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListingsDeprecated``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `EbayCompletedSoldListingsDeprecated`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `EBayAPI.EbayCompletedSoldListingsDeprecated`: %v\n", resp)
+	// response from `EbayCompletedSoldListings`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `EBayAPI.EbayCompletedSoldListings`: %v\n", resp)
 }
 ```
 
@@ -151,16 +151,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiEbayCompletedSoldListingsDeprecatedRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiEbayCompletedSoldListingsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | Search keywords | 
- **domain** | **string** |  | [default to &quot;com&quot;]
- **categoryId** | **string** |  | 
+ **domain** | **string** | Marketplace domain (com, co.uk, de …) | [default to &quot;com&quot;]
+ **categoryId** | **string** | Restrict to a category id | 
  **page** | **int32** |  | [default to 1]
- **perPage** | **int32** |  | 
+ **perPage** | **int32** | 60, 120 or 240 | 
  **sortBy** | **string** | best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low | [default to &quot;best_match&quot;]
  **condition** | **string** | new|open_box|refurbished|used|for_parts | 
  **minPrice** | **float32** |  | 
