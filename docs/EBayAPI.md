@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 ## EbayCompletedSoldListings
 
-> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
+> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Execute()
 
 Completed / sold listings
 
@@ -129,13 +129,14 @@ func main() {
 	page := int32(56) // int32 |  (optional) (default to 1)
 	perPage := int32(56) // int32 | 60, 120 or 240 (optional)
 	sortBy := "sortBy_example" // string | best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low (optional) (default to "best_match")
-	condition := "condition_example" // string | new|open_box|refurbished|used|for_parts (optional)
+	condition := "condition_example" // string | new|open_box|refurbished|used|for_parts|graded|ungraded (optional)
 	minPrice := float32(8.14) // float32 |  (optional)
 	maxPrice := float32(8.14) // float32 |  (optional)
+	location := "location_example" // string | domestic|worldwide (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Execute()
+	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -162,9 +163,10 @@ Name | Type | Description  | Notes
  **page** | **int32** |  | [default to 1]
  **perPage** | **int32** | 60, 120 or 240 | 
  **sortBy** | **string** | best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low | [default to &quot;best_match&quot;]
- **condition** | **string** | new|open_box|refurbished|used|for_parts | 
+ **condition** | **string** | new|open_box|refurbished|used|for_parts|graded|ungraded | 
  **minPrice** | **float32** |  | 
  **maxPrice** | **float32** |  | 
+ **location** | **string** | domestic|worldwide | 
 
 ### Return type
 
@@ -868,7 +870,7 @@ Other parameters are passed through a pointer to a apiEbayListMarketsRequest str
 
 ## EbaySearchListings
 
-> interface{} EbaySearchListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Execute()
+> interface{} EbaySearchListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Location(location).Execute()
 
 Search listings
 
@@ -893,15 +895,16 @@ func main() {
 	page := int32(56) // int32 |  (optional) (default to 1)
 	perPage := int32(56) // int32 | 60, 120 or 240 (optional)
 	sortBy := "sortBy_example" // string | best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low (optional) (default to "best_match")
-	condition := "condition_example" // string | new|open_box|refurbished|used|for_parts (optional)
+	condition := "condition_example" // string | new|open_box|refurbished|used|for_parts|graded|ungraded (optional)
 	buyingFormat := "buyingFormat_example" // string | auction|buy_it_now|best_offer (optional)
 	minPrice := float32(8.14) // float32 |  (optional)
 	maxPrice := float32(8.14) // float32 |  (optional)
 	freeShipping := true // bool |  (optional) (default to false)
+	location := "location_example" // string | domestic|worldwide (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbaySearchListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Execute()
+	resp, r, err := apiClient.EBayAPI.EbaySearchListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Location(location).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbaySearchListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -928,11 +931,12 @@ Name | Type | Description  | Notes
  **page** | **int32** |  | [default to 1]
  **perPage** | **int32** | 60, 120 or 240 | 
  **sortBy** | **string** | best_match|ending_soonest|newly_listed|price_low_to_high|price_high_to_low | [default to &quot;best_match&quot;]
- **condition** | **string** | new|open_box|refurbished|used|for_parts | 
+ **condition** | **string** | new|open_box|refurbished|used|for_parts|graded|ungraded | 
  **buyingFormat** | **string** | auction|buy_it_now|best_offer | 
  **minPrice** | **float32** |  | 
  **maxPrice** | **float32** |  | 
  **freeShipping** | **bool** |  | [default to false]
+ **location** | **string** | domestic|worldwide | 
 
 ### Return type
 

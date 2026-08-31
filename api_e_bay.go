@@ -226,6 +226,7 @@ type ApiEbayCompletedSoldListingsRequest struct {
 	condition *string
 	minPrice *float32
 	maxPrice *float32
+	location *string
 }
 
 // Search keywords
@@ -263,7 +264,7 @@ func (r ApiEbayCompletedSoldListingsRequest) SortBy(sortBy string) ApiEbayComple
 	return r
 }
 
-// new|open_box|refurbished|used|for_parts
+// new|open_box|refurbished|used|for_parts|graded|ungraded
 func (r ApiEbayCompletedSoldListingsRequest) Condition(condition string) ApiEbayCompletedSoldListingsRequest {
 	r.condition = &condition
 	return r
@@ -276,6 +277,12 @@ func (r ApiEbayCompletedSoldListingsRequest) MinPrice(minPrice float32) ApiEbayC
 
 func (r ApiEbayCompletedSoldListingsRequest) MaxPrice(maxPrice float32) ApiEbayCompletedSoldListingsRequest {
 	r.maxPrice = &maxPrice
+	return r
+}
+
+// domestic|worldwide
+func (r ApiEbayCompletedSoldListingsRequest) Location(location string) ApiEbayCompletedSoldListingsRequest {
+	r.location = &location
 	return r
 }
 
@@ -355,6 +362,9 @@ func (a *EBayAPIService) EbayCompletedSoldListingsExecute(r ApiEbayCompletedSold
 	}
 	if r.maxPrice != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "max_price", r.maxPrice, "form", "")
+	}
+	if r.location != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1795,6 +1805,7 @@ type ApiEbaySearchListingsRequest struct {
 	minPrice *float32
 	maxPrice *float32
 	freeShipping *bool
+	location *string
 }
 
 // Search keywords
@@ -1832,7 +1843,7 @@ func (r ApiEbaySearchListingsRequest) SortBy(sortBy string) ApiEbaySearchListing
 	return r
 }
 
-// new|open_box|refurbished|used|for_parts
+// new|open_box|refurbished|used|for_parts|graded|ungraded
 func (r ApiEbaySearchListingsRequest) Condition(condition string) ApiEbaySearchListingsRequest {
 	r.condition = &condition
 	return r
@@ -1856,6 +1867,12 @@ func (r ApiEbaySearchListingsRequest) MaxPrice(maxPrice float32) ApiEbaySearchLi
 
 func (r ApiEbaySearchListingsRequest) FreeShipping(freeShipping bool) ApiEbaySearchListingsRequest {
 	r.freeShipping = &freeShipping
+	return r
+}
+
+// domestic|worldwide
+func (r ApiEbaySearchListingsRequest) Location(location string) ApiEbaySearchListingsRequest {
+	r.location = &location
 	return r
 }
 
@@ -1944,6 +1961,9 @@ func (a *EBayAPIService) EbaySearchListingsExecute(r ApiEbaySearchListingsReques
 	} else {
 		var defaultValue bool = false
 		r.freeShipping = &defaultValue
+	}
+	if r.location != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
