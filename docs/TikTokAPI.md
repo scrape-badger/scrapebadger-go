@@ -28,8 +28,13 @@ Method | HTTP request | Description
 [**TiktokSearchHashtags**](TikTokAPI.md#TiktokSearchHashtags) | **Get** /v1/tiktok/search/hashtags | Search hashtags
 [**TiktokSearchTheTiktokAdLibrary**](TikTokAPI.md#TiktokSearchTheTiktokAdLibrary) | **Get** /v1/tiktok/ads/search | Search the TikTok Ad Library
 [**TiktokSearchTiktokAdvertisers**](TikTokAPI.md#TiktokSearchTiktokAdvertisers) | **Get** /v1/tiktok/ads/advertisers | Search TikTok advertisers
+[**TiktokSearchTiktokShopProducts**](TikTokAPI.md#TiktokSearchTiktokShopProducts) | **Get** /v1/tiktok/shop/search | Search TikTok Shop products
 [**TiktokSearchUsers**](TikTokAPI.md#TiktokSearchUsers) | **Get** /v1/tiktok/search/users | Search users
 [**TiktokSearchVideos**](TikTokAPI.md#TiktokSearchVideos) | **Get** /v1/tiktok/search/videos | Search videos
+[**TiktokTiktokShopBestSellers**](TikTokAPI.md#TiktokTiktokShopBestSellers) | **Get** /v1/tiktok/shop/ranking | TikTok Shop best sellers
+[**TiktokTiktokShopCategorySubcategoriesTopProducts**](TikTokAPI.md#TiktokTiktokShopCategorySubcategoriesTopProducts) | **Get** /v1/tiktok/shop/categories/{category_id} | TikTok Shop category: subcategories + top products
+[**TiktokTiktokShopProductDetail**](TikTokAPI.md#TiktokTiktokShopProductDetail) | **Get** /v1/tiktok/shop/products/{product_id} | TikTok Shop product detail
+[**TiktokTiktokShopRootCategories**](TikTokAPI.md#TiktokTiktokShopRootCategories) | **Get** /v1/tiktok/shop/categories | TikTok Shop root categories
 [**TiktokTrendingHashtags**](TikTokAPI.md#TiktokTrendingHashtags) | **Get** /v1/tiktok/trending/hashtags | Trending hashtags
 [**TiktokTrendingSongs**](TikTokAPI.md#TiktokTrendingSongs) | **Get** /v1/tiktok/trending/songs | Trending songs
 [**TiktokTrendingVideos**](TikTokAPI.md#TiktokTrendingVideos) | **Get** /v1/tiktok/trending/videos | Trending videos
@@ -1767,6 +1772,72 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## TiktokSearchTiktokShopProducts
+
+> interface{} TiktokSearchTiktokShopProducts(ctx).Q(q).Execute()
+
+Search TikTok Shop products
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	q := "q_example" // string | Keyword, e.g. 'wireless earbuds'
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokSearchTiktokShopProducts(context.Background()).Q(q).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokSearchTiktokShopProducts``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokSearchTiktokShopProducts`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokSearchTiktokShopProducts`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokSearchTiktokShopProductsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **q** | **string** | Keyword, e.g. &#39;wireless earbuds&#39; | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## TiktokSearchUsers
 
 > interface{} TiktokSearchUsers(ctx).Query(query).Region(region).Count(count).Cursor(cursor).Execute()
@@ -1892,6 +1963,273 @@ Name | Type | Description  | Notes
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 20]
  **cursor** | **string** | Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TiktokTiktokShopBestSellers
+
+> interface{} TiktokTiktokShopBestSellers(ctx).Count(count).Execute()
+
+TikTok Shop best sellers
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	count := int32(56) // int32 | Max products to return (optional) (default to 20)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokTiktokShopBestSellers(context.Background()).Count(count).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokTiktokShopBestSellers``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokTiktokShopBestSellers`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokTiktokShopBestSellers`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokTiktokShopBestSellersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **count** | **int32** | Max products to return | [default to 20]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TiktokTiktokShopCategorySubcategoriesTopProducts
+
+> interface{} TiktokTiktokShopCategorySubcategoriesTopProducts(ctx, categoryId).Execute()
+
+TikTok Shop category: subcategories + top products
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	categoryId := "categoryId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokTiktokShopCategorySubcategoriesTopProducts(context.Background(), categoryId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokTiktokShopCategorySubcategoriesTopProducts``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokTiktokShopCategorySubcategoriesTopProducts`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokTiktokShopCategorySubcategoriesTopProducts`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**categoryId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokTiktokShopCategorySubcategoriesTopProductsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TiktokTiktokShopProductDetail
+
+> interface{} TiktokTiktokShopProductDetail(ctx, productId).Execute()
+
+TikTok Shop product detail
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	productId := "productId_example" // string | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokTiktokShopProductDetail(context.Background(), productId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokTiktokShopProductDetail``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokTiktokShopProductDetail`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokTiktokShopProductDetail`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**productId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokTiktokShopProductDetailRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## TiktokTiktokShopRootCategories
+
+> interface{} TiktokTiktokShopRootCategories(ctx).Execute()
+
+TikTok Shop root categories
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TikTokAPI.TiktokTiktokShopRootCategories(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokTiktokShopRootCategories``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `TiktokTiktokShopRootCategories`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokTiktokShopRootCategories`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiTiktokTiktokShopRootCategoriesRequest struct via the builder pattern
+
 
 ### Return type
 

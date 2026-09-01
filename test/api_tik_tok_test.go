@@ -342,6 +342,18 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test TikTokAPIService TiktokSearchTiktokShopProducts", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokSearchTiktokShopProducts(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test TikTokAPIService TiktokSearchUsers", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -359,6 +371,58 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.TikTokAPI.TiktokSearchVideos(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TikTokAPIService TiktokTiktokShopBestSellers", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokTiktokShopBestSellers(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TikTokAPIService TiktokTiktokShopCategorySubcategoriesTopProducts", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var categoryId string
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokTiktokShopCategorySubcategoriesTopProducts(context.Background(), categoryId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TikTokAPIService TiktokTiktokShopProductDetail", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var productId string
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokTiktokShopProductDetail(context.Background(), productId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test TikTokAPIService TiktokTiktokShopRootCategories", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokTiktokShopRootCategories(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
