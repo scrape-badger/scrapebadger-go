@@ -1682,7 +1682,7 @@ Name | Type | Description  | Notes
 
 ## GoogleMultiSellerOffersByBarcode
 
-> interface{} GoogleMultiSellerOffersByBarcode(ctx).Barcode(barcode).Gl(gl).Hl(hl).Execute()
+> interface{} GoogleMultiSellerOffersByBarcode(ctx).Barcode(barcode).CatalogId(catalogId).Gl(gl).Hl(hl).Domain(domain).Execute()
 
 Multi-seller offers by barcode
 
@@ -1701,13 +1701,15 @@ import (
 )
 
 func main() {
-	barcode := "barcode_example" // string | Product barcode — GTIN-8 / UPC-A / EAN-13 / GTIN-14
+	barcode := "barcode_example" // string | Product barcode — GTIN-8 / UPC-A / EAN-13 / GTIN-14 (optional)
+	catalogId := "catalogId_example" // string | Google Shopping catalogid (the `catalog_id` on /shopping/search tiles, or `prds=catalogid:<id>` in a Google Shopping URL). Alternative to `barcode`; exactly one of the two is required (optional)
 	gl := "gl_example" // string | Country code (ISO 3166 alpha-2) (optional)
 	hl := "hl_example" // string | Language code (optional) (default to "en")
+	domain := "domain_example" // string | Google domain (optional) (default to "google.com")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GoogleAPI.GoogleMultiSellerOffersByBarcode(context.Background()).Barcode(barcode).Gl(gl).Hl(hl).Execute()
+	resp, r, err := apiClient.GoogleAPI.GoogleMultiSellerOffersByBarcode(context.Background()).Barcode(barcode).CatalogId(catalogId).Gl(gl).Hl(hl).Domain(domain).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleMultiSellerOffersByBarcode``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1729,8 +1731,10 @@ Other parameters are passed through a pointer to a apiGoogleMultiSellerOffersByB
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **barcode** | **string** | Product barcode — GTIN-8 / UPC-A / EAN-13 / GTIN-14 | 
+ **catalogId** | **string** | Google Shopping catalogid (the &#x60;catalog_id&#x60; on /shopping/search tiles, or &#x60;prds&#x3D;catalogid:&lt;id&gt;&#x60; in a Google Shopping URL). Alternative to &#x60;barcode&#x60;; exactly one of the two is required | 
  **gl** | **string** | Country code (ISO 3166 alpha-2) | 
  **hl** | **string** | Language code | [default to &quot;en&quot;]
+ **domain** | **string** | Google domain | [default to &quot;google.com&quot;]
 
 ### Return type
 

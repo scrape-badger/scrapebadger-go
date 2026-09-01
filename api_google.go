@@ -4144,13 +4144,21 @@ type ApiGoogleMultiSellerOffersByBarcodeRequest struct {
 	ctx context.Context
 	ApiService *GoogleAPIService
 	barcode *string
+	catalogId *string
 	gl *string
 	hl *string
+	domain *string
 }
 
 // Product barcode — GTIN-8 / UPC-A / EAN-13 / GTIN-14
 func (r ApiGoogleMultiSellerOffersByBarcodeRequest) Barcode(barcode string) ApiGoogleMultiSellerOffersByBarcodeRequest {
 	r.barcode = &barcode
+	return r
+}
+
+// Google Shopping catalogid (the &#x60;catalog_id&#x60; on /shopping/search tiles, or &#x60;prds&#x3D;catalogid:&lt;id&gt;&#x60; in a Google Shopping URL). Alternative to &#x60;barcode&#x60;; exactly one of the two is required
+func (r ApiGoogleMultiSellerOffersByBarcodeRequest) CatalogId(catalogId string) ApiGoogleMultiSellerOffersByBarcodeRequest {
+	r.catalogId = &catalogId
 	return r
 }
 
@@ -4166,6 +4174,12 @@ func (r ApiGoogleMultiSellerOffersByBarcodeRequest) Hl(hl string) ApiGoogleMulti
 	return r
 }
 
+// Google domain
+func (r ApiGoogleMultiSellerOffersByBarcodeRequest) Domain(domain string) ApiGoogleMultiSellerOffersByBarcodeRequest {
+	r.domain = &domain
+	return r
+}
+
 func (r ApiGoogleMultiSellerOffersByBarcodeRequest) Execute() (interface{}, *http.Response, error) {
 	return r.ApiService.GoogleMultiSellerOffersByBarcodeExecute(r)
 }
@@ -4173,8 +4187,10 @@ func (r ApiGoogleMultiSellerOffersByBarcodeRequest) Execute() (interface{}, *htt
 /*
 GoogleMultiSellerOffersByBarcode Multi-seller offers by barcode
 
-Resolve a barcode to a product via Google web search, then return its
-Google Shopping seller offers (source + price per merchant).
+Google Shopping seller offers (source + price + link per merchant) for a
+product identified either by ``barcode`` (resolved via Google web search) or
+by its Google Shopping ``catalog_id`` (read straight off Google's product
+page, all seller pages fetched in parallel).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGoogleMultiSellerOffersByBarcodeRequest
@@ -4206,11 +4222,13 @@ func (a *GoogleAPIService) GoogleMultiSellerOffersByBarcodeExecute(r ApiGoogleMu
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.barcode == nil {
-		return localVarReturnValue, nil, reportError("barcode is required and must be specified")
-	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "barcode", r.barcode, "form", "")
+	if r.barcode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "barcode", r.barcode, "form", "")
+	}
+	if r.catalogId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "catalog_id", r.catalogId, "form", "")
+	}
 	if r.gl != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "gl", r.gl, "form", "")
 	}
@@ -4219,6 +4237,12 @@ func (a *GoogleAPIService) GoogleMultiSellerOffersByBarcodeExecute(r ApiGoogleMu
 	} else {
 		var defaultValue string = "en"
 		r.hl = &defaultValue
+	}
+	if r.domain != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "domain", r.domain, "form", "")
+	} else {
+		var defaultValue string = "google.com"
+		r.domain = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
