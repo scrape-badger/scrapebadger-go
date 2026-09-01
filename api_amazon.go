@@ -579,6 +579,7 @@ type ApiAmazonGetAllSellerOffersBuyboxRequest struct {
 	asin string
 	domain *string
 	zip *string
+	page *int32
 }
 
 func (r ApiAmazonGetAllSellerOffersBuyboxRequest) Domain(domain string) ApiAmazonGetAllSellerOffersBuyboxRequest {
@@ -588,6 +589,12 @@ func (r ApiAmazonGetAllSellerOffersBuyboxRequest) Domain(domain string) ApiAmazo
 
 func (r ApiAmazonGetAllSellerOffersBuyboxRequest) Zip(zip string) ApiAmazonGetAllSellerOffersBuyboxRequest {
 	r.zip = &zip
+	return r
+}
+
+// Offer page, 10 rows each
+func (r ApiAmazonGetAllSellerOffersBuyboxRequest) Page(page int32) ApiAmazonGetAllSellerOffersBuyboxRequest {
+	r.page = &page
 	return r
 }
 
@@ -642,6 +649,12 @@ func (a *AmazonAPIService) AmazonGetAllSellerOffersBuyboxExecute(r ApiAmazonGetA
 	}
 	if r.zip != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "zip", r.zip, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		r.page = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

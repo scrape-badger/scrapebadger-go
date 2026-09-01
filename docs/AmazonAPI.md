@@ -289,7 +289,7 @@ Name | Type | Description  | Notes
 
 ## AmazonGetAllSellerOffersBuybox
 
-> interface{} AmazonGetAllSellerOffersBuybox(ctx, asin).Domain(domain).Zip(zip).Execute()
+> interface{} AmazonGetAllSellerOffersBuybox(ctx, asin).Domain(domain).Zip(zip).Page(page).Execute()
 
 Get all seller offers (buybox)
 
@@ -311,10 +311,11 @@ func main() {
 	asin := "asin_example" // string | 
 	domain := "domain_example" // string |  (optional) (default to "com")
 	zip := "zip_example" // string |  (optional)
+	page := int32(56) // int32 | Offer page, 10 rows each (optional) (default to 1)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AmazonAPI.AmazonGetAllSellerOffersBuybox(context.Background(), asin).Domain(domain).Zip(zip).Execute()
+	resp, r, err := apiClient.AmazonAPI.AmazonGetAllSellerOffersBuybox(context.Background(), asin).Domain(domain).Zip(zip).Page(page).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AmazonAPI.AmazonGetAllSellerOffersBuybox``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -342,6 +343,7 @@ Name | Type | Description  | Notes
 
  **domain** | **string** |  | [default to &quot;com&quot;]
  **zip** | **string** |  | 
+ **page** | **int32** | Offer page, 10 rows each | [default to 1]
 
 ### Return type
 
