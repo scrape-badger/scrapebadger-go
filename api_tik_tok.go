@@ -3658,11 +3658,25 @@ type ApiTiktokSearchTiktokShopProductsRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
 	q *string
+	region *string
+	offset *int32
 }
 
 // Keyword, e.g. &#39;wireless earbuds&#39;
 func (r ApiTiktokSearchTiktokShopProductsRequest) Q(q string) ApiTiktokSearchTiktokShopProductsRequest {
 	r.q = &q
+	return r
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokSearchTiktokShopProductsRequest) Region(region string) ApiTiktokSearchTiktokShopProductsRequest {
+	r.region = &region
+	return r
+}
+
+// Pass back next_offset for the next page (US)
+func (r ApiTiktokSearchTiktokShopProductsRequest) Offset(offset int32) ApiTiktokSearchTiktokShopProductsRequest {
+	r.offset = &offset
 	return r
 }
 
@@ -3673,8 +3687,7 @@ func (r ApiTiktokSearchTiktokShopProductsRequest) Execute() (interface{}, *http.
 /*
 TiktokSearchTiktokShopProducts Search TikTok Shop products
 
-Keyword search over TikTok Shop products (US): products with their bound video, matching
-shops, related searches and categories.
+Keyword search over TikTok Shop products: 30 per page with offset pagination (US); the first page also carries matching shops and related searches.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiTiktokSearchTiktokShopProductsRequest
@@ -3714,6 +3727,18 @@ func (a *TikTokAPIService) TiktokSearchTiktokShopProductsExecute(r ApiTiktokSear
 	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	} else {
+		var defaultValue int32 = 0
+		r.offset = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -4131,7 +4156,14 @@ func (a *TikTokAPIService) TiktokSearchVideosExecute(r ApiTiktokSearchVideosRequ
 type ApiTiktokTiktokShopBestSellersRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
+	region *string
 	count *int32
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopBestSellersRequest) Region(region string) ApiTiktokTiktokShopBestSellersRequest {
+	r.region = &region
+	return r
 }
 
 // Max products to return
@@ -4147,7 +4179,7 @@ func (r ApiTiktokTiktokShopBestSellersRequest) Execute() (interface{}, *http.Res
 /*
 TiktokTiktokShopBestSellers TikTok Shop best sellers
 
-TikTok Shop's own ranking of the best-selling products of the past 30 days (US).
+TikTok Shop's own ranking of the best-selling products of the past 30 days (US only).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiTiktokTiktokShopBestSellersRequest
@@ -4180,6 +4212,12 @@ func (a *TikTokAPIService) TiktokTiktokShopBestSellersExecute(r ApiTiktokTiktokS
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
@@ -4268,6 +4306,13 @@ type ApiTiktokTiktokShopCategorySubcategoriesTopProductsRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
 	categoryId string
+	region *string
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopCategorySubcategoriesTopProductsRequest) Region(region string) ApiTiktokTiktokShopCategorySubcategoriesTopProductsRequest {
+	r.region = &region
+	return r
 }
 
 func (r ApiTiktokTiktokShopCategorySubcategoriesTopProductsRequest) Execute() (interface{}, *http.Response, error) {
@@ -4277,7 +4322,7 @@ func (r ApiTiktokTiktokShopCategorySubcategoriesTopProductsRequest) Execute() (i
 /*
 TiktokTiktokShopCategorySubcategoriesTopProducts TikTok Shop category: subcategories + top products
 
-A category's subcategories and its top products as TikTok Shop ranks them (US).
+A category's subcategories and its top products as TikTok Shop ranks them.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param categoryId
@@ -4313,6 +4358,152 @@ func (a *TikTokAPIService) TiktokTiktokShopCategorySubcategoriesTopProductsExecu
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTiktokTiktokShopDealsFeedRequest struct {
+	ctx context.Context
+	ApiService *TikTokAPIService
+	deal string
+	region *string
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopDealsFeedRequest) Region(region string) ApiTiktokTiktokShopDealsFeedRequest {
+	r.region = &region
+	return r
+}
+
+func (r ApiTiktokTiktokShopDealsFeedRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokTiktokShopDealsFeedExecute(r)
+}
+
+/*
+TiktokTiktokShopDealsFeed TikTok Shop deals feed
+
+A curated storefront feed: recommended-for-you, or premium-offers (US only).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param deal
+ @return ApiTiktokTiktokShopDealsFeedRequest
+*/
+func (a *TikTokAPIService) TiktokTiktokShopDealsFeed(ctx context.Context, deal string) ApiTiktokTiktokShopDealsFeedRequest {
+	return ApiTiktokTiktokShopDealsFeedRequest{
+		ApiService: a,
+		ctx: ctx,
+		deal: deal,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *TikTokAPIService) TiktokTiktokShopDealsFeedExecute(r ApiTiktokTiktokShopDealsFeedRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokTiktokShopDealsFeed")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/tiktok/shop/deals/{deal}"
+	localVarPath = strings.Replace(localVarPath, "{"+"deal"+"}", url.PathEscape(parameterValueToString(r.deal, "deal")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -4395,6 +4586,13 @@ type ApiTiktokTiktokShopProductDetailRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
 	productId string
+	region *string
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopProductDetailRequest) Region(region string) ApiTiktokTiktokShopProductDetailRequest {
+	r.region = &region
+	return r
 }
 
 func (r ApiTiktokTiktokShopProductDetailRequest) Execute() (interface{}, *http.Response, error) {
@@ -4404,7 +4602,7 @@ func (r ApiTiktokTiktokShopProductDetailRequest) Execute() (interface{}, *http.R
 /*
 TiktokTiktokShopProductDetail TikTok Shop product detail
 
-Full TikTok Shop product page (US): description, images, price, SKUs with stock, reviews,
+Full TikTok Shop product page: description, images, price, SKUs with stock, first reviews,
 shop and TikTok's AI summary.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -4441,6 +4639,225 @@ func (a *TikTokAPIService) TiktokTiktokShopProductDetailExecute(r ApiTiktokTikto
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTiktokTiktokShopProductReviewsRequest struct {
+	ctx context.Context
+	ApiService *TikTokAPIService
+	productId string
+	region *string
+	page *int32
+	count *int32
+	sort *string
+	rating *int32
+	withMedia *bool
+	verified *bool
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopProductReviewsRequest) Region(region string) ApiTiktokTiktokShopProductReviewsRequest {
+	r.region = &region
+	return r
+}
+
+func (r ApiTiktokTiktokShopProductReviewsRequest) Page(page int32) ApiTiktokTiktokShopProductReviewsRequest {
+	r.page = &page
+	return r
+}
+
+func (r ApiTiktokTiktokShopProductReviewsRequest) Count(count int32) ApiTiktokTiktokShopProductReviewsRequest {
+	r.count = &count
+	return r
+}
+
+// recommended | recent
+func (r ApiTiktokTiktokShopProductReviewsRequest) Sort(sort string) ApiTiktokTiktokShopProductReviewsRequest {
+	r.sort = &sort
+	return r
+}
+
+// Only this star rating
+func (r ApiTiktokTiktokShopProductReviewsRequest) Rating(rating int32) ApiTiktokTiktokShopProductReviewsRequest {
+	r.rating = &rating
+	return r
+}
+
+// Only reviews with photos/videos
+func (r ApiTiktokTiktokShopProductReviewsRequest) WithMedia(withMedia bool) ApiTiktokTiktokShopProductReviewsRequest {
+	r.withMedia = &withMedia
+	return r
+}
+
+// Only verified purchases
+func (r ApiTiktokTiktokShopProductReviewsRequest) Verified(verified bool) ApiTiktokTiktokShopProductReviewsRequest {
+	r.verified = &verified
+	return r
+}
+
+func (r ApiTiktokTiktokShopProductReviewsRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokTiktokShopProductReviewsExecute(r)
+}
+
+/*
+TiktokTiktokShopProductReviews TikTok Shop product reviews
+
+Paginated product reviews with the rating breakdown (US).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param productId
+ @return ApiTiktokTiktokShopProductReviewsRequest
+*/
+func (a *TikTokAPIService) TiktokTiktokShopProductReviews(ctx context.Context, productId string) ApiTiktokTiktokShopProductReviewsRequest {
+	return ApiTiktokTiktokShopProductReviewsRequest{
+		ApiService: a,
+		ctx: ctx,
+		productId: productId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *TikTokAPIService) TiktokTiktokShopProductReviewsExecute(r ApiTiktokTiktokShopProductReviewsRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokTiktokShopProductReviews")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/tiktok/shop/products/{product_id}/reviews"
+	localVarPath = strings.Replace(localVarPath, "{"+"product_id"+"}", url.PathEscape(parameterValueToString(r.productId, "productId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		r.page = &defaultValue
+	}
+	if r.count != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
+	} else {
+		var defaultValue int32 = 20
+		r.count = &defaultValue
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "recommended"
+		r.sort = &defaultValue
+	}
+	if r.rating != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "rating", r.rating, "form", "")
+	}
+	if r.withMedia != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "with_media", r.withMedia, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.withMedia = &defaultValue
+	}
+	if r.verified != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "verified", r.verified, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.verified = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -4522,6 +4939,13 @@ func (a *TikTokAPIService) TiktokTiktokShopProductDetailExecute(r ApiTiktokTikto
 type ApiTiktokTiktokShopRootCategoriesRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
+	region *string
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopRootCategoriesRequest) Region(region string) ApiTiktokTiktokShopRootCategoriesRequest {
+	r.region = &region
+	return r
 }
 
 func (r ApiTiktokTiktokShopRootCategoriesRequest) Execute() (interface{}, *http.Response, error) {
@@ -4531,7 +4955,7 @@ func (r ApiTiktokTiktokShopRootCategoriesRequest) Execute() (interface{}, *http.
 /*
 TiktokTiktokShopRootCategories TikTok Shop root categories
 
-Top-level TikTok Shop categories (US). Drill down with /shop/categories/{category_id}.
+Top-level TikTok Shop categories of a market. Drill down with /shop/categories/{id}.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiTiktokTiktokShopRootCategoriesRequest
@@ -4564,6 +4988,12 @@ func (a *TikTokAPIService) TiktokTiktokShopRootCategoriesExecute(r ApiTiktokTikt
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -4616,6 +5046,181 @@ func (a *TikTokAPIService) TiktokTiktokShopRootCategoriesExecute(r ApiTiktokTikt
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiTiktokTiktokShopStoreProductsRequest struct {
+	ctx context.Context
+	ApiService *TikTokAPIService
+	sellerId string
+	region *string
+	cursor *string
+	count *int32
+}
+
+// Market: US, GB, ID
+func (r ApiTiktokTiktokShopStoreProductsRequest) Region(region string) ApiTiktokTiktokShopStoreProductsRequest {
+	r.region = &region
+	return r
+}
+
+// Pass back next_cursor for the next page
+func (r ApiTiktokTiktokShopStoreProductsRequest) Cursor(cursor string) ApiTiktokTiktokShopStoreProductsRequest {
+	r.cursor = &cursor
+	return r
+}
+
+func (r ApiTiktokTiktokShopStoreProductsRequest) Count(count int32) ApiTiktokTiktokShopStoreProductsRequest {
+	r.count = &count
+	return r
+}
+
+func (r ApiTiktokTiktokShopStoreProductsRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokTiktokShopStoreProductsExecute(r)
+}
+
+/*
+TiktokTiktokShopStoreProducts TikTok Shop store + products
+
+A store's stats and its cursor-paginated product catalogue (US).
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sellerId
+ @return ApiTiktokTiktokShopStoreProductsRequest
+*/
+func (a *TikTokAPIService) TiktokTiktokShopStoreProducts(ctx context.Context, sellerId string) ApiTiktokTiktokShopStoreProductsRequest {
+	return ApiTiktokTiktokShopStoreProductsRequest{
+		ApiService: a,
+		ctx: ctx,
+		sellerId: sellerId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *TikTokAPIService) TiktokTiktokShopStoreProductsExecute(r ApiTiktokTiktokShopStoreProductsRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokTiktokShopStoreProducts")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/tiktok/shop/stores/{seller_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"seller_id"+"}", url.PathEscape(parameterValueToString(r.sellerId, "sellerId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.region != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "region", r.region, "form", "")
+	} else {
+		var defaultValue string = "US"
+		r.region = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	} else {
+		var defaultValue string = ""
+		r.cursor = &defaultValue
+	}
+	if r.count != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
+	} else {
+		var defaultValue int32 = 20
+		r.count = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
