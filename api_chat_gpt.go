@@ -28,6 +28,7 @@ type ApiChatgptAskChatgptAQuestionRequest struct {
 	prompt *string
 	country *string
 	webSearch *string
+	imageUrl *string
 }
 
 // The prompt to send to ChatGPT (max 4096 characters).
@@ -45,6 +46,12 @@ func (r ApiChatgptAskChatgptAQuestionRequest) Country(country string) ApiChatgpt
 // auto (let ChatGPT decide) | force (ask it to browse) | off (answer from memory). &#x60;web_search_triggered&#x60; in the response always reports what actually happened.
 func (r ApiChatgptAskChatgptAQuestionRequest) WebSearch(webSearch string) ApiChatgptAskChatgptAQuestionRequest {
 	r.webSearch = &webSearch
+	return r
+}
+
+// Public http(s) URL of an image to attach to the prompt. ChatGPT reads it and answers about it. POST also accepts &#x60;image_base64&#x60;. Exactly one of the two.
+func (r ApiChatgptAskChatgptAQuestionRequest) ImageUrl(imageUrl string) ApiChatgptAskChatgptAQuestionRequest {
+	r.imageUrl = &imageUrl
 	return r
 }
 
@@ -100,6 +107,9 @@ func (a *ChatGPTAPIService) ChatgptAskChatgptAQuestionExecute(r ApiChatgptAskCha
 	} else {
 		var defaultValue string = "auto"
 		r.webSearch = &defaultValue
+	}
+	if r.imageUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "image_url", r.imageUrl, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

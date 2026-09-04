@@ -28,6 +28,7 @@ type ApiGeminiAskGeminiAQuestionRequest struct {
 	prompt *string
 	country *string
 	webSearch *string
+	imageUrl *string
 }
 
 // The prompt to send to Gemini (max 4096 characters).
@@ -45,6 +46,12 @@ func (r ApiGeminiAskGeminiAQuestionRequest) Country(country string) ApiGeminiAsk
 // auto (let Gemini decide) | force (ask it to browse) | off (answer from memory). &#x60;web_search_triggered&#x60; in the response always reports what actually happened.
 func (r ApiGeminiAskGeminiAQuestionRequest) WebSearch(webSearch string) ApiGeminiAskGeminiAQuestionRequest {
 	r.webSearch = &webSearch
+	return r
+}
+
+// Public http(s) URL of an image to attach to the prompt. Gemini reads it and answers about it. POST also accepts &#x60;image_base64&#x60;. Exactly one of the two.
+func (r ApiGeminiAskGeminiAQuestionRequest) ImageUrl(imageUrl string) ApiGeminiAskGeminiAQuestionRequest {
+	r.imageUrl = &imageUrl
 	return r
 }
 
@@ -100,6 +107,9 @@ func (a *GeminiAPIService) GeminiAskGeminiAQuestionExecute(r ApiGeminiAskGeminiA
 	} else {
 		var defaultValue string = "auto"
 		r.webSearch = &defaultValue
+	}
+	if r.imageUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "image_url", r.imageUrl, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

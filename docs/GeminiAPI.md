@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## GeminiAskGeminiAQuestion
 
-> interface{} GeminiAskGeminiAQuestion(ctx).Prompt(prompt).Country(country).WebSearch(webSearch).Execute()
+> interface{} GeminiAskGeminiAQuestion(ctx).Prompt(prompt).Country(country).WebSearch(webSearch).ImageUrl(imageUrl).Execute()
 
 Ask Gemini a question
 
@@ -37,10 +37,11 @@ func main() {
 	prompt := "prompt_example" // string | The prompt to send to Gemini (max 4096 characters).
 	country := "country_example" // string | ISO-3166 alpha-2 egress country, e.g. 'US', 'GB', 'DE'. (optional)
 	webSearch := "webSearch_example" // string | auto (let Gemini decide) | force (ask it to browse) | off (answer from memory). `web_search_triggered` in the response always reports what actually happened. (optional) (default to "auto")
+	imageUrl := "imageUrl_example" // string | Public http(s) URL of an image to attach to the prompt. Gemini reads it and answers about it. POST also accepts `image_base64`. Exactly one of the two. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GeminiAPI.GeminiAskGeminiAQuestion(context.Background()).Prompt(prompt).Country(country).WebSearch(webSearch).Execute()
+	resp, r, err := apiClient.GeminiAPI.GeminiAskGeminiAQuestion(context.Background()).Prompt(prompt).Country(country).WebSearch(webSearch).ImageUrl(imageUrl).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GeminiAPI.GeminiAskGeminiAQuestion``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -64,6 +65,7 @@ Name | Type | Description  | Notes
  **prompt** | **string** | The prompt to send to Gemini (max 4096 characters). | 
  **country** | **string** | ISO-3166 alpha-2 egress country, e.g. &#39;US&#39;, &#39;GB&#39;, &#39;DE&#39;. | 
  **webSearch** | **string** | auto (let Gemini decide) | force (ask it to browse) | off (answer from memory). &#x60;web_search_triggered&#x60; in the response always reports what actually happened. | [default to &quot;auto&quot;]
+ **imageUrl** | **string** | Public http(s) URL of an image to attach to the prompt. Gemini reads it and answers about it. POST also accepts &#x60;image_base64&#x60;. Exactly one of the two. | 
 
 ### Return type
 
