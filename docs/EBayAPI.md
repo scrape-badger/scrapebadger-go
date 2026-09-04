@@ -16,6 +16,7 @@ Method | HTTP request | Description
 [**EbayKeywordSuggestions**](EBayAPI.md#EbayKeywordSuggestions) | **Get** /v1/ebay/autocomplete | Keyword suggestions
 [**EbayListCategories**](EBayAPI.md#EbayListCategories) | **Get** /v1/ebay/categories | List categories
 [**EbayListMarkets**](EBayAPI.md#EbayListMarkets) | **Get** /v1/ebay/markets | List markets
+[**EbaySearchByImage**](EBayAPI.md#EbaySearchByImage) | **Post** /v1/ebay/search/by-image | Search by image
 [**EbaySearchListings**](EBayAPI.md#EbaySearchListings) | **Get** /v1/ebay/search | Search listings
 
 
@@ -863,6 +864,72 @@ Other parameters are passed through a pointer to a apiEbayListMarketsRequest str
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## EbaySearchByImage
+
+> interface{} EbaySearchByImage(ctx).RequestBody(requestBody).Execute()
+
+Search by image
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	requestBody := map[string]interface{}{"key": interface{}(123)} // map[string]interface{} | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.EBayAPI.EbaySearchByImage(context.Background()).RequestBody(requestBody).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbaySearchByImage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `EbaySearchByImage`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `EBayAPI.EbaySearchByImage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiEbaySearchByImageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **requestBody** | **map[string]interface{}** |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
