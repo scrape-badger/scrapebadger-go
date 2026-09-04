@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 ## EbayCompletedSoldListings
 
-> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Execute()
+> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Language(language).Execute()
 
 Completed / sold listings
 
@@ -133,10 +133,11 @@ func main() {
 	minPrice := float32(8.14) // float32 |  (optional)
 	maxPrice := float32(8.14) // float32 |  (optional)
 	location := "location_example" // string | domestic|worldwide (optional)
+	language := "language_example" // string | english|japanese|chinese|korean (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Execute()
+	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Language(language).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -167,6 +168,7 @@ Name | Type | Description  | Notes
  **minPrice** | **float32** |  | 
  **maxPrice** | **float32** |  | 
  **location** | **string** | domestic|worldwide | 
+ **language** | **string** | english|japanese|chinese|korean | 
 
 ### Return type
 
@@ -870,7 +872,7 @@ Other parameters are passed through a pointer to a apiEbayListMarketsRequest str
 
 ## EbaySearchListings
 
-> interface{} EbaySearchListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Location(location).Execute()
+> interface{} EbaySearchListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Location(location).Language(language).Execute()
 
 Search listings
 
@@ -901,10 +903,11 @@ func main() {
 	maxPrice := float32(8.14) // float32 |  (optional)
 	freeShipping := true // bool |  (optional) (default to false)
 	location := "location_example" // string | domestic|worldwide (optional)
+	language := "language_example" // string | english|japanese|chinese|korean (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbaySearchListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Location(location).Execute()
+	resp, r, err := apiClient.EBayAPI.EbaySearchListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).BuyingFormat(buyingFormat).MinPrice(minPrice).MaxPrice(maxPrice).FreeShipping(freeShipping).Location(location).Language(language).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbaySearchListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -937,6 +940,7 @@ Name | Type | Description  | Notes
  **maxPrice** | **float32** |  | 
  **freeShipping** | **bool** |  | [default to false]
  **location** | **string** | domestic|worldwide | 
+ **language** | **string** | english|japanese|chinese|korean | 
 
 ### Return type
 

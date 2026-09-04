@@ -227,6 +227,7 @@ type ApiEbayCompletedSoldListingsRequest struct {
 	minPrice *float32
 	maxPrice *float32
 	location *string
+	language *string
 }
 
 // Search keywords
@@ -283,6 +284,12 @@ func (r ApiEbayCompletedSoldListingsRequest) MaxPrice(maxPrice float32) ApiEbayC
 // domestic|worldwide
 func (r ApiEbayCompletedSoldListingsRequest) Location(location string) ApiEbayCompletedSoldListingsRequest {
 	r.location = &location
+	return r
+}
+
+// english|japanese|chinese|korean
+func (r ApiEbayCompletedSoldListingsRequest) Language(language string) ApiEbayCompletedSoldListingsRequest {
+	r.language = &language
 	return r
 }
 
@@ -365,6 +372,9 @@ func (a *EBayAPIService) EbayCompletedSoldListingsExecute(r ApiEbayCompletedSold
 	}
 	if r.location != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
+	}
+	if r.language != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "language", r.language, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1806,6 +1816,7 @@ type ApiEbaySearchListingsRequest struct {
 	maxPrice *float32
 	freeShipping *bool
 	location *string
+	language *string
 }
 
 // Search keywords
@@ -1873,6 +1884,12 @@ func (r ApiEbaySearchListingsRequest) FreeShipping(freeShipping bool) ApiEbaySea
 // domestic|worldwide
 func (r ApiEbaySearchListingsRequest) Location(location string) ApiEbaySearchListingsRequest {
 	r.location = &location
+	return r
+}
+
+// english|japanese|chinese|korean
+func (r ApiEbaySearchListingsRequest) Language(language string) ApiEbaySearchListingsRequest {
+	r.language = &language
 	return r
 }
 
@@ -1964,6 +1981,9 @@ func (a *EBayAPIService) EbaySearchListingsExecute(r ApiEbaySearchListingsReques
 	}
 	if r.location != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
+	}
+	if r.language != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "language", r.language, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
