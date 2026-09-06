@@ -49,7 +49,7 @@ func (r ApiGeminiAskGeminiAQuestionRequest) WebSearch(webSearch string) ApiGemin
 	return r
 }
 
-// Public http(s) URL of an image to attach to the prompt. Gemini reads it and answers about it. POST also accepts &#x60;image_base64&#x60;. Exactly one of the two.
+// UNAVAILABLE. Signed-out Gemini refuses image questions — it accepts the upload and then answers PERMISSION_DENIED to its own generate RPC, so this returns 422 immediately rather than charging for a render that cannot succeed. Use /v1/chatgpt/ask for image input.
 func (r ApiGeminiAskGeminiAQuestionRequest) ImageUrl(imageUrl string) ApiGeminiAskGeminiAQuestionRequest {
 	r.imageUrl = &imageUrl
 	return r
