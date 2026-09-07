@@ -31,9 +31,7 @@ Method | HTTP request | Description
 [**TiktokSearchTiktokShopProducts**](TikTokAPI.md#TiktokSearchTiktokShopProducts) | **Get** /v1/tiktok/shop/search | Search TikTok Shop products
 [**TiktokSearchUsers**](TikTokAPI.md#TiktokSearchUsers) | **Get** /v1/tiktok/search/users | Search users
 [**TiktokSearchVideos**](TikTokAPI.md#TiktokSearchVideos) | **Get** /v1/tiktok/search/videos | Search videos
-[**TiktokTiktokShopBestSellers**](TikTokAPI.md#TiktokTiktokShopBestSellers) | **Get** /v1/tiktok/shop/ranking | TikTok Shop best sellers
 [**TiktokTiktokShopCategorySubcategoriesTopProducts**](TikTokAPI.md#TiktokTiktokShopCategorySubcategoriesTopProducts) | **Get** /v1/tiktok/shop/categories/{category_id} | TikTok Shop category: subcategories + top products
-[**TiktokTiktokShopDealsFeed**](TikTokAPI.md#TiktokTiktokShopDealsFeed) | **Get** /v1/tiktok/shop/deals/{deal} | TikTok Shop deals feed
 [**TiktokTiktokShopProductDetail**](TikTokAPI.md#TiktokTiktokShopProductDetail) | **Get** /v1/tiktok/shop/products/{product_id} | TikTok Shop product detail
 [**TiktokTiktokShopProductReviews**](TikTokAPI.md#TiktokTiktokShopProductReviews) | **Get** /v1/tiktok/shop/products/{product_id}/reviews | TikTok Shop product reviews
 [**TiktokTiktokShopRootCategories**](TikTokAPI.md#TiktokTiktokShopRootCategories) | **Get** /v1/tiktok/shop/categories | TikTok Shop root categories
@@ -1989,74 +1987,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TiktokTiktokShopBestSellers
-
-> interface{} TiktokTiktokShopBestSellers(ctx).Region(region).Count(count).Execute()
-
-TikTok Shop best sellers
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/scrape-badger/scrapebadger-go"
-)
-
-func main() {
-	region := "region_example" // string | Market: US, GB, ID (optional) (default to "US")
-	count := int32(56) // int32 | Max products to return (optional) (default to 20)
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokTiktokShopBestSellers(context.Background()).Region(region).Count(count).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokTiktokShopBestSellers``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `TiktokTiktokShopBestSellers`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokTiktokShopBestSellers`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiTiktokTiktokShopBestSellersRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **region** | **string** | Market: US, GB, ID | [default to &quot;US&quot;]
- **count** | **int32** | Max products to return | [default to 20]
-
-### Return type
-
-**interface{}**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## TiktokTiktokShopCategorySubcategoriesTopProducts
 
 > interface{} TiktokTiktokShopCategorySubcategoriesTopProducts(ctx, categoryId).Region(region).Execute()
@@ -2104,78 +2034,6 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTiktokTiktokShopCategorySubcategoriesTopProductsRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **region** | **string** | Market: US, GB, ID | [default to &quot;US&quot;]
-
-### Return type
-
-**interface{}**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## TiktokTiktokShopDealsFeed
-
-> interface{} TiktokTiktokShopDealsFeed(ctx, deal).Region(region).Execute()
-
-TikTok Shop deals feed
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/scrape-badger/scrapebadger-go"
-)
-
-func main() {
-	deal := "deal_example" // string | 
-	region := "region_example" // string | Market: US, GB, ID (optional) (default to "US")
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokTiktokShopDealsFeed(context.Background(), deal).Region(region).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokTiktokShopDealsFeed``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `TiktokTiktokShopDealsFeed`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokTiktokShopDealsFeed`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**deal** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiTiktokTiktokShopDealsFeedRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
