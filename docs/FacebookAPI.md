@@ -611,7 +611,7 @@ Name | Type | Description  | Notes
 
 ## FacebookGetPostComments
 
-> interface{} FacebookGetPostComments(ctx, postId).After(after).Sort(sort).Execute()
+> interface{} FacebookGetPostComments(ctx, postId).Url(url).After(after).Sort(sort).Execute()
 
 Get post comments
 
@@ -631,12 +631,13 @@ import (
 
 func main() {
 	postId := "postId_example" // string | 
+	url := "url_example" // string | Full post permalink/reel URL — overrides post_id (optional)
 	after := "after_example" // string |  (optional)
-	sort := "sort_example" // string |  (optional) (default to "relevance")
+	sort := "sort_example" // string | relevance | newest (optional) (default to "relevance")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookGetPostComments(context.Background(), postId).After(after).Sort(sort).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookGetPostComments(context.Background(), postId).Url(url).After(after).Sort(sort).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookGetPostComments``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -662,8 +663,9 @@ Other parameters are passed through a pointer to a apiFacebookGetPostCommentsReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **url** | **string** | Full post permalink/reel URL — overrides post_id | 
  **after** | **string** |  | 
- **sort** | **string** |  | [default to &quot;relevance&quot;]
+ **sort** | **string** | relevance | newest | [default to &quot;relevance&quot;]
 
 ### Return type
 
@@ -685,7 +687,7 @@ Name | Type | Description  | Notes
 
 ## FacebookGetPostDetail
 
-> interface{} FacebookGetPostDetail(ctx, postId).Execute()
+> interface{} FacebookGetPostDetail(ctx, postId).Url(url).Execute()
 
 Get post detail
 
@@ -705,10 +707,11 @@ import (
 
 func main() {
 	postId := "postId_example" // string | 
+	url := "url_example" // string | Full post permalink/reel URL — overrides post_id (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookGetPostDetail(context.Background(), postId).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookGetPostDetail(context.Background(), postId).Url(url).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookGetPostDetail``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -734,6 +737,7 @@ Other parameters are passed through a pointer to a apiFacebookGetPostDetailReque
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **url** | **string** | Full post permalink/reel URL — overrides post_id | 
 
 ### Return type
 

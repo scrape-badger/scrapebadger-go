@@ -1138,8 +1138,15 @@ type ApiFacebookGetPostCommentsRequest struct {
 	ctx context.Context
 	ApiService *FacebookAPIService
 	postId string
+	url *string
 	after *string
 	sort *string
+}
+
+// Full post permalink/reel URL — overrides post_id
+func (r ApiFacebookGetPostCommentsRequest) Url(url string) ApiFacebookGetPostCommentsRequest {
+	r.url = &url
+	return r
 }
 
 func (r ApiFacebookGetPostCommentsRequest) After(after string) ApiFacebookGetPostCommentsRequest {
@@ -1147,6 +1154,7 @@ func (r ApiFacebookGetPostCommentsRequest) After(after string) ApiFacebookGetPos
 	return r
 }
 
+// relevance | newest
 func (r ApiFacebookGetPostCommentsRequest) Sort(sort string) ApiFacebookGetPostCommentsRequest {
 	r.sort = &sort
 	return r
@@ -1159,7 +1167,11 @@ func (r ApiFacebookGetPostCommentsRequest) Execute() (interface{}, *http.Respons
 /*
 FacebookGetPostComments Get post comments
 
-Get a Facebook post's comment thread (paginated).
+Get a Facebook post's comment thread, 10 per page.
+
+``sort`` is ``relevance`` (Facebook's ranked order, the default) or
+``newest``. Follow ``end_cursor`` while ``has_next_page`` to walk the whole
+thread; ``total_count`` is how many the post has.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param postId
@@ -1195,6 +1207,9 @@ func (a *FacebookAPIService) FacebookGetPostCommentsExecute(r ApiFacebookGetPost
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "form", "")
 	}
@@ -1286,6 +1301,13 @@ type ApiFacebookGetPostDetailRequest struct {
 	ctx context.Context
 	ApiService *FacebookAPIService
 	postId string
+	url *string
+}
+
+// Full post permalink/reel URL — overrides post_id
+func (r ApiFacebookGetPostDetailRequest) Url(url string) ApiFacebookGetPostDetailRequest {
+	r.url = &url
+	return r
 }
 
 func (r ApiFacebookGetPostDetailRequest) Execute() (interface{}, *http.Response, error) {
@@ -1295,7 +1317,9 @@ func (r ApiFacebookGetPostDetailRequest) Execute() (interface{}, *http.Response,
 /*
 FacebookGetPostDetail Get post detail
 
-Get a Facebook post's detail plus its top comments.
+Get a Facebook post's detail: text, media, author, date and the
+reaction / comment / share counts. The comments themselves come from
+``/posts/{post_id}/comments``.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param postId
@@ -1331,6 +1355,9 @@ func (a *FacebookAPIService) FacebookGetPostDetailExecute(r ApiFacebookGetPostDe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
