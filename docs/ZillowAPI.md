@@ -5,6 +5,7 @@ All URIs are relative to *https://scrapebadger.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ZillowGetAgentProfileListings**](ZillowAPI.md#ZillowGetAgentProfileListings) | **Get** /v1/zillow/agent | Get agent profile + listings
+[**ZillowGetMultifamilyBuilding**](ZillowAPI.md#ZillowGetMultifamilyBuilding) | **Get** /v1/zillow/building | Get multifamily building
 [**ZillowGetPropertyDetail**](ZillowAPI.md#ZillowGetPropertyDetail) | **Get** /v1/zillow/property/{zpid} | Get property detail
 [**ZillowGetPropertyDetailByUrl**](ZillowAPI.md#ZillowGetPropertyDetailByUrl) | **Get** /v1/zillow/property | Get property detail by URL
 [**ZillowListCoverageMarkets**](ZillowAPI.md#ZillowListCoverageMarkets) | **Get** /v1/zillow/markets | List coverage markets
@@ -64,6 +65,72 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **username** | **string** | Zillow profile username | 
  **url** | **string** | Full Zillow /profile/... URL | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ZillowGetMultifamilyBuilding
+
+> interface{} ZillowGetMultifamilyBuilding(ctx).Url(url).Execute()
+
+Get multifamily building
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	url := "url_example" // string | Full Zillow building URL, e.g. https://www.zillow.com/apartments/kansas-city-mo/brookside-51/CkBJqt/
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ZillowAPI.ZillowGetMultifamilyBuilding(context.Background()).Url(url).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ZillowAPI.ZillowGetMultifamilyBuilding``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ZillowGetMultifamilyBuilding`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ZillowAPI.ZillowGetMultifamilyBuilding`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiZillowGetMultifamilyBuildingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **url** | **string** | Full Zillow building URL, e.g. https://www.zillow.com/apartments/kansas-city-mo/brookside-51/CkBJqt/ | 
 
 ### Return type
 

@@ -34,6 +34,18 @@ func Test_scrapebadger_ZillowAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ZillowAPIService ZillowGetMultifamilyBuilding", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ZillowAPI.ZillowGetMultifamilyBuilding(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ZillowAPIService ZillowGetPropertyDetail", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
