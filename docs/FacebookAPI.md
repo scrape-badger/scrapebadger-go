@@ -1291,7 +1291,7 @@ Name | Type | Description  | Notes
 
 ## FacebookSearchMarketplace
 
-> interface{} FacebookSearchMarketplace(ctx).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).After(after).Execute()
+> interface{} FacebookSearchMarketplace(ctx).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).Radius(radius).After(after).Execute()
 
 Search Marketplace
 
@@ -1311,18 +1311,19 @@ import (
 
 func main() {
 	query := "query_example" // string | Search keywords
-	location := "location_example" // string | Marketplace location slug (optional) (default to "nyc")
+	location := "location_example" // string | Marketplace location slug or numeric place id (optional) (default to "nyc")
 	minPrice := int32(56) // int32 |  (optional)
 	maxPrice := int32(56) // int32 |  (optional)
 	daysSinceListed := int32(56) // int32 |  (optional)
 	sortBy := "sortBy_example" // string |  (optional)
 	itemCondition := "itemCondition_example" // string |  (optional)
 	deliveryMethod := "deliveryMethod_example" // string |  (optional)
+	radius := int32(56) // int32 | Search radius around the location (km, or miles in the US) (optional)
 	after := "after_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookSearchMarketplace(context.Background()).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).After(after).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookSearchMarketplace(context.Background()).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).Radius(radius).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookSearchMarketplace``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1344,13 +1345,14 @@ Other parameters are passed through a pointer to a apiFacebookSearchMarketplaceR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | Search keywords | 
- **location** | **string** | Marketplace location slug | [default to &quot;nyc&quot;]
+ **location** | **string** | Marketplace location slug or numeric place id | [default to &quot;nyc&quot;]
  **minPrice** | **int32** |  | 
  **maxPrice** | **int32** |  | 
  **daysSinceListed** | **int32** |  | 
  **sortBy** | **string** |  | 
  **itemCondition** | **string** |  | 
  **deliveryMethod** | **string** |  | 
+ **radius** | **int32** | Search radius around the location (km, or miles in the US) | 
  **after** | **string** |  | 
 
 ### Return type

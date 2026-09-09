@@ -2483,6 +2483,7 @@ type ApiFacebookSearchMarketplaceRequest struct {
 	sortBy *string
 	itemCondition *string
 	deliveryMethod *string
+	radius *int32
 	after *string
 }
 
@@ -2492,7 +2493,7 @@ func (r ApiFacebookSearchMarketplaceRequest) Query(query string) ApiFacebookSear
 	return r
 }
 
-// Marketplace location slug
+// Marketplace location slug or numeric place id
 func (r ApiFacebookSearchMarketplaceRequest) Location(location string) ApiFacebookSearchMarketplaceRequest {
 	r.location = &location
 	return r
@@ -2528,6 +2529,12 @@ func (r ApiFacebookSearchMarketplaceRequest) DeliveryMethod(deliveryMethod strin
 	return r
 }
 
+// Search radius around the location (km, or miles in the US)
+func (r ApiFacebookSearchMarketplaceRequest) Radius(radius int32) ApiFacebookSearchMarketplaceRequest {
+	r.radius = &radius
+	return r
+}
+
 func (r ApiFacebookSearchMarketplaceRequest) After(after string) ApiFacebookSearchMarketplaceRequest {
 	r.after = &after
 	return r
@@ -2541,6 +2548,11 @@ func (r ApiFacebookSearchMarketplaceRequest) Execute() (interface{}, *http.Respo
 FacebookSearchMarketplace Search Marketplace
 
 Search Facebook Marketplace listings by keyword and location.
+
+``location`` must be a Facebook location slug (``london``, ``newcastleupontyne``)
+or a numeric Facebook place id — the ``city_page_id`` on any listing is one.
+Human-readable names such as ``Durham, UK`` are rejected with a 400 rather than
+silently searching Facebook's San Francisco default.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiFacebookSearchMarketplaceRequest
@@ -2600,6 +2612,9 @@ func (a *FacebookAPIService) FacebookSearchMarketplaceExecute(r ApiFacebookSearc
 	}
 	if r.deliveryMethod != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery_method", r.deliveryMethod, "form", "")
+	}
+	if r.radius != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "radius", r.radius, "form", "")
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "form", "")
