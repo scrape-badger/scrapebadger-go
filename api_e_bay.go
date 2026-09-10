@@ -302,6 +302,13 @@ EbayCompletedSoldListings Completed / sold listings
 
 Search completed/sold listings — eBay's sold-price history.
 
+eBay pads a short result set with "results matching fewer words" and counts
+only the exact ones in ``pagination.total_results``. Results come back in
+eBay's own ranking order with the exact matches first, and each one carries
+``exact_match`` (true/false) so a price series can be built without parsing
+titles. An empty ``results`` with ``total_results: 0`` is eBay's own answer
+and costs 0 credits — a fetch failure is never a 200.
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEbayCompletedSoldListingsRequest
 */
