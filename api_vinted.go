@@ -847,6 +847,261 @@ func (a *VintedAPIService) VintedListMarketsExecute(r ApiVintedListMarketsReques
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiVintedListPublicVintedMobileOperationsRequest struct {
+	ctx context.Context
+	ApiService *VintedAPIService
+}
+
+func (r ApiVintedListPublicVintedMobileOperationsRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.VintedListPublicVintedMobileOperationsExecute(r)
+}
+
+/*
+VintedListPublicVintedMobileOperations List public Vinted mobile operations
+
+Discover public read operations, parameters and runnable examples. Free.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiVintedListPublicVintedMobileOperationsRequest
+*/
+func (a *VintedAPIService) VintedListPublicVintedMobileOperations(ctx context.Context) ApiVintedListPublicVintedMobileOperationsRequest {
+	return ApiVintedListPublicVintedMobileOperationsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *VintedAPIService) VintedListPublicVintedMobileOperationsExecute(r ApiVintedListPublicVintedMobileOperationsRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedListPublicVintedMobileOperations")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/vinted/mobile/operations"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiVintedReadVintedMobileDataRequest struct {
+	ctx context.Context
+	ApiService *VintedAPIService
+	operation string
+	vintedMobileReadRequest *VintedMobileReadRequest
+}
+
+func (r ApiVintedReadVintedMobileDataRequest) VintedMobileReadRequest(vintedMobileReadRequest VintedMobileReadRequest) ApiVintedReadVintedMobileDataRequest {
+	r.vintedMobileReadRequest = &vintedMobileReadRequest
+	return r
+}
+
+func (r ApiVintedReadVintedMobileDataRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.VintedReadVintedMobileDataExecute(r)
+}
+
+/*
+VintedReadVintedMobileData Read Vinted mobile data
+
+Read catalog, listing, seller, review, sold-comparable, pricing, reference,
+shipping-reference, homepage or help data. No Vinted account is required.
+This is an allowlisted read API, including read-only upstream POST queries.
+Returns operation, market, and the upstream JSON under data. One credit.
+Sold comparable prices are not guaranteed final negotiated sale prices.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param operation
+ @return ApiVintedReadVintedMobileDataRequest
+*/
+func (a *VintedAPIService) VintedReadVintedMobileData(ctx context.Context, operation string) ApiVintedReadVintedMobileDataRequest {
+	return ApiVintedReadVintedMobileDataRequest{
+		ApiService: a,
+		ctx: ctx,
+		operation: operation,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *VintedAPIService) VintedReadVintedMobileDataExecute(r ApiVintedReadVintedMobileDataRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedReadVintedMobileData")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/vinted/mobile/{operation}"
+	localVarPath = strings.Replace(localVarPath, "{"+"operation"+"}", url.PathEscape(parameterValueToString(r.operation, "operation")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.vintedMobileReadRequest == nil {
+		return localVarReturnValue, nil, reportError("vintedMobileReadRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.vintedMobileReadRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiVintedSearchBrandsRequest struct {
 	ctx context.Context
 	ApiService *VintedAPIService
@@ -1006,6 +1261,10 @@ type ApiVintedSearchVintedItemsRequest struct {
 	brandIds *string
 	catalogIds *string
 	colorIds *string
+	sizeIds *string
+	materialIds *string
+	time *int32
+	searchSessionId *string
 	statusIds *string
 	order *string
 }
@@ -1062,6 +1321,30 @@ func (r ApiVintedSearchVintedItemsRequest) CatalogIds(catalogIds string) ApiVint
 // Comma-separated color IDs
 func (r ApiVintedSearchVintedItemsRequest) ColorIds(colorIds string) ApiVintedSearchVintedItemsRequest {
 	r.colorIds = &colorIds
+	return r
+}
+
+// Comma-separated size IDs
+func (r ApiVintedSearchVintedItemsRequest) SizeIds(sizeIds string) ApiVintedSearchVintedItemsRequest {
+	r.sizeIds = &sizeIds
+	return r
+}
+
+// Comma-separated material IDs
+func (r ApiVintedSearchVintedItemsRequest) MaterialIds(materialIds string) ApiVintedSearchVintedItemsRequest {
+	r.materialIds = &materialIds
+	return r
+}
+
+// Pagination time returned by the preceding page
+func (r ApiVintedSearchVintedItemsRequest) Time(time int32) ApiVintedSearchVintedItemsRequest {
+	r.time = &time
+	return r
+}
+
+// Reuse across pages of one search
+func (r ApiVintedSearchVintedItemsRequest) SearchSessionId(searchSessionId string) ApiVintedSearchVintedItemsRequest {
+	r.searchSessionId = &searchSessionId
 	return r
 }
 
@@ -1155,6 +1438,18 @@ func (a *VintedAPIService) VintedSearchVintedItemsExecute(r ApiVintedSearchVinte
 	}
 	if r.colorIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "color_ids", r.colorIds, "form", "")
+	}
+	if r.sizeIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "size_ids", r.sizeIds, "form", "")
+	}
+	if r.materialIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "material_ids", r.materialIds, "form", "")
+	}
+	if r.time != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "time", r.time, "form", "")
+	}
+	if r.searchSessionId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search_session_id", r.searchSessionId, "form", "")
 	}
 	if r.statusIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "status_ids", r.statusIds, "form", "")

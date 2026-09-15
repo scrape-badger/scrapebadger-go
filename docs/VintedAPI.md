@@ -10,6 +10,8 @@ Method | HTTP request | Description
 [**VintedListColors**](VintedAPI.md#VintedListColors) | **Get** /v1/vinted/colors | List colors
 [**VintedListItemConditions**](VintedAPI.md#VintedListItemConditions) | **Get** /v1/vinted/statuses | List item conditions
 [**VintedListMarkets**](VintedAPI.md#VintedListMarkets) | **Get** /v1/vinted/markets | List markets
+[**VintedListPublicVintedMobileOperations**](VintedAPI.md#VintedListPublicVintedMobileOperations) | **Get** /v1/vinted/mobile/operations | List public Vinted mobile operations
+[**VintedReadVintedMobileData**](VintedAPI.md#VintedReadVintedMobileData) | **Post** /v1/vinted/mobile/{operation} | Read Vinted mobile data
 [**VintedSearchBrands**](VintedAPI.md#VintedSearchBrands) | **Get** /v1/vinted/brands | Search brands
 [**VintedSearchVintedItems**](VintedAPI.md#VintedSearchVintedItems) | **Get** /v1/vinted/search | Search Vinted items
 [**VintedVintedScraperHealthCheck**](VintedAPI.md#VintedVintedScraperHealthCheck) | **Get** /v1/vinted/health | Vinted scraper health check
@@ -430,6 +432,139 @@ Other parameters are passed through a pointer to a apiVintedListMarketsRequest s
 [[Back to README]](../README.md)
 
 
+## VintedListPublicVintedMobileOperations
+
+> interface{} VintedListPublicVintedMobileOperations(ctx).Execute()
+
+List public Vinted mobile operations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.VintedAPI.VintedListPublicVintedMobileOperations(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedListPublicVintedMobileOperations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `VintedListPublicVintedMobileOperations`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedListPublicVintedMobileOperations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiVintedListPublicVintedMobileOperationsRequest struct via the builder pattern
+
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## VintedReadVintedMobileData
+
+> interface{} VintedReadVintedMobileData(ctx, operation).VintedMobileReadRequest(vintedMobileReadRequest).Execute()
+
+Read Vinted mobile data
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	operation := "operation_example" // string | 
+	vintedMobileReadRequest := *openapiclient.NewVintedMobileReadRequest() // VintedMobileReadRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.VintedAPI.VintedReadVintedMobileData(context.Background(), operation).VintedMobileReadRequest(vintedMobileReadRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedReadVintedMobileData``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `VintedReadVintedMobileData`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedReadVintedMobileData`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**operation** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiVintedReadVintedMobileDataRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **vintedMobileReadRequest** | [**VintedMobileReadRequest**](VintedMobileReadRequest.md) |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## VintedSearchBrands
 
 > interface{} VintedSearchBrands(ctx).Keyword(keyword).Market(market).Execute()
@@ -500,7 +635,7 @@ Name | Type | Description  | Notes
 
 ## VintedSearchVintedItems
 
-> interface{} VintedSearchVintedItems(ctx).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).StatusIds(statusIds).Order(order).Execute()
+> interface{} VintedSearchVintedItems(ctx).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).SizeIds(sizeIds).MaterialIds(materialIds).Time(time).SearchSessionId(searchSessionId).StatusIds(statusIds).Order(order).Execute()
 
 Search Vinted items
 
@@ -529,12 +664,16 @@ func main() {
 	brandIds := "brandIds_example" // string |  (optional)
 	catalogIds := "catalogIds_example" // string | Comma-separated Vinted catalog (category) IDs to restrict the search to, e.g. '1904' or '1904,79'. Vinted applies this before searching, so pagination totals reflect the filtered set. A catalog ID is the `catalog[]` value in a Vinted category URL (vinted.fr/catalog?catalog[]=1904). (optional)
 	colorIds := "colorIds_example" // string | Comma-separated color IDs (optional)
+	sizeIds := "sizeIds_example" // string | Comma-separated size IDs (optional)
+	materialIds := "materialIds_example" // string | Comma-separated material IDs (optional)
+	time := int32(56) // int32 | Pagination time returned by the preceding page (optional)
+	searchSessionId := "searchSessionId_example" // string | Reuse across pages of one search (optional)
 	statusIds := "statusIds_example" // string | Comma-separated condition/status IDs (optional)
 	order := "order_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.VintedAPI.VintedSearchVintedItems(context.Background()).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).StatusIds(statusIds).Order(order).Execute()
+	resp, r, err := apiClient.VintedAPI.VintedSearchVintedItems(context.Background()).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).SizeIds(sizeIds).MaterialIds(materialIds).Time(time).SearchSessionId(searchSessionId).StatusIds(statusIds).Order(order).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchVintedItems``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -565,6 +704,10 @@ Name | Type | Description  | Notes
  **brandIds** | **string** |  | 
  **catalogIds** | **string** | Comma-separated Vinted catalog (category) IDs to restrict the search to, e.g. &#39;1904&#39; or &#39;1904,79&#39;. Vinted applies this before searching, so pagination totals reflect the filtered set. A catalog ID is the &#x60;catalog[]&#x60; value in a Vinted category URL (vinted.fr/catalog?catalog[]&#x3D;1904). | 
  **colorIds** | **string** | Comma-separated color IDs | 
+ **sizeIds** | **string** | Comma-separated size IDs | 
+ **materialIds** | **string** | Comma-separated material IDs | 
+ **time** | **int32** | Pagination time returned by the preceding page | 
+ **searchSessionId** | **string** | Reuse across pages of one search | 
  **statusIds** | **string** | Comma-separated condition/status IDs | 
  **order** | **string** |  | 
 

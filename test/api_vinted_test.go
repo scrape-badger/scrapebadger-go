@@ -100,6 +100,32 @@ func Test_scrapebadger_VintedAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test VintedAPIService VintedListPublicVintedMobileOperations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.VintedAPI.VintedListPublicVintedMobileOperations(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test VintedAPIService VintedReadVintedMobileData", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var operation string
+
+		resp, httpRes, err := apiClient.VintedAPI.VintedReadVintedMobileData(context.Background(), operation).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test VintedAPIService VintedSearchBrands", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
