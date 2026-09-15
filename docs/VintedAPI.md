@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**VintedListPublicVintedMobileOperations**](VintedAPI.md#VintedListPublicVintedMobileOperations) | **Get** /v1/vinted/mobile/operations | List public Vinted mobile operations
 [**VintedReadVintedMobileData**](VintedAPI.md#VintedReadVintedMobileData) | **Post** /v1/vinted/mobile/{operation} | Read Vinted mobile data
 [**VintedSearchBrands**](VintedAPI.md#VintedSearchBrands) | **Get** /v1/vinted/brands | Search brands
+[**VintedSearchByImage**](VintedAPI.md#VintedSearchByImage) | **Post** /v1/vinted/search_by_image | Search by image
 [**VintedSearchVintedItems**](VintedAPI.md#VintedSearchVintedItems) | **Get** /v1/vinted/search | Search Vinted items
 [**VintedVintedScraperHealthCheck**](VintedAPI.md#VintedVintedScraperHealthCheck) | **Get** /v1/vinted/health | Vinted scraper health check
 [**VintedVintedScraperHealthCheckHead**](VintedAPI.md#VintedVintedScraperHealthCheckHead) | **Head** /v1/vinted/health | Vinted scraper health check
@@ -626,6 +627,72 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## VintedSearchByImage
+
+> interface{} VintedSearchByImage(ctx).VintedImageSearchRequest(vintedImageSearchRequest).Execute()
+
+Search by image
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	vintedImageSearchRequest := *openapiclient.NewVintedImageSearchRequest() // VintedImageSearchRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.VintedAPI.VintedSearchByImage(context.Background()).VintedImageSearchRequest(vintedImageSearchRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchByImage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `VintedSearchByImage`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedSearchByImage`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiVintedSearchByImageRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **vintedImageSearchRequest** | [**VintedImageSearchRequest**](VintedImageSearchRequest.md) |  | 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
