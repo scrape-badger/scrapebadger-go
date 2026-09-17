@@ -449,7 +449,7 @@ func main() {
 	sizes := "sizes_example" // string | Comma-separated size IDs (optional)
 	conditions := "conditions_example" // string | Comma-separated condition slugs (brand_new, used_excellent, ...) (optional)
 	gender := "gender_example" // string | male | female (optional)
-	sort := "sort_example" // string | relevance | newlyListed | priceAscending | priceDescending (optional)
+	sort := "sort_example" // string | relevance (default) | priceAscending | priceDescending (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -485,7 +485,7 @@ Name | Type | Description  | Notes
  **sizes** | **string** | Comma-separated size IDs | 
  **conditions** | **string** | Comma-separated condition slugs (brand_new, used_excellent, ...) | 
  **gender** | **string** | male | female | 
- **sort** | **string** | relevance | newlyListed | priceAscending | priceDescending | 
+ **sort** | **string** | relevance (default) | priceAscending | priceDescending | 
 
 ### Return type
 

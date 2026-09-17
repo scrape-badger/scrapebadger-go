@@ -887,7 +887,7 @@ func (r ApiDepopSearchDepopProductsRequest) Gender(gender string) ApiDepopSearch
 	return r
 }
 
-// relevance | newlyListed | priceAscending | priceDescending
+// relevance (default) | priceAscending | priceDescending
 func (r ApiDepopSearchDepopProductsRequest) Sort(sort string) ApiDepopSearchDepopProductsRequest {
 	r.sort = &sort
 	return r
