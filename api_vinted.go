@@ -35,7 +35,7 @@ func (r ApiVintedGetItemDetailsRequest) Market(market string) ApiVintedGetItemDe
 	return r
 }
 
-func (r ApiVintedGetItemDetailsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedGetItemDetailsRequest) Execute() (*ItemDetailResponse, *http.Response, error) {
 	return r.ApiService.VintedGetItemDetailsExecute(r)
 }
 
@@ -57,13 +57,13 @@ func (a *VintedAPIService) VintedGetItemDetails(ctx context.Context, itemId int3
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedGetItemDetailsExecute(r ApiVintedGetItemDetailsRequest) (interface{}, *http.Response, error) {
+//  @return ItemDetailResponse
+func (a *VintedAPIService) VintedGetItemDetailsExecute(r ApiVintedGetItemDetailsRequest) (*ItemDetailResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *ItemDetailResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedGetItemDetails")
@@ -174,7 +174,7 @@ func (r ApiVintedGetUserProfileRequest) Market(market string) ApiVintedGetUserPr
 	return r
 }
 
-func (r ApiVintedGetUserProfileRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedGetUserProfileRequest) Execute() (*UserProfileResponse, *http.Response, error) {
 	return r.ApiService.VintedGetUserProfileExecute(r)
 }
 
@@ -196,13 +196,13 @@ func (a *VintedAPIService) VintedGetUserProfile(ctx context.Context, userId int3
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedGetUserProfileExecute(r ApiVintedGetUserProfileRequest) (interface{}, *http.Response, error) {
+//  @return UserProfileResponse
+func (a *VintedAPIService) VintedGetUserProfileExecute(r ApiVintedGetUserProfileRequest) (*UserProfileResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *UserProfileResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedGetUserProfile")
@@ -325,7 +325,7 @@ func (r ApiVintedGetUserSListedItemsRequest) PerPage(perPage int32) ApiVintedGet
 	return r
 }
 
-func (r ApiVintedGetUserSListedItemsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedGetUserSListedItemsRequest) Execute() (*UserItemsResponse, *http.Response, error) {
 	return r.ApiService.VintedGetUserSListedItemsExecute(r)
 }
 
@@ -347,13 +347,13 @@ func (a *VintedAPIService) VintedGetUserSListedItems(ctx context.Context, userId
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedGetUserSListedItemsExecute(r ApiVintedGetUserSListedItemsRequest) (interface{}, *http.Response, error) {
+//  @return UserItemsResponse
+func (a *VintedAPIService) VintedGetUserSListedItemsExecute(r ApiVintedGetUserSListedItemsRequest) (*UserItemsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *UserItemsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedGetUserSListedItems")
@@ -475,7 +475,7 @@ func (r ApiVintedListColorsRequest) Market(market string) ApiVintedListColorsReq
 	return r
 }
 
-func (r ApiVintedListColorsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedListColorsRequest) Execute() (*ColorsResponse, *http.Response, error) {
 	return r.ApiService.VintedListColorsExecute(r)
 }
 
@@ -495,13 +495,13 @@ func (a *VintedAPIService) VintedListColors(ctx context.Context) ApiVintedListCo
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedListColorsExecute(r ApiVintedListColorsRequest) (interface{}, *http.Response, error) {
+//  @return ColorsResponse
+func (a *VintedAPIService) VintedListColorsExecute(r ApiVintedListColorsRequest) (*ColorsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *ColorsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedListColors")
@@ -610,7 +610,7 @@ func (r ApiVintedListItemConditionsRequest) Market(market string) ApiVintedListI
 	return r
 }
 
-func (r ApiVintedListItemConditionsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedListItemConditionsRequest) Execute() (*StatusesResponse, *http.Response, error) {
 	return r.ApiService.VintedListItemConditionsExecute(r)
 }
 
@@ -630,13 +630,13 @@ func (a *VintedAPIService) VintedListItemConditions(ctx context.Context) ApiVint
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedListItemConditionsExecute(r ApiVintedListItemConditionsRequest) (interface{}, *http.Response, error) {
+//  @return StatusesResponse
+func (a *VintedAPIService) VintedListItemConditionsExecute(r ApiVintedListItemConditionsRequest) (*StatusesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *StatusesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedListItemConditions")
@@ -739,7 +739,7 @@ type ApiVintedListMarketsRequest struct {
 	ApiService *VintedAPIService
 }
 
-func (r ApiVintedListMarketsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedListMarketsRequest) Execute() (*MarketsResponse, *http.Response, error) {
 	return r.ApiService.VintedListMarketsExecute(r)
 }
 
@@ -759,13 +759,13 @@ func (a *VintedAPIService) VintedListMarkets(ctx context.Context) ApiVintedListM
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedListMarketsExecute(r ApiVintedListMarketsRequest) (interface{}, *http.Response, error) {
+//  @return MarketsResponse
+func (a *VintedAPIService) VintedListMarketsExecute(r ApiVintedListMarketsRequest) (*MarketsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *MarketsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedListMarkets")
@@ -1120,7 +1120,7 @@ func (r ApiVintedSearchBrandsRequest) Market(market string) ApiVintedSearchBrand
 	return r
 }
 
-func (r ApiVintedSearchBrandsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedSearchBrandsRequest) Execute() (*BrandsResponse, *http.Response, error) {
 	return r.ApiService.VintedSearchBrandsExecute(r)
 }
 
@@ -1140,13 +1140,13 @@ func (a *VintedAPIService) VintedSearchBrands(ctx context.Context) ApiVintedSear
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedSearchBrandsExecute(r ApiVintedSearchBrandsRequest) (interface{}, *http.Response, error) {
+//  @return BrandsResponse
+func (a *VintedAPIService) VintedSearchBrandsExecute(r ApiVintedSearchBrandsRequest) (*BrandsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *BrandsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedSearchBrands")
@@ -1259,7 +1259,7 @@ func (r ApiVintedSearchByImageRequest) VintedImageSearchRequest(vintedImageSearc
 	return r
 }
 
-func (r ApiVintedSearchByImageRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedSearchByImageRequest) Execute() (*SearchResponse, *http.Response, error) {
 	return r.ApiService.VintedSearchByImageExecute(r)
 }
 
@@ -1284,13 +1284,13 @@ func (a *VintedAPIService) VintedSearchByImage(ctx context.Context) ApiVintedSea
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedSearchByImageExecute(r ApiVintedSearchByImageRequest) (interface{}, *http.Response, error) {
+//  @return SearchResponse
+func (a *VintedAPIService) VintedSearchByImageExecute(r ApiVintedSearchByImageRequest) (*SearchResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *SearchResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedSearchByImage")
@@ -1498,7 +1498,7 @@ func (r ApiVintedSearchVintedItemsRequest) Order(order string) ApiVintedSearchVi
 	return r
 }
 
-func (r ApiVintedSearchVintedItemsRequest) Execute() (interface{}, *http.Response, error) {
+func (r ApiVintedSearchVintedItemsRequest) Execute() (*SearchResponse, *http.Response, error) {
 	return r.ApiService.VintedSearchVintedItemsExecute(r)
 }
 
@@ -1518,13 +1518,13 @@ func (a *VintedAPIService) VintedSearchVintedItems(ctx context.Context) ApiVinte
 }
 
 // Execute executes the request
-//  @return interface{}
-func (a *VintedAPIService) VintedSearchVintedItemsExecute(r ApiVintedSearchVintedItemsRequest) (interface{}, *http.Response, error) {
+//  @return SearchResponse
+func (a *VintedAPIService) VintedSearchVintedItemsExecute(r ApiVintedSearchVintedItemsRequest) (*SearchResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  interface{}
+		localVarReturnValue  *SearchResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedSearchVintedItems")

@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## VintedGetItemDetails
 
-> interface{} VintedGetItemDetails(ctx, itemId).Market(market).Execute()
+> ItemDetailResponse VintedGetItemDetails(ctx, itemId).Market(market).Execute()
 
 Get item details
 
@@ -51,7 +51,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedGetItemDetails``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedGetItemDetails`: interface{}
+	// response from `VintedGetItemDetails`: ItemDetailResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedGetItemDetails`: %v\n", resp)
 }
 ```
@@ -76,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**ItemDetailResponse**](ItemDetailResponse.md)
 
 ### Authorization
 
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ## VintedGetUserProfile
 
-> interface{} VintedGetUserProfile(ctx, userId).Market(market).Execute()
+> UserProfileResponse VintedGetUserProfile(ctx, userId).Market(market).Execute()
 
 Get user profile
 
@@ -123,7 +123,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedGetUserProfile``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedGetUserProfile`: interface{}
+	// response from `VintedGetUserProfile`: UserProfileResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedGetUserProfile`: %v\n", resp)
 }
 ```
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**UserProfileResponse**](UserProfileResponse.md)
 
 ### Authorization
 
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 ## VintedGetUserSListedItems
 
-> interface{} VintedGetUserSListedItems(ctx, userId).Market(market).Page(page).PerPage(perPage).Execute()
+> UserItemsResponse VintedGetUserSListedItems(ctx, userId).Market(market).Page(page).PerPage(perPage).Execute()
 
 Get user's listed items
 
@@ -197,7 +197,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedGetUserSListedItems``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedGetUserSListedItems`: interface{}
+	// response from `VintedGetUserSListedItems`: UserItemsResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedGetUserSListedItems`: %v\n", resp)
 }
 ```
@@ -224,7 +224,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**UserItemsResponse**](UserItemsResponse.md)
 
 ### Authorization
 
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 
 ## VintedListColors
 
-> interface{} VintedListColors(ctx).Market(market).Execute()
+> ColorsResponse VintedListColors(ctx).Market(market).Execute()
 
 List colors
 
@@ -270,7 +270,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedListColors``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedListColors`: interface{}
+	// response from `VintedListColors`: ColorsResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedListColors`: %v\n", resp)
 }
 ```
@@ -290,7 +290,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**ColorsResponse**](ColorsResponse.md)
 
 ### Authorization
 
@@ -308,7 +308,7 @@ Name | Type | Description  | Notes
 
 ## VintedListItemConditions
 
-> interface{} VintedListItemConditions(ctx).Market(market).Execute()
+> StatusesResponse VintedListItemConditions(ctx).Market(market).Execute()
 
 List item conditions
 
@@ -336,7 +336,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedListItemConditions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedListItemConditions`: interface{}
+	// response from `VintedListItemConditions`: StatusesResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedListItemConditions`: %v\n", resp)
 }
 ```
@@ -356,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**StatusesResponse**](StatusesResponse.md)
 
 ### Authorization
 
@@ -374,7 +374,7 @@ Name | Type | Description  | Notes
 
 ## VintedListMarkets
 
-> interface{} VintedListMarkets(ctx).Execute()
+> MarketsResponse VintedListMarkets(ctx).Execute()
 
 List markets
 
@@ -401,7 +401,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedListMarkets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedListMarkets`: interface{}
+	// response from `VintedListMarkets`: MarketsResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedListMarkets`: %v\n", resp)
 }
 ```
@@ -417,7 +417,7 @@ Other parameters are passed through a pointer to a apiVintedListMarketsRequest s
 
 ### Return type
 
-**interface{}**
+[**MarketsResponse**](MarketsResponse.md)
 
 ### Authorization
 
@@ -568,7 +568,7 @@ Name | Type | Description  | Notes
 
 ## VintedSearchBrands
 
-> interface{} VintedSearchBrands(ctx).Keyword(keyword).Market(market).Execute()
+> BrandsResponse VintedSearchBrands(ctx).Keyword(keyword).Market(market).Execute()
 
 Search brands
 
@@ -597,7 +597,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchBrands``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedSearchBrands`: interface{}
+	// response from `VintedSearchBrands`: BrandsResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedSearchBrands`: %v\n", resp)
 }
 ```
@@ -618,7 +618,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**BrandsResponse**](BrandsResponse.md)
 
 ### Authorization
 
@@ -636,7 +636,7 @@ Name | Type | Description  | Notes
 
 ## VintedSearchByImage
 
-> interface{} VintedSearchByImage(ctx).VintedImageSearchRequest(vintedImageSearchRequest).Execute()
+> SearchResponse VintedSearchByImage(ctx).VintedImageSearchRequest(vintedImageSearchRequest).Execute()
 
 Search by image
 
@@ -664,7 +664,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchByImage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedSearchByImage`: interface{}
+	// response from `VintedSearchByImage`: SearchResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedSearchByImage`: %v\n", resp)
 }
 ```
@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**SearchResponse**](SearchResponse.md)
 
 ### Authorization
 
@@ -702,7 +702,7 @@ Name | Type | Description  | Notes
 
 ## VintedSearchVintedItems
 
-> interface{} VintedSearchVintedItems(ctx).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).SizeIds(sizeIds).MaterialIds(materialIds).Time(time).SearchSessionId(searchSessionId).StatusIds(statusIds).Order(order).Execute()
+> SearchResponse VintedSearchVintedItems(ctx).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).SizeIds(sizeIds).MaterialIds(materialIds).Time(time).SearchSessionId(searchSessionId).StatusIds(statusIds).Order(order).Execute()
 
 Search Vinted items
 
@@ -745,7 +745,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchVintedItems``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedSearchVintedItems`: interface{}
+	// response from `VintedSearchVintedItems`: SearchResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedSearchVintedItems`: %v\n", resp)
 }
 ```
@@ -780,7 +780,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**interface{}**
+[**SearchResponse**](SearchResponse.md)
 
 ### Authorization
 
