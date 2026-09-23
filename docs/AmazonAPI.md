@@ -462,9 +462,9 @@ import (
 func main() {
 	asin := "asin_example" // string | 
 	domain := "domain_example" // string |  (optional) (default to "com")
-	page := int32(56) // int32 | Review page (1-100, ~10 reviews/page) (optional) (default to 1)
+	page := int32(56) // int32 | Review page (10 reviews/page) (optional) (default to 1)
 	sortBy := "sortBy_example" // string | helpful | recent (optional) (default to "helpful")
-	star := "star_example" // string | one_star..five_star | positive | critical (optional)
+	star := "star_example" // string | 1-5 | one_star..five_star | positive | critical | all_stars (optional)
 	verifiedOnly := true // bool |  (optional) (default to false)
 	mediaOnly := true // bool |  (optional) (default to false)
 
@@ -497,9 +497,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **domain** | **string** |  | [default to &quot;com&quot;]
- **page** | **int32** | Review page (1-100, ~10 reviews/page) | [default to 1]
+ **page** | **int32** | Review page (10 reviews/page) | [default to 1]
  **sortBy** | **string** | helpful | recent | [default to &quot;helpful&quot;]
- **star** | **string** | one_star..five_star | positive | critical | 
+ **star** | **string** | 1-5 | one_star..five_star | positive | critical | all_stars | 
  **verifiedOnly** | **bool** |  | [default to false]
  **mediaOnly** | **bool** |  | [default to false]
 

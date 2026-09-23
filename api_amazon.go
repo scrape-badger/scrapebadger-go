@@ -909,7 +909,7 @@ func (r ApiAmazonGetProductReviewsRequest) Domain(domain string) ApiAmazonGetPro
 	return r
 }
 
-// Review page (1-100, ~10 reviews/page)
+// Review page (10 reviews/page)
 func (r ApiAmazonGetProductReviewsRequest) Page(page int32) ApiAmazonGetProductReviewsRequest {
 	r.page = &page
 	return r
@@ -921,7 +921,7 @@ func (r ApiAmazonGetProductReviewsRequest) SortBy(sortBy string) ApiAmazonGetPro
 	return r
 }
 
-// one_star..five_star | positive | critical
+// 1-5 | one_star..five_star | positive | critical | all_stars
 func (r ApiAmazonGetProductReviewsRequest) Star(star string) ApiAmazonGetProductReviewsRequest {
 	r.star = &star
 	return r
@@ -944,7 +944,14 @@ func (r ApiAmazonGetProductReviewsRequest) Execute() (interface{}, *http.Respons
 /*
 AmazonGetProductReviews Get product reviews
 
-Customer reviews for an ASIN (featured + paginated, with filters).
+Customer reviews for an ASIN, filtered, sorted and paginated.
+
+Reviews come from the product page's public featured block, which is the
+only review surface Amazon serves anonymously — a subset of the full
+history (``ratings_total`` reports the true total). ``pagination`` gives
+the filtered count and the last page, so paging past it returns an empty
+list. An unrecognised ``star`` or ``sort_by`` is rejected with 422 rather
+than silently answered with unfiltered reviews.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param asin
