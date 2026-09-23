@@ -1267,9 +1267,10 @@ func (r ApiVintedSearchByImageRequest) Execute() (interface{}, *http.Response, e
 VintedSearchByImage Search by image
 
 Find active Vinted listings from a photo. 10 credits per successful request. Returns the usual items, pagination and
-market envelope. Visual ranking. Each item carries `similarity_score` (0-1; the query image's own listing
-scores 1.0) on the calls where Vinted returns a ranking, and null on the ones
-where it does not -- a null says nothing about the item. Resend the same image
+market envelope. Visual ranking. Each item carries `similarity_score` on the calls where Vinted returns
+a ranking, and null on the ones where it does not -- a null says nothing about the item. The score sits on
+an unbounded scale that Vinted changes without notice (0-1 in Sep 2026, ~36-44 since): compare it only with
+the other items in the SAME response, never to a fixed cut-off. Resend the same image
 and pagination time for subsequent pages. Structured brand data may be null.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
