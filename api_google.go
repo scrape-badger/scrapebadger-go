@@ -2280,19 +2280,19 @@ func (r ApiGoogleGoogleLensVisualSearchRequest) Hl(hl string) ApiGoogleGoogleLen
 	return r
 }
 
-// Bias towards shoppable product matches
+// NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60;
 func (r ApiGoogleGoogleLensVisualSearchRequest) Product(product bool) ApiGoogleGoogleLensVisualSearchRequest {
 	r.product = &product
 	return r
 }
 
-// Include the visual-matches carousel
+// Always true in practice — &#x60;false&#x60; is reported back in &#x60;warnings&#x60;
 func (r ApiGoogleGoogleLensVisualSearchRequest) VisualMatches(visualMatches bool) ApiGoogleGoogleLensVisualSearchRequest {
 	r.visualMatches = &visualMatches
 	return r
 }
 
-// Restrict to exact-match results
+// NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60;
 func (r ApiGoogleGoogleLensVisualSearchRequest) ExactMatches(exactMatches bool) ApiGoogleGoogleLensVisualSearchRequest {
 	r.exactMatches = &exactMatches
 	return r
@@ -2313,6 +2313,13 @@ Response carries ``lens_results`` (Scrapingdog parity alias) with
 ``price`` (``{value, currency, extracted}``) and the raw ``tag`` chip it
 is parsed from, on shoppable matches. ``related_searches`` chips come
 alongside. Legacy ``results`` alias kept for backwards compat.
+
+``query`` refines the grid with text and is honoured. ``product`` and
+``exact_matches`` are not yet supported, and ``visual_matches=false``
+cannot be: visual matches are the only surface served. Setting any of
+the three adds a line to the ``warnings`` array on the response rather
+than changing the result — see SCR-177. The match grid still CONTAINS
+an image's exact matches; Google just does not label which they are.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGoogleGoogleLensVisualSearchRequest

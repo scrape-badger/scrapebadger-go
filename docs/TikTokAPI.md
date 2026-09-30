@@ -8,11 +8,11 @@ Method | HTTP request | Description
 [**TiktokGeneralSearch**](TikTokAPI.md#TiktokGeneralSearch) | **Get** /v1/tiktok/search | General search
 [**TiktokGetCommentReplies**](TikTokAPI.md#TiktokGetCommentReplies) | **Get** /v1/tiktok/comments/{comment_id}/replies | Get comment replies
 [**TiktokGetComments**](TikTokAPI.md#TiktokGetComments) | **Get** /v1/tiktok/videos/{video_id}/comments | Get comments
-[**TiktokGetFollowersDeprecated**](TikTokAPI.md#TiktokGetFollowersDeprecated) | **Get** /v1/tiktok/users/{username}/followers | Get followers (deprecated)
-[**TiktokGetFollowingDeprecated**](TikTokAPI.md#TiktokGetFollowingDeprecated) | **Get** /v1/tiktok/users/{username}/following | Get following (deprecated)
+[**TiktokGetFollowers**](TikTokAPI.md#TiktokGetFollowers) | **Get** /v1/tiktok/users/{username}/followers | Get followers
+[**TiktokGetFollowing**](TikTokAPI.md#TiktokGetFollowing) | **Get** /v1/tiktok/users/{username}/following | Get following
 [**TiktokGetHashtagDetail**](TikTokAPI.md#TiktokGetHashtagDetail) | **Get** /v1/tiktok/hashtags/{name} | Get hashtag detail
 [**TiktokGetHashtagVideos**](TikTokAPI.md#TiktokGetHashtagVideos) | **Get** /v1/tiktok/hashtags/{name}/videos | Get hashtag videos
-[**TiktokGetLikedVideosDeprecated**](TikTokAPI.md#TiktokGetLikedVideosDeprecated) | **Get** /v1/tiktok/users/{username}/liked | Get liked videos (deprecated)
+[**TiktokGetLikedVideos**](TikTokAPI.md#TiktokGetLikedVideos) | **Get** /v1/tiktok/users/{username}/liked | Get liked videos
 [**TiktokGetMusicSoundDetail**](TikTokAPI.md#TiktokGetMusicSoundDetail) | **Get** /v1/tiktok/music/{music_id} | Get music/sound detail
 [**TiktokGetMusicVideos**](TikTokAPI.md#TiktokGetMusicVideos) | **Get** /v1/tiktok/music/{music_id}/videos | Get music videos
 [**TiktokGetOembedMetadata**](TikTokAPI.md#TiktokGetOembedMetadata) | **Get** /v1/tiktok/oembed | Get oEmbed metadata
@@ -142,7 +142,7 @@ func main() {
 	query := "query_example" // string | Search keyword
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 20)
-	cursor := "cursor_example" // string | Composite pagination cursor (offset.search_id) from a prior page's pagination.cursor (optional)
+	cursor := "cursor_example" // string | Opaque continuation cursor from a prior page's pagination.cursor (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
  **query** | **string** | Search keyword | 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 20]
- **cursor** | **string** | Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor | 
+ **cursor** | **string** | Opaque continuation cursor from a prior page&#39;s pagination.cursor | 
 
 ### Return type
 
@@ -344,11 +344,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TiktokGetFollowersDeprecated
+## TiktokGetFollowers
 
-> interface{} TiktokGetFollowersDeprecated(ctx, username).Region(region).Count(count).Execute()
+> interface{} TiktokGetFollowers(ctx, username).Region(region).Count(count).Cursor(cursor).Execute()
 
-Get followers (deprecated)
+Get followers
 
 
 
@@ -368,16 +368,17 @@ func main() {
 	username := "username_example" // string | 
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 30)
+	cursor := "cursor_example" // string | Continuation cursor from the previous page (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokGetFollowersDeprecated(context.Background(), username).Region(region).Count(count).Execute()
+	resp, r, err := apiClient.TikTokAPI.TiktokGetFollowers(context.Background(), username).Region(region).Count(count).Cursor(cursor).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetFollowersDeprecated``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetFollowers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TiktokGetFollowersDeprecated`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetFollowersDeprecated`: %v\n", resp)
+	// response from `TiktokGetFollowers`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetFollowers`: %v\n", resp)
 }
 ```
 
@@ -391,7 +392,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTiktokGetFollowersDeprecatedRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiTiktokGetFollowersRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -399,6 +400,7 @@ Name | Type | Description  | Notes
 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 30]
+ **cursor** | **string** | Continuation cursor from the previous page | 
 
 ### Return type
 
@@ -418,11 +420,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TiktokGetFollowingDeprecated
+## TiktokGetFollowing
 
-> interface{} TiktokGetFollowingDeprecated(ctx, username).Region(region).Count(count).Execute()
+> interface{} TiktokGetFollowing(ctx, username).Region(region).Count(count).Cursor(cursor).Execute()
 
-Get following (deprecated)
+Get following
 
 
 
@@ -442,16 +444,17 @@ func main() {
 	username := "username_example" // string | 
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 30)
+	cursor := "cursor_example" // string | Continuation cursor from the previous page (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokGetFollowingDeprecated(context.Background(), username).Region(region).Count(count).Execute()
+	resp, r, err := apiClient.TikTokAPI.TiktokGetFollowing(context.Background(), username).Region(region).Count(count).Cursor(cursor).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetFollowingDeprecated``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetFollowing``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TiktokGetFollowingDeprecated`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetFollowingDeprecated`: %v\n", resp)
+	// response from `TiktokGetFollowing`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetFollowing`: %v\n", resp)
 }
 ```
 
@@ -465,7 +468,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTiktokGetFollowingDeprecatedRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiTiktokGetFollowingRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -473,6 +476,7 @@ Name | Type | Description  | Notes
 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 30]
+ **cursor** | **string** | Continuation cursor from the previous page | 
 
 ### Return type
 
@@ -640,11 +644,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## TiktokGetLikedVideosDeprecated
+## TiktokGetLikedVideos
 
-> interface{} TiktokGetLikedVideosDeprecated(ctx, username).Region(region).Count(count).Execute()
+> interface{} TiktokGetLikedVideos(ctx, username).Region(region).Count(count).Cursor(cursor).Execute()
 
-Get liked videos (deprecated)
+Get liked videos
 
 
 
@@ -664,16 +668,17 @@ func main() {
 	username := "username_example" // string | 
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 30)
+	cursor := "cursor_example" // string | Continuation cursor from the previous page (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokGetLikedVideosDeprecated(context.Background(), username).Region(region).Count(count).Execute()
+	resp, r, err := apiClient.TikTokAPI.TiktokGetLikedVideos(context.Background(), username).Region(region).Count(count).Cursor(cursor).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetLikedVideosDeprecated``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetLikedVideos``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TiktokGetLikedVideosDeprecated`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetLikedVideosDeprecated`: %v\n", resp)
+	// response from `TiktokGetLikedVideos`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `TikTokAPI.TiktokGetLikedVideos`: %v\n", resp)
 }
 ```
 
@@ -687,7 +692,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiTiktokGetLikedVideosDeprecatedRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiTiktokGetLikedVideosRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -695,6 +700,7 @@ Name | Type | Description  | Notes
 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 30]
+ **cursor** | **string** | Continuation cursor from the previous page | 
 
 ### Return type
 
@@ -932,7 +938,7 @@ Name | Type | Description  | Notes
 
 ## TiktokGetRelatedVideos
 
-> interface{} TiktokGetRelatedVideos(ctx, videoId).Region(region).Count(count).Execute()
+> interface{} TiktokGetRelatedVideos(ctx, videoId).Region(region).Count(count).Cursor(cursor).Execute()
 
 Get related videos
 
@@ -954,10 +960,11 @@ func main() {
 	videoId := "videoId_example" // string | 
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 16)
+	cursor := "cursor_example" // string | Continuation cursor from the previous page (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokGetRelatedVideos(context.Background(), videoId).Region(region).Count(count).Execute()
+	resp, r, err := apiClient.TikTokAPI.TiktokGetRelatedVideos(context.Background(), videoId).Region(region).Count(count).Cursor(cursor).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetRelatedVideos``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -985,6 +992,7 @@ Name | Type | Description  | Notes
 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 16]
+ **cursor** | **string** | Continuation cursor from the previous page | 
 
 ### Return type
 
@@ -1006,7 +1014,7 @@ Name | Type | Description  | Notes
 
 ## TiktokGetReposts
 
-> interface{} TiktokGetReposts(ctx, username).Region(region).Count(count).Execute()
+> interface{} TiktokGetReposts(ctx, username).Region(region).Count(count).Cursor(cursor).Execute()
 
 Get reposts
 
@@ -1028,10 +1036,11 @@ func main() {
 	username := "username_example" // string | 
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 30)
+	cursor := "cursor_example" // string | Continuation cursor from the previous page (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TikTokAPI.TiktokGetReposts(context.Background(), username).Region(region).Count(count).Execute()
+	resp, r, err := apiClient.TikTokAPI.TiktokGetReposts(context.Background(), username).Region(region).Count(count).Cursor(cursor).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TikTokAPI.TiktokGetReposts``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1059,6 +1068,7 @@ Name | Type | Description  | Notes
 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 30]
+ **cursor** | **string** | Continuation cursor from the previous page | 
 
 ### Return type
 
@@ -1318,7 +1328,7 @@ func main() {
 	username := "username_example" // string | 
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 30)
-	cursor := "cursor_example" // string | Pagination cursor from a prior page's `pagination.cursor` (signer path only). (optional)
+	cursor := "cursor_example" // string | Pagination cursor from a prior page's `pagination.cursor` (opaque; expires after 15 minutes). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1350,7 +1360,7 @@ Name | Type | Description  | Notes
 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 30]
- **cursor** | **string** | Pagination cursor from a prior page&#39;s &#x60;pagination.cursor&#x60; (signer path only). | 
+ **cursor** | **string** | Pagination cursor from a prior page&#39;s &#x60;pagination.cursor&#x60; (opaque; expires after 15 minutes). | 
 
 ### Return type
 
@@ -1651,7 +1661,7 @@ func main() {
 	query := "query_example" // string | Search keyword
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 20)
-	cursor := "cursor_example" // string | Composite pagination cursor (offset.search_id) from a prior page's pagination.cursor (optional)
+	cursor := "cursor_example" // string | Opaque continuation cursor from a prior page's pagination.cursor (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1679,7 +1689,7 @@ Name | Type | Description  | Notes
  **query** | **string** | Search keyword | 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 20]
- **cursor** | **string** | Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor | 
+ **cursor** | **string** | Opaque continuation cursor from a prior page&#39;s pagination.cursor | 
 
 ### Return type
 
@@ -1945,7 +1955,7 @@ func main() {
 	query := "query_example" // string | Search keyword
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 20)
-	cursor := "cursor_example" // string | Composite pagination cursor (offset.search_id) from a prior page's pagination.cursor (optional)
+	cursor := "cursor_example" // string | Opaque continuation cursor from a prior page's pagination.cursor (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1973,7 +1983,7 @@ Name | Type | Description  | Notes
  **query** | **string** | Search keyword | 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 20]
- **cursor** | **string** | Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor | 
+ **cursor** | **string** | Opaque continuation cursor from a prior page&#39;s pagination.cursor | 
 
 ### Return type
 
@@ -2017,7 +2027,7 @@ func main() {
 	query := "query_example" // string | Search keyword
 	region := "region_example" // string |  (optional) (default to "US")
 	count := int32(56) // int32 |  (optional) (default to 20)
-	cursor := "cursor_example" // string | Composite pagination cursor (offset.search_id) from a prior page's pagination.cursor (optional)
+	cursor := "cursor_example" // string | Opaque continuation cursor from a prior page's pagination.cursor (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -2045,7 +2055,7 @@ Name | Type | Description  | Notes
  **query** | **string** | Search keyword | 
  **region** | **string** |  | [default to &quot;US&quot;]
  **count** | **int32** |  | [default to 20]
- **cursor** | **string** | Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor | 
+ **cursor** | **string** | Opaque continuation cursor from a prior page&#39;s pagination.cursor | 
 
 ### Return type
 
@@ -2681,7 +2691,7 @@ import (
 
 func main() {
 	region := "region_example" // string |  (optional) (default to "US")
-	period := int32(56) // int32 |  (optional) (default to 7)
+	period := int32(56) // int32 | Historical windows are unavailable; omit period (optional)
 	count := int32(56) // int32 |  (optional) (default to 20)
 
 	configuration := openapiclient.NewConfiguration()
@@ -2708,7 +2718,7 @@ Other parameters are passed through a pointer to a apiTiktokTrendingHashtagsRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **region** | **string** |  | [default to &quot;US&quot;]
- **period** | **int32** |  | [default to 7]
+ **period** | **int32** | Historical windows are unavailable; omit period | 
  **count** | **int32** |  | [default to 20]
 
 ### Return type
@@ -2751,7 +2761,7 @@ import (
 
 func main() {
 	region := "region_example" // string |  (optional) (default to "US")
-	period := int32(56) // int32 |  (optional) (default to 7)
+	period := int32(56) // int32 | Historical windows are unavailable; omit period (optional)
 	count := int32(56) // int32 |  (optional) (default to 20)
 
 	configuration := openapiclient.NewConfiguration()
@@ -2778,7 +2788,7 @@ Other parameters are passed through a pointer to a apiTiktokTrendingSongsRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **region** | **string** |  | [default to &quot;US&quot;]
- **period** | **int32** |  | [default to 7]
+ **period** | **int32** | Historical windows are unavailable; omit period | 
  **count** | **int32** |  | [default to 20]
 
 ### Return type

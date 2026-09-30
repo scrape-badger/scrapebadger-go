@@ -74,13 +74,13 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TikTokAPIService TiktokGetFollowersDeprecated", func(t *testing.T) {
+	t.Run("Test TikTokAPIService TiktokGetFollowers", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var username string
 
-		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetFollowersDeprecated(context.Background(), username).Execute()
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetFollowers(context.Background(), username).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -88,13 +88,13 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TikTokAPIService TiktokGetFollowingDeprecated", func(t *testing.T) {
+	t.Run("Test TikTokAPIService TiktokGetFollowing", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var username string
 
-		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetFollowingDeprecated(context.Background(), username).Execute()
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetFollowing(context.Background(), username).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -130,13 +130,13 @@ func Test_scrapebadger_TikTokAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test TikTokAPIService TiktokGetLikedVideosDeprecated", func(t *testing.T) {
+	t.Run("Test TikTokAPIService TiktokGetLikedVideos", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var username string
 
-		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetLikedVideosDeprecated(context.Background(), username).Execute()
+		resp, httpRes, err := apiClient.TikTokAPI.TiktokGetLikedVideos(context.Background(), username).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

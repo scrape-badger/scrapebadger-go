@@ -221,7 +221,7 @@ func (r ApiTiktokGeneralSearchRequest) Count(count int32) ApiTiktokGeneralSearch
 	return r
 }
 
-// Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor
+// Opaque continuation cursor from a prior page&#39;s pagination.cursor
 func (r ApiTiktokGeneralSearchRequest) Cursor(cursor string) ApiTiktokGeneralSearchRequest {
 	r.cursor = &cursor
 	return r
@@ -697,41 +697,46 @@ func (a *TikTokAPIService) TiktokGetCommentsExecute(r ApiTiktokGetCommentsReques
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiTiktokGetFollowersDeprecatedRequest struct {
+type ApiTiktokGetFollowersRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
 	username string
 	region *string
 	count *int32
+	cursor *string
 }
 
-func (r ApiTiktokGetFollowersDeprecatedRequest) Region(region string) ApiTiktokGetFollowersDeprecatedRequest {
+func (r ApiTiktokGetFollowersRequest) Region(region string) ApiTiktokGetFollowersRequest {
 	r.region = &region
 	return r
 }
 
-func (r ApiTiktokGetFollowersDeprecatedRequest) Count(count int32) ApiTiktokGetFollowersDeprecatedRequest {
+func (r ApiTiktokGetFollowersRequest) Count(count int32) ApiTiktokGetFollowersRequest {
 	r.count = &count
 	return r
 }
 
-func (r ApiTiktokGetFollowersDeprecatedRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.TiktokGetFollowersDeprecatedExecute(r)
+// Continuation cursor from the previous page
+func (r ApiTiktokGetFollowersRequest) Cursor(cursor string) ApiTiktokGetFollowersRequest {
+	r.cursor = &cursor
+	return r
+}
+
+func (r ApiTiktokGetFollowersRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokGetFollowersExecute(r)
 }
 
 /*
-TiktokGetFollowersDeprecated Get followers (deprecated)
+TiktokGetFollowers Get followers
 
-DEPRECATED — TikTok followers require an authenticated account session. Returns HTTP 410.
+Get publicly visible followers without an account.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param username
- @return ApiTiktokGetFollowersDeprecatedRequest
-
-Deprecated
+ @return ApiTiktokGetFollowersRequest
 */
-func (a *TikTokAPIService) TiktokGetFollowersDeprecated(ctx context.Context, username string) ApiTiktokGetFollowersDeprecatedRequest {
-	return ApiTiktokGetFollowersDeprecatedRequest{
+func (a *TikTokAPIService) TiktokGetFollowers(ctx context.Context, username string) ApiTiktokGetFollowersRequest {
+	return ApiTiktokGetFollowersRequest{
 		ApiService: a,
 		ctx: ctx,
 		username: username,
@@ -740,8 +745,7 @@ func (a *TikTokAPIService) TiktokGetFollowersDeprecated(ctx context.Context, use
 
 // Execute executes the request
 //  @return interface{}
-// Deprecated
-func (a *TikTokAPIService) TiktokGetFollowersDeprecatedExecute(r ApiTiktokGetFollowersDeprecatedRequest) (interface{}, *http.Response, error) {
+func (a *TikTokAPIService) TiktokGetFollowersExecute(r ApiTiktokGetFollowersRequest) (interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -749,7 +753,7 @@ func (a *TikTokAPIService) TiktokGetFollowersDeprecatedExecute(r ApiTiktokGetFol
 		localVarReturnValue  interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetFollowersDeprecated")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetFollowers")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -772,6 +776,9 @@ func (a *TikTokAPIService) TiktokGetFollowersDeprecatedExecute(r ApiTiktokGetFol
 	} else {
 		var defaultValue int32 = 30
 		r.count = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -851,41 +858,46 @@ func (a *TikTokAPIService) TiktokGetFollowersDeprecatedExecute(r ApiTiktokGetFol
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiTiktokGetFollowingDeprecatedRequest struct {
+type ApiTiktokGetFollowingRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
 	username string
 	region *string
 	count *int32
+	cursor *string
 }
 
-func (r ApiTiktokGetFollowingDeprecatedRequest) Region(region string) ApiTiktokGetFollowingDeprecatedRequest {
+func (r ApiTiktokGetFollowingRequest) Region(region string) ApiTiktokGetFollowingRequest {
 	r.region = &region
 	return r
 }
 
-func (r ApiTiktokGetFollowingDeprecatedRequest) Count(count int32) ApiTiktokGetFollowingDeprecatedRequest {
+func (r ApiTiktokGetFollowingRequest) Count(count int32) ApiTiktokGetFollowingRequest {
 	r.count = &count
 	return r
 }
 
-func (r ApiTiktokGetFollowingDeprecatedRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.TiktokGetFollowingDeprecatedExecute(r)
+// Continuation cursor from the previous page
+func (r ApiTiktokGetFollowingRequest) Cursor(cursor string) ApiTiktokGetFollowingRequest {
+	r.cursor = &cursor
+	return r
+}
+
+func (r ApiTiktokGetFollowingRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokGetFollowingExecute(r)
 }
 
 /*
-TiktokGetFollowingDeprecated Get following (deprecated)
+TiktokGetFollowing Get following
 
-DEPRECATED — TikTok following requires an authenticated account session. Returns HTTP 410.
+Get publicly visible followed accounts. Hidden lists return HTTP 403.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param username
- @return ApiTiktokGetFollowingDeprecatedRequest
-
-Deprecated
+ @return ApiTiktokGetFollowingRequest
 */
-func (a *TikTokAPIService) TiktokGetFollowingDeprecated(ctx context.Context, username string) ApiTiktokGetFollowingDeprecatedRequest {
-	return ApiTiktokGetFollowingDeprecatedRequest{
+func (a *TikTokAPIService) TiktokGetFollowing(ctx context.Context, username string) ApiTiktokGetFollowingRequest {
+	return ApiTiktokGetFollowingRequest{
 		ApiService: a,
 		ctx: ctx,
 		username: username,
@@ -894,8 +906,7 @@ func (a *TikTokAPIService) TiktokGetFollowingDeprecated(ctx context.Context, use
 
 // Execute executes the request
 //  @return interface{}
-// Deprecated
-func (a *TikTokAPIService) TiktokGetFollowingDeprecatedExecute(r ApiTiktokGetFollowingDeprecatedRequest) (interface{}, *http.Response, error) {
+func (a *TikTokAPIService) TiktokGetFollowingExecute(r ApiTiktokGetFollowingRequest) (interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -903,7 +914,7 @@ func (a *TikTokAPIService) TiktokGetFollowingDeprecatedExecute(r ApiTiktokGetFol
 		localVarReturnValue  interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetFollowingDeprecated")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetFollowing")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -926,6 +937,9 @@ func (a *TikTokAPIService) TiktokGetFollowingDeprecatedExecute(r ApiTiktokGetFol
 	} else {
 		var defaultValue int32 = 30
 		r.count = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1305,41 +1319,46 @@ func (a *TikTokAPIService) TiktokGetHashtagVideosExecute(r ApiTiktokGetHashtagVi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiTiktokGetLikedVideosDeprecatedRequest struct {
+type ApiTiktokGetLikedVideosRequest struct {
 	ctx context.Context
 	ApiService *TikTokAPIService
 	username string
 	region *string
 	count *int32
+	cursor *string
 }
 
-func (r ApiTiktokGetLikedVideosDeprecatedRequest) Region(region string) ApiTiktokGetLikedVideosDeprecatedRequest {
+func (r ApiTiktokGetLikedVideosRequest) Region(region string) ApiTiktokGetLikedVideosRequest {
 	r.region = &region
 	return r
 }
 
-func (r ApiTiktokGetLikedVideosDeprecatedRequest) Count(count int32) ApiTiktokGetLikedVideosDeprecatedRequest {
+func (r ApiTiktokGetLikedVideosRequest) Count(count int32) ApiTiktokGetLikedVideosRequest {
 	r.count = &count
 	return r
 }
 
-func (r ApiTiktokGetLikedVideosDeprecatedRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.TiktokGetLikedVideosDeprecatedExecute(r)
+// Continuation cursor from the previous page
+func (r ApiTiktokGetLikedVideosRequest) Cursor(cursor string) ApiTiktokGetLikedVideosRequest {
+	r.cursor = &cursor
+	return r
+}
+
+func (r ApiTiktokGetLikedVideosRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.TiktokGetLikedVideosExecute(r)
 }
 
 /*
-TiktokGetLikedVideosDeprecated Get liked videos (deprecated)
+TiktokGetLikedVideos Get liked videos
 
-DEPRECATED — TikTok liked videos require an authenticated account session. Returns HTTP 410.
+Get public liked videos. Hidden liked lists return HTTP 403.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param username
- @return ApiTiktokGetLikedVideosDeprecatedRequest
-
-Deprecated
+ @return ApiTiktokGetLikedVideosRequest
 */
-func (a *TikTokAPIService) TiktokGetLikedVideosDeprecated(ctx context.Context, username string) ApiTiktokGetLikedVideosDeprecatedRequest {
-	return ApiTiktokGetLikedVideosDeprecatedRequest{
+func (a *TikTokAPIService) TiktokGetLikedVideos(ctx context.Context, username string) ApiTiktokGetLikedVideosRequest {
+	return ApiTiktokGetLikedVideosRequest{
 		ApiService: a,
 		ctx: ctx,
 		username: username,
@@ -1348,8 +1367,7 @@ func (a *TikTokAPIService) TiktokGetLikedVideosDeprecated(ctx context.Context, u
 
 // Execute executes the request
 //  @return interface{}
-// Deprecated
-func (a *TikTokAPIService) TiktokGetLikedVideosDeprecatedExecute(r ApiTiktokGetLikedVideosDeprecatedRequest) (interface{}, *http.Response, error) {
+func (a *TikTokAPIService) TiktokGetLikedVideosExecute(r ApiTiktokGetLikedVideosRequest) (interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -1357,7 +1375,7 @@ func (a *TikTokAPIService) TiktokGetLikedVideosDeprecatedExecute(r ApiTiktokGetL
 		localVarReturnValue  interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetLikedVideosDeprecated")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TikTokAPIService.TiktokGetLikedVideos")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -1380,6 +1398,9 @@ func (a *TikTokAPIService) TiktokGetLikedVideosDeprecatedExecute(r ApiTiktokGetL
 	} else {
 		var defaultValue int32 = 30
 		r.count = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1911,6 +1932,7 @@ type ApiTiktokGetRelatedVideosRequest struct {
 	videoId string
 	region *string
 	count *int32
+	cursor *string
 }
 
 func (r ApiTiktokGetRelatedVideosRequest) Region(region string) ApiTiktokGetRelatedVideosRequest {
@@ -1920,6 +1942,12 @@ func (r ApiTiktokGetRelatedVideosRequest) Region(region string) ApiTiktokGetRela
 
 func (r ApiTiktokGetRelatedVideosRequest) Count(count int32) ApiTiktokGetRelatedVideosRequest {
 	r.count = &count
+	return r
+}
+
+// Continuation cursor from the previous page
+func (r ApiTiktokGetRelatedVideosRequest) Cursor(cursor string) ApiTiktokGetRelatedVideosRequest {
+	r.cursor = &cursor
 	return r
 }
 
@@ -1977,6 +2005,9 @@ func (a *TikTokAPIService) TiktokGetRelatedVideosExecute(r ApiTiktokGetRelatedVi
 	} else {
 		var defaultValue int32 = 16
 		r.count = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2062,6 +2093,7 @@ type ApiTiktokGetRepostsRequest struct {
 	username string
 	region *string
 	count *int32
+	cursor *string
 }
 
 func (r ApiTiktokGetRepostsRequest) Region(region string) ApiTiktokGetRepostsRequest {
@@ -2071,6 +2103,12 @@ func (r ApiTiktokGetRepostsRequest) Region(region string) ApiTiktokGetRepostsReq
 
 func (r ApiTiktokGetRepostsRequest) Count(count int32) ApiTiktokGetRepostsRequest {
 	r.count = &count
+	return r
+}
+
+// Continuation cursor from the previous page
+func (r ApiTiktokGetRepostsRequest) Cursor(cursor string) ApiTiktokGetRepostsRequest {
+	r.cursor = &cursor
 	return r
 }
 
@@ -2128,6 +2166,9 @@ func (a *TikTokAPIService) TiktokGetRepostsExecute(r ApiTiktokGetRepostsRequest)
 	} else {
 		var defaultValue int32 = 30
 		r.count = &defaultValue
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2645,7 +2686,7 @@ func (r ApiTiktokGetUserVideosRequest) Count(count int32) ApiTiktokGetUserVideos
 	return r
 }
 
-// Pagination cursor from a prior page&#39;s &#x60;pagination.cursor&#x60; (signer path only).
+// Pagination cursor from a prior page&#39;s &#x60;pagination.cursor&#x60; (opaque; expires after 15 minutes).
 func (r ApiTiktokGetUserVideosRequest) Cursor(cursor string) ApiTiktokGetUserVideosRequest {
 	r.cursor = &cursor
 	return r
@@ -3300,7 +3341,7 @@ func (r ApiTiktokSearchHashtagsRequest) Count(count int32) ApiTiktokSearchHashta
 	return r
 }
 
-// Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor
+// Opaque continuation cursor from a prior page&#39;s pagination.cursor
 func (r ApiTiktokSearchHashtagsRequest) Cursor(cursor string) ApiTiktokSearchHashtagsRequest {
 	r.cursor = &cursor
 	return r
@@ -4024,7 +4065,7 @@ func (r ApiTiktokSearchUsersRequest) Count(count int32) ApiTiktokSearchUsersRequ
 	return r
 }
 
-// Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor
+// Opaque continuation cursor from a prior page&#39;s pagination.cursor
 func (r ApiTiktokSearchUsersRequest) Cursor(cursor string) ApiTiktokSearchUsersRequest {
 	r.cursor = &cursor
 	return r
@@ -4192,7 +4233,7 @@ func (r ApiTiktokSearchVideosRequest) Count(count int32) ApiTiktokSearchVideosRe
 	return r
 }
 
-// Composite pagination cursor (offset.search_id) from a prior page&#39;s pagination.cursor
+// Opaque continuation cursor from a prior page&#39;s pagination.cursor
 func (r ApiTiktokSearchVideosRequest) Cursor(cursor string) ApiTiktokSearchVideosRequest {
 	r.cursor = &cursor
 	return r
@@ -5655,6 +5696,7 @@ func (r ApiTiktokTrendingHashtagsRequest) Region(region string) ApiTiktokTrendin
 	return r
 }
 
+// Historical windows are unavailable; omit period
 func (r ApiTiktokTrendingHashtagsRequest) Period(period int32) ApiTiktokTrendingHashtagsRequest {
 	r.period = &period
 	return r
@@ -5713,9 +5755,6 @@ func (a *TikTokAPIService) TiktokTrendingHashtagsExecute(r ApiTiktokTrendingHash
 	}
 	if r.period != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
-	} else {
-		var defaultValue int32 = 7
-		r.period = &defaultValue
 	}
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
@@ -5814,6 +5853,7 @@ func (r ApiTiktokTrendingSongsRequest) Region(region string) ApiTiktokTrendingSo
 	return r
 }
 
+// Historical windows are unavailable; omit period
 func (r ApiTiktokTrendingSongsRequest) Period(period int32) ApiTiktokTrendingSongsRequest {
 	r.period = &period
 	return r
@@ -5872,9 +5912,6 @@ func (a *TikTokAPIService) TiktokTrendingSongsExecute(r ApiTiktokTrendingSongsRe
 	}
 	if r.period != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
-	} else {
-		var defaultValue int32 = 7
-		r.period = &defaultValue
 	}
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")

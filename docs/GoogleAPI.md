@@ -959,9 +959,9 @@ func main() {
 	language := "language_example" // string | Language code (alias for hl) (optional)
 	gl := "gl_example" // string | Country code (optional) (default to "us")
 	hl := "hl_example" // string | Language code (optional) (default to "en")
-	product := true // bool | Bias towards shoppable product matches (optional) (default to false)
-	visualMatches := true // bool | Include the visual-matches carousel (optional) (default to true)
-	exactMatches := true // bool | Restrict to exact-match results (optional) (default to false)
+	product := true // bool | NOT YET SUPPORTED — accepted, and reported back in `warnings` (optional) (default to false)
+	visualMatches := true // bool | Always true in practice — `false` is reported back in `warnings` (optional) (default to true)
+	exactMatches := true // bool | NOT YET SUPPORTED — accepted, and reported back in `warnings` (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -992,9 +992,9 @@ Name | Type | Description  | Notes
  **language** | **string** | Language code (alias for hl) | 
  **gl** | **string** | Country code | [default to &quot;us&quot;]
  **hl** | **string** | Language code | [default to &quot;en&quot;]
- **product** | **bool** | Bias towards shoppable product matches | [default to false]
- **visualMatches** | **bool** | Include the visual-matches carousel | [default to true]
- **exactMatches** | **bool** | Restrict to exact-match results | [default to false]
+ **product** | **bool** | NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60; | [default to false]
+ **visualMatches** | **bool** | Always true in practice — &#x60;false&#x60; is reported back in &#x60;warnings&#x60; | [default to true]
+ **exactMatches** | **bool** | NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60; | [default to false]
 
 ### Return type
 
