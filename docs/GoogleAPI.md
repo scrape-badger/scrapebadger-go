@@ -961,7 +961,7 @@ func main() {
 	hl := "hl_example" // string | Language code (optional) (default to "en")
 	product := true // bool | NOT YET SUPPORTED — accepted, and reported back in `warnings` (optional) (default to false)
 	visualMatches := true // bool | Always true in practice — `false` is reported back in `warnings` (optional) (default to true)
-	exactMatches := true // bool | NOT YET SUPPORTED — accepted, and reported back in `warnings` (optional) (default to false)
+	exactMatches := true // bool | Return the pages hosting this image, flagged `exact_match` (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -994,7 +994,7 @@ Name | Type | Description  | Notes
  **hl** | **string** | Language code | [default to &quot;en&quot;]
  **product** | **bool** | NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60; | [default to false]
  **visualMatches** | **bool** | Always true in practice — &#x60;false&#x60; is reported back in &#x60;warnings&#x60; | [default to true]
- **exactMatches** | **bool** | NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60; | [default to false]
+ **exactMatches** | **bool** | Return the pages hosting this image, flagged &#x60;exact_match&#x60; | [default to false]
 
 ### Return type
 
