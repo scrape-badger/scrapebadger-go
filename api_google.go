@@ -2292,7 +2292,7 @@ func (r ApiGoogleGoogleLensVisualSearchRequest) VisualMatches(visualMatches bool
 	return r
 }
 
-// Return the pages hosting this image, flagged &#x60;exact_match&#x60;
+// EXPERIMENTAL and off by default: when Google&#39;s source set is available this returns only the pages hosting the image, each flagged exact_match; it is frequently unavailable, and every request that falls back says so in warnings
 func (r ApiGoogleGoogleLensVisualSearchRequest) ExactMatches(exactMatches bool) ApiGoogleGoogleLensVisualSearchRequest {
 	r.exactMatches = &exactMatches
 	return r
@@ -2314,14 +2314,15 @@ Response carries ``lens_results`` (Scrapingdog parity alias) with
 is parsed from, on shoppable matches. ``related_searches`` chips come
 alongside. Legacy ``results`` alias kept for backwards compat.
 
-``query`` refines the grid with text. ``exact_matches=true`` swaps the
-grid for Google's high-precision source set — the pages actually hosting
-the image, each flagged ``exact_match: true`` — which is much smaller
-than the grid (one result vs ~58 on our reference image). ``product`` is
-still not supported, and ``visual_matches=false`` cannot be: visual
-matches are the only grid served. Anything that could not be applied,
-including an exact-match lookup that came back empty, is named in the
-``warnings`` array rather than silently dropped (SCR-177, SCR-180).
+``query`` refines the grid with text. ``exact_matches=true`` is
+EXPERIMENTAL and off by default: when Google's source set is available it
+returns just the pages hosting the image, each flagged
+``exact_match: true``, but that set is frequently empty and the request
+then falls back to the grid. ``product`` is not supported, and
+``visual_matches=false`` cannot be: visual matches are the only grid
+served. Anything that could not be applied — including an exact-match
+lookup that came back empty — is named in the ``warnings`` array rather
+than silently dropped (SCR-177, SCR-180).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGoogleGoogleLensVisualSearchRequest

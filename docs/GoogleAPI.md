@@ -961,7 +961,7 @@ func main() {
 	hl := "hl_example" // string | Language code (optional) (default to "en")
 	product := true // bool | NOT YET SUPPORTED — accepted, and reported back in `warnings` (optional) (default to false)
 	visualMatches := true // bool | Always true in practice — `false` is reported back in `warnings` (optional) (default to true)
-	exactMatches := true // bool | Return the pages hosting this image, flagged `exact_match` (optional) (default to false)
+	exactMatches := true // bool | EXPERIMENTAL and off by default: when Google's source set is available this returns only the pages hosting the image, each flagged exact_match; it is frequently unavailable, and every request that falls back says so in warnings (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -994,7 +994,7 @@ Name | Type | Description  | Notes
  **hl** | **string** | Language code | [default to &quot;en&quot;]
  **product** | **bool** | NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60; | [default to false]
  **visualMatches** | **bool** | Always true in practice — &#x60;false&#x60; is reported back in &#x60;warnings&#x60; | [default to true]
- **exactMatches** | **bool** | Return the pages hosting this image, flagged &#x60;exact_match&#x60; | [default to false]
+ **exactMatches** | **bool** | EXPERIMENTAL and off by default: when Google&#39;s source set is available this returns only the pages hosting the image, each flagged exact_match; it is frequently unavailable, and every request that falls back says so in warnings | [default to false]
 
 ### Return type
 
