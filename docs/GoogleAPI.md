@@ -959,9 +959,9 @@ func main() {
 	language := "language_example" // string | Language code (alias for hl) (optional)
 	gl := "gl_example" // string | Country code (optional) (default to "us")
 	hl := "hl_example" // string | Language code (optional) (default to "en")
-	product := true // bool | NOT YET SUPPORTED — accepted, and reported back in `warnings` (optional) (default to false)
+	product := true // bool | Only the tiles Google marked buyable (price + stock), drawn from the same grid (optional) (default to false)
 	visualMatches := true // bool | Always true in practice — `false` is reported back in `warnings` (optional) (default to true)
-	exactMatches := true // bool | Return only the pages hosting this image, flagged exact_match. Available for most images (7/10 in sampling); falls back to the full grid otherwise, saying so in warnings (optional) (default to false)
+	exactMatches := true // bool | Return only the pages hosting this image, flagged exact_match. Available for most images (8/10 in sampling); falls back to the full grid otherwise, saying so in warnings (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -992,9 +992,9 @@ Name | Type | Description  | Notes
  **language** | **string** | Language code (alias for hl) | 
  **gl** | **string** | Country code | [default to &quot;us&quot;]
  **hl** | **string** | Language code | [default to &quot;en&quot;]
- **product** | **bool** | NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60; | [default to false]
+ **product** | **bool** | Only the tiles Google marked buyable (price + stock), drawn from the same grid | [default to false]
  **visualMatches** | **bool** | Always true in practice — &#x60;false&#x60; is reported back in &#x60;warnings&#x60; | [default to true]
- **exactMatches** | **bool** | Return only the pages hosting this image, flagged exact_match. Available for most images (7/10 in sampling); falls back to the full grid otherwise, saying so in warnings | [default to false]
+ **exactMatches** | **bool** | Return only the pages hosting this image, flagged exact_match. Available for most images (8/10 in sampling); falls back to the full grid otherwise, saying so in warnings | [default to false]
 
 ### Return type
 

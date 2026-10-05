@@ -2280,7 +2280,7 @@ func (r ApiGoogleGoogleLensVisualSearchRequest) Hl(hl string) ApiGoogleGoogleLen
 	return r
 }
 
-// NOT YET SUPPORTED — accepted, and reported back in &#x60;warnings&#x60;
+// Only the tiles Google marked buyable (price + stock), drawn from the same grid
 func (r ApiGoogleGoogleLensVisualSearchRequest) Product(product bool) ApiGoogleGoogleLensVisualSearchRequest {
 	r.product = &product
 	return r
@@ -2292,7 +2292,7 @@ func (r ApiGoogleGoogleLensVisualSearchRequest) VisualMatches(visualMatches bool
 	return r
 }
 
-// Return only the pages hosting this image, flagged exact_match. Available for most images (7/10 in sampling); falls back to the full grid otherwise, saying so in warnings
+// Return only the pages hosting this image, flagged exact_match. Available for most images (8/10 in sampling); falls back to the full grid otherwise, saying so in warnings
 func (r ApiGoogleGoogleLensVisualSearchRequest) ExactMatches(exactMatches bool) ApiGoogleGoogleLensVisualSearchRequest {
 	r.exactMatches = &exactMatches
 	return r
@@ -2316,8 +2316,8 @@ alongside. Legacy ``results`` alias kept for backwards compat.
 
 ``query`` refines the grid with text. ``exact_matches=true`` returns just
 the pages hosting the image, each flagged ``exact_match: true``, instead
-of the broad grid — available for most images (7 of 10 in sampling) and
-falling back to the grid otherwise. ``product`` is not supported, and
+of the broad grid — available for most images (8 of 10 in sampling) and
+falling back to the grid otherwise. ``product=true`` narrows the grid to the tiles Google marked buyable. ``visual_matches=false`` cannot be honoured:
 ``visual_matches=false`` cannot be: visual matches are the only grid
 served. Anything that could not be applied — including an exact-match
 lookup that came back empty — is named in the ``warnings`` array rather
