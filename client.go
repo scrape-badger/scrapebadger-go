@@ -93,6 +93,8 @@ type APIClient struct {
 
 	LoopNetAPI *LoopNetAPIService
 
+	NaverAPI *NaverAPIService
+
 	PerplexityAPI *PerplexityAPIService
 
 	RealtorAPI *RealtorAPIService
@@ -158,6 +160,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LeboncoinAPI = (*LeboncoinAPIService)(&c.common)
 	c.LinkedInAPI = (*LinkedInAPIService)(&c.common)
 	c.LoopNetAPI = (*LoopNetAPIService)(&c.common)
+	c.NaverAPI = (*NaverAPIService)(&c.common)
 	c.PerplexityAPI = (*PerplexityAPIService)(&c.common)
 	c.RealtorAPI = (*RealtorAPIService)(&c.common)
 	c.RedditAPI = (*RedditAPIService)(&c.common)
