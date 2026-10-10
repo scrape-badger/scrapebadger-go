@@ -46,20 +46,6 @@ func Test_scrapebadger_WebAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test WebAPIService WebGetBatchJobStatus", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var jobId string
-
-		resp, httpRes, err := apiClient.WebAPI.WebGetBatchJobStatus(context.Background(), jobId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test WebAPIService WebPollAnAutoUnblockDiscoveryJob", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -79,18 +65,6 @@ func Test_scrapebadger_WebAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.WebAPI.WebScrapeAUrl(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test WebAPIService WebSubmitBatchScrapingJob", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.WebAPI.WebSubmitBatchScrapingJob(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

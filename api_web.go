@@ -143,6 +143,12 @@ func (a *WebAPIService) WebDetectAntiBotAndCaptchaSystemsExecute(r ApiWebDetectA
 type ApiWebExtractStructuredDataRequest struct {
 	ctx context.Context
 	ApiService *WebAPIService
+	extractRequest *ExtractRequest
+}
+
+func (r ApiWebExtractStructuredDataRequest) ExtractRequest(extractRequest ExtractRequest) ApiWebExtractStructuredDataRequest {
+	r.extractRequest = &extractRequest
+	return r
 }
 
 func (r ApiWebExtractStructuredDataRequest) Execute() (interface{}, *http.Response, error) {
@@ -152,7 +158,12 @@ func (r ApiWebExtractStructuredDataRequest) Execute() (interface{}, *http.Respon
 /*
 WebExtractStructuredData Extract structured data
 
-Extract structured data from a URL using CSS or XPath selectors. (Phase 6)
+Scrape a URL and extract fields with CSS/XPath selectors and/or AI.
+
+``extract_rules`` maps a field to a selector and returns ``data``;
+``ai_extract_rules`` (field -> description) and ``ai_query`` return
+``ai_extraction``. Billed as a scrape, plus the AI extraction credits when
+AI is asked for and succeeds.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiWebExtractStructuredDataRequest
@@ -184,9 +195,12 @@ func (a *WebAPIService) WebExtractStructuredDataExecute(r ApiWebExtractStructure
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.extractRequest == nil {
+		return localVarReturnValue, nil, reportError("extractRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -202,123 +216,8 @@ func (a *WebAPIService) WebExtractStructuredDataExecute(r ApiWebExtractStructure
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-API-Key"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiWebGetBatchJobStatusRequest struct {
-	ctx context.Context
-	ApiService *WebAPIService
-	jobId string
-}
-
-func (r ApiWebGetBatchJobStatusRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.WebGetBatchJobStatusExecute(r)
-}
-
-/*
-WebGetBatchJobStatus Get batch job status
-
-Get the status of a batch scraping job. (Phase 6)
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param jobId
- @return ApiWebGetBatchJobStatusRequest
-*/
-func (a *WebAPIService) WebGetBatchJobStatus(ctx context.Context, jobId string) ApiWebGetBatchJobStatusRequest {
-	return ApiWebGetBatchJobStatusRequest{
-		ApiService: a,
-		ctx: ctx,
-		jobId: jobId,
-	}
-}
-
-// Execute executes the request
-//  @return interface{}
-func (a *WebAPIService) WebGetBatchJobStatusExecute(r ApiWebGetBatchJobStatusRequest) (interface{}, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  interface{}
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WebAPIService.WebGetBatchJobStatus")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/v1/web/batch/{job_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"job_id"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
+	// body params
+	localVarPostBody = r.extractRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -639,122 +538,15 @@ func (a *WebAPIService) WebScrapeAUrlExecute(r ApiWebScrapeAUrlRequest) (interfa
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiWebSubmitBatchScrapingJobRequest struct {
-	ctx context.Context
-	ApiService *WebAPIService
-}
-
-func (r ApiWebSubmitBatchScrapingJobRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.WebSubmitBatchScrapingJobExecute(r)
-}
-
-/*
-WebSubmitBatchScrapingJob Submit batch scraping job
-
-Submit a batch of URLs for scraping. (Phase 6)
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiWebSubmitBatchScrapingJobRequest
-*/
-func (a *WebAPIService) WebSubmitBatchScrapingJob(ctx context.Context) ApiWebSubmitBatchScrapingJobRequest {
-	return ApiWebSubmitBatchScrapingJobRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return interface{}
-func (a *WebAPIService) WebSubmitBatchScrapingJobExecute(r ApiWebSubmitBatchScrapingJobRequest) (interface{}, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  interface{}
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WebAPIService.WebSubmitBatchScrapingJob")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/v1/web/batch"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["X-API-Key"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiWebTakeAScreenshotRequest struct {
 	ctx context.Context
 	ApiService *WebAPIService
+	screenshotRequest *ScreenshotRequest
+}
+
+func (r ApiWebTakeAScreenshotRequest) ScreenshotRequest(screenshotRequest ScreenshotRequest) ApiWebTakeAScreenshotRequest {
+	r.screenshotRequest = &screenshotRequest
+	return r
 }
 
 func (r ApiWebTakeAScreenshotRequest) Execute() (interface{}, *http.Response, error) {
@@ -764,7 +556,12 @@ func (r ApiWebTakeAScreenshotRequest) Execute() (interface{}, *http.Response, er
 /*
 WebTakeAScreenshot Take a screenshot
 
-Take a screenshot of a URL. (browser engine)
+Render a URL in the browser engine and return a PNG screenshot.
+
+``screenshot`` is the PNG, base64-encoded. ``width``/``height`` set the
+viewport; ``full_page`` captures the whole scrollable page. Billed as a
+browser scrape (plus the proxy tier); a page that loads without a
+screenshot is a 502 and costs nothing.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiWebTakeAScreenshotRequest
@@ -796,9 +593,12 @@ func (a *WebAPIService) WebTakeAScreenshotExecute(r ApiWebTakeAScreenshotRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.screenshotRequest == nil {
+		return localVarReturnValue, nil, reportError("screenshotRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -814,6 +614,8 @@ func (a *WebAPIService) WebTakeAScreenshotExecute(r ApiWebTakeAScreenshotRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.screenshotRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -849,6 +651,16 @@ func (a *WebAPIService) WebTakeAScreenshotExecute(r ApiWebTakeAScreenshotRequest
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
