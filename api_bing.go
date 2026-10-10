@@ -1027,13 +1027,13 @@ func (r ApiBingWebSearchRequest) Market(market string) ApiBingWebSearchRequest {
 	return r
 }
 
-// Results per page (1-50)
+// Organic results to return (1-50), merged from Bing&#39;s following pages when one page is short. May return fewer.
 func (r ApiBingWebSearchRequest) Count(count int32) ApiBingWebSearchRequest {
 	r.count = &count
 	return r
 }
 
-// Zero-based result offset for pagination
+// Organic results to skip in Bing&#39;s ranking. Paginate with offset +&#x3D; count.
 func (r ApiBingWebSearchRequest) Offset(offset int32) ApiBingWebSearchRequest {
 	r.offset = &offset
 	return r

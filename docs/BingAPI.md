@@ -503,8 +503,8 @@ import (
 func main() {
 	query := "query_example" // string | Search keywords, e.g. 'coffee machine'
 	market := "market_example" // string | Bing market code, e.g. 'en-US', 'en-GB', 'de-DE'. See /markets. (optional) (default to "en-US")
-	count := int32(56) // int32 | Results per page (1-50) (optional) (default to 10)
-	offset := int32(56) // int32 | Zero-based result offset for pagination (optional) (default to 0)
+	count := int32(56) // int32 | Organic results to return (1-50), merged from Bing's following pages when one page is short. May return fewer. (optional) (default to 10)
+	offset := int32(56) // int32 | Organic results to skip in Bing's ranking. Paginate with offset += count. (optional) (default to 0)
 	safeSearch := "safeSearch_example" // string | off | moderate | strict (default moderate) (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -532,8 +532,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query** | **string** | Search keywords, e.g. &#39;coffee machine&#39; | 
  **market** | **string** | Bing market code, e.g. &#39;en-US&#39;, &#39;en-GB&#39;, &#39;de-DE&#39;. See /markets. | [default to &quot;en-US&quot;]
- **count** | **int32** | Results per page (1-50) | [default to 10]
- **offset** | **int32** | Zero-based result offset for pagination | [default to 0]
+ **count** | **int32** | Organic results to return (1-50), merged from Bing&#39;s following pages when one page is short. May return fewer. | [default to 10]
+ **offset** | **int32** | Organic results to skip in Bing&#39;s ranking. Paginate with offset +&#x3D; count. | [default to 0]
  **safeSearch** | **string** | off | moderate | strict (default moderate) | 
 
 ### Return type
