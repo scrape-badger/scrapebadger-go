@@ -397,7 +397,7 @@ Name | Type | Description  | Notes
 
 ## FacebookGetGroupPosts
 
-> interface{} FacebookGetGroupPosts(ctx, groupId).After(after).Execute()
+> interface{} FacebookGetGroupPosts(ctx, groupId).After(after).Sort(sort).Execute()
 
 Get group posts
 
@@ -418,10 +418,11 @@ import (
 func main() {
 	groupId := "groupId_example" // string | 
 	after := "after_example" // string |  (optional)
+	sort := "sort_example" // string | newest | relevance (optional) (default to "newest")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookGetGroupPosts(context.Background(), groupId).After(after).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookGetGroupPosts(context.Background(), groupId).After(after).Sort(sort).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookGetGroupPosts``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -448,6 +449,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **after** | **string** |  | 
+ **sort** | **string** | newest | relevance | [default to &quot;newest&quot;]
 
 ### Return type
 

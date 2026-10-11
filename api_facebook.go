@@ -740,10 +740,17 @@ type ApiFacebookGetGroupPostsRequest struct {
 	ApiService *FacebookAPIService
 	groupId string
 	after *string
+	sort *string
 }
 
 func (r ApiFacebookGetGroupPostsRequest) After(after string) ApiFacebookGetGroupPostsRequest {
 	r.after = &after
+	return r
+}
+
+// newest | relevance
+func (r ApiFacebookGetGroupPostsRequest) Sort(sort string) ApiFacebookGetGroupPostsRequest {
+	r.sort = &sort
 	return r
 }
 
@@ -754,7 +761,12 @@ func (r ApiFacebookGetGroupPostsRequest) Execute() (interface{}, *http.Response,
 /*
 FacebookGetGroupPosts Get group posts
 
-Get a Facebook group's post feed.
+Get a public Facebook group's post feed.
+
+``sort`` is ``newest`` (newest first by post time, the default) or
+``relevance`` (Facebook's "top posts" ranking, which moves posts with fresh
+comments up). Facebook serves 3 posts per page to logged-out visitors; follow
+``end_cursor`` while ``has_next_page`` for older posts.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId
@@ -792,6 +804,12 @@ func (a *FacebookAPIService) FacebookGetGroupPostsExecute(r ApiFacebookGetGroupP
 
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "newest"
+		r.sort = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
