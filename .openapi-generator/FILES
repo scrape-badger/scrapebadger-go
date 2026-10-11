@@ -19,6 +19,7 @@ api_facebook.go
 api_gemini.go
 api_google.go
 api_google_play.go
+api_gumtree.go
 api_idealista.go
 api_immobiliare.go
 api_instagram.go
@@ -74,6 +75,7 @@ docs/FilterRuleValidateResponse.md
 docs/GeminiAPI.md
 docs/GoogleAPI.md
 docs/GooglePlayAPI.md
+docs/GumtreeAPI.md
 docs/HTTPValidationError.md
 docs/IdealistaAPI.md
 docs/ImmobiliareAPI.md
@@ -205,6 +207,7 @@ test/api_facebook_test.go
 test/api_gemini_test.go
 test/api_google_play_test.go
 test/api_google_test.go
+test/api_gumtree_test.go
 test/api_idealista_test.go
 test/api_immobiliare_test.go
 test/api_instagram_test.go
