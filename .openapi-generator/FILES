@@ -33,6 +33,7 @@ api_redfin.go
 api_tik_tok.go
 api_twitter.go
 api_vinted.go
+api_wallapop.go
 api_walmart.go
 api_web.go
 api_yahoo.go
@@ -118,6 +119,7 @@ docs/VintedSellerSummary.md
 docs/VintedStatus.md
 docs/VintedUserProfile.md
 docs/VintedUserSummary.md
+docs/WallapopAPI.md
 docs/WalmartAPI.md
 docs/WebAPI.md
 docs/WebhookCreate.md
@@ -217,6 +219,7 @@ test/api_redfin_test.go
 test/api_tik_tok_test.go
 test/api_twitter_test.go
 test/api_vinted_test.go
+test/api_wallapop_test.go
 test/api_walmart_test.go
 test/api_web_test.go
 test/api_yahoo_test.go

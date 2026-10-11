@@ -109,6 +109,8 @@ type APIClient struct {
 
 	VintedAPI *VintedAPIService
 
+	WallapopAPI *WallapopAPIService
+
 	WalmartAPI *WalmartAPIService
 
 	WebAPI *WebAPIService
@@ -168,6 +170,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.TikTokAPI = (*TikTokAPIService)(&c.common)
 	c.TwitterAPI = (*TwitterAPIService)(&c.common)
 	c.VintedAPI = (*VintedAPIService)(&c.common)
+	c.WallapopAPI = (*WallapopAPIService)(&c.common)
 	c.WalmartAPI = (*WalmartAPIService)(&c.common)
 	c.WebAPI = (*WebAPIService)(&c.common)
 	c.YahooAPI = (*YahooAPIService)(&c.common)
