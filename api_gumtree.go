@@ -213,7 +213,6 @@ GumtreeGetSearchFilters Get search filters
 Filters, sort orders and radius options for a category, with live counts.
 
 Feed a `key` and a `value` back into `/search` as `filters=key:value`.
-au bills 2x (browser render).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeGetSearchFiltersRequest
@@ -900,7 +899,7 @@ GumtreeListLocations List locations
 Browse Gumtree's location tree.
 
 uk: UK -> nations -> counties -> towns. au: states -> regions -> areas, each
-with its live ad count (browser render, bills 5x). za: provinces -> towns.
+with its live ad count. za: provinces -> towns.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeListLocationsRequest
@@ -1390,7 +1389,7 @@ GumtreeSearchListings Search listings
 Search Gumtree listings in the UK, Australia or South Africa.
 
 Up to 50 pages. Page size: uk 25, au 24 (plus up to 6 featured top ads),
-za 20. An au search runs a real browser (~10-20 s) and bills 2x.
+za 20.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeSearchListingsRequest
