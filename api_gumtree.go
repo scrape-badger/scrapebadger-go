@@ -27,6 +27,13 @@ type ApiGumtreeGetListingRequest struct {
 	ctx context.Context
 	ApiService *GumtreeAPIService
 	listingId string
+	market *string
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeGetListingRequest) Market(market string) ApiGumtreeGetListingRequest {
+	r.market = &market
+	return r
 }
 
 func (r ApiGumtreeGetListingRequest) Execute() (interface{}, *http.Response, error) {
@@ -39,7 +46,7 @@ GumtreeGetListing Get listing
 Full listing — description, attributes, images, seller, similar listings.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param listingId Gumtree listing id — the number at the end of a gumtree.com/p/... URL
+ @param listingId Gumtree listing id — the number at the end of the listing URL (uk/au: ~10 digits; za: the full 26-digit ad id, not the short one)
  @return ApiGumtreeGetListingRequest
 */
 func (a *GumtreeAPIService) GumtreeGetListing(ctx context.Context, listingId string) ApiGumtreeGetListingRequest {
@@ -72,6 +79,12 @@ func (a *GumtreeAPIService) GumtreeGetListingExecute(r ApiGumtreeGetListingReque
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	} else {
+		var defaultValue string = "uk"
+		r.market = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -156,22 +169,37 @@ type ApiGumtreeGetSearchFiltersRequest struct {
 	category *string
 	location *string
 	query *string
+	filters *string
+	market *string
 }
 
-// Category slug, e.g. &#39;cars&#39;, &#39;for-sale&#39;, &#39;property-to-rent&#39;, &#39;jobs&#39;. Default &#39;all&#39;.
+// uk: category slug, e.g. &#39;cars&#39;, &#39;for-sale&#39;, &#39;property-to-rent&#39;, &#39;jobs&#39;, &#39;bicycles&#39;. au/za: numeric category id, e.g. &#39;18320&#39; (au cars) or &#39;9077&#39; (za cars). Use /categories to browse the tree. Default &#39;all&#39;.
 func (r ApiGumtreeGetSearchFiltersRequest) Category(category string) ApiGumtreeGetSearchFiltersRequest {
 	r.category = &category
 	return r
 }
 
-// Location slug (&#39;london&#39;), town name or UK postcode (&#39;SW1A 1AA&#39;). Default &#39;uk&#39;.
+// uk: location slug (&#39;london&#39;), town name or UK postcode (&#39;SW1A 1AA&#39;). au/za: numeric location id, e.g. &#39;3003435&#39; (au Sydney) or &#39;3100003&#39; (za Gauteng). Use /locations/autocomplete to resolve one. Default: the whole country.
 func (r ApiGumtreeGetSearchFiltersRequest) Location(location string) ApiGumtreeGetSearchFiltersRequest {
 	r.location = &location
 	return r
 }
 
+// Optional keywords to scope the counts
 func (r ApiGumtreeGetSearchFiltersRequest) Query(query string) ApiGumtreeGetSearchFiltersRequest {
 	r.query = &query
+	return r
+}
+
+// za only: filters already applied (e.g. &#39;ma:toyota&#39; to list Toyota models)
+func (r ApiGumtreeGetSearchFiltersRequest) Filters(filters string) ApiGumtreeGetSearchFiltersRequest {
+	r.filters = &filters
+	return r
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeGetSearchFiltersRequest) Market(market string) ApiGumtreeGetSearchFiltersRequest {
+	r.market = &market
 	return r
 }
 
@@ -183,6 +211,9 @@ func (r ApiGumtreeGetSearchFiltersRequest) Execute() (interface{}, *http.Respons
 GumtreeGetSearchFilters Get search filters
 
 Filters, sort orders and radius options for a category, with live counts.
+
+Feed a `key` and a `value` back into `/search` as `filters=key:value`.
+au bills 2x (browser render).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeGetSearchFiltersRequest
@@ -223,12 +254,18 @@ func (a *GumtreeAPIService) GumtreeGetSearchFiltersExecute(r ApiGumtreeGetSearch
 	}
 	if r.location != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
-	} else {
-		var defaultValue string = "uk"
-		r.location = &defaultValue
 	}
 	if r.query != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	}
+	if r.filters != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters", r.filters, "form", "")
+	}
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	} else {
+		var defaultValue string = "uk"
+		r.market = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -313,10 +350,17 @@ type ApiGumtreeGetSellerListingsRequest struct {
 	ApiService *GumtreeAPIService
 	listingId string
 	page *int32
+	market *string
 }
 
 func (r ApiGumtreeGetSellerListingsRequest) Page(page int32) ApiGumtreeGetSellerListingsRequest {
 	r.page = &page
+	return r
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeGetSellerListingsRequest) Market(market string) ApiGumtreeGetSellerListingsRequest {
+	r.market = &market
 	return r
 }
 
@@ -330,7 +374,7 @@ GumtreeGetSellerListings Get seller listings
 Every live listing by the seller of the given listing.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param listingId Gumtree listing id — the number at the end of a gumtree.com/p/... URL
+ @param listingId Gumtree listing id — the number at the end of the listing URL (uk/au: ~10 digits; za: the full 26-digit ad id, not the short one)
  @return ApiGumtreeGetSellerListingsRequest
 */
 func (a *GumtreeAPIService) GumtreeGetSellerListings(ctx context.Context, listingId string) ApiGumtreeGetSellerListingsRequest {
@@ -368,6 +412,12 @@ func (a *GumtreeAPIService) GumtreeGetSellerListingsExecute(r ApiGumtreeGetSelle
 	} else {
 		var defaultValue int32 = 1
 		r.page = &defaultValue
+	}
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	} else {
+		var defaultValue string = "uk"
+		r.market = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -677,11 +727,18 @@ type ApiGumtreeListCategoriesRequest struct {
 	ctx context.Context
 	ApiService *GumtreeAPIService
 	parentId *int32
+	market *string
 }
 
-// Parent category id (default: all)
+// Category id to list the children of (default: all)
 func (r ApiGumtreeListCategoriesRequest) ParentId(parentId int32) ApiGumtreeListCategoriesRequest {
 	r.parentId = &parentId
+	return r
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeListCategoriesRequest) Market(market string) ApiGumtreeListCategoriesRequest {
+	r.market = &market
 	return r
 }
 
@@ -692,7 +749,9 @@ func (r ApiGumtreeListCategoriesRequest) Execute() (interface{}, *http.Response,
 /*
 GumtreeListCategories List categories
 
-Browse Gumtree's category tree. A node's `slug` is the `/search` category.
+Browse Gumtree's category tree.
+
+A node's `slug` (uk) or `id` (au/za) is the `/search` category.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeListCategoriesRequest
@@ -727,9 +786,12 @@ func (a *GumtreeAPIService) GumtreeListCategoriesExecute(r ApiGumtreeListCategor
 
 	if r.parentId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_id", r.parentId, "form", "")
+	}
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
 	} else {
-		var defaultValue int32 = 1
-		r.parentId = &defaultValue
+		var defaultValue string = "uk"
+		r.market = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -813,11 +875,18 @@ type ApiGumtreeListLocationsRequest struct {
 	ctx context.Context
 	ApiService *GumtreeAPIService
 	parentId *int32
+	market *string
 }
 
-// Parent location id (default: UK)
+// Location id to list the children of (default: the whole country)
 func (r ApiGumtreeListLocationsRequest) ParentId(parentId int32) ApiGumtreeListLocationsRequest {
 	r.parentId = &parentId
+	return r
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeListLocationsRequest) Market(market string) ApiGumtreeListLocationsRequest {
+	r.market = &market
 	return r
 }
 
@@ -829,6 +898,9 @@ func (r ApiGumtreeListLocationsRequest) Execute() (interface{}, *http.Response, 
 GumtreeListLocations List locations
 
 Browse Gumtree's location tree.
+
+uk: UK -> nations -> counties -> towns. au: states -> regions -> areas, each
+with its live ad count (browser render, bills 5x). za: provinces -> towns.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeListLocationsRequest
@@ -863,9 +935,12 @@ func (a *GumtreeAPIService) GumtreeListLocationsExecute(r ApiGumtreeListLocation
 
 	if r.parentId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "parent_id", r.parentId, "form", "")
+	}
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
 	} else {
-		var defaultValue int32 = 10000392
-		r.parentId = &defaultValue
+		var defaultValue string = "uk"
+		r.market = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -945,15 +1020,135 @@ func (a *GumtreeAPIService) GumtreeListLocationsExecute(r ApiGumtreeListLocation
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGumtreeListMarketsRequest struct {
+	ctx context.Context
+	ApiService *GumtreeAPIService
+}
+
+func (r ApiGumtreeListMarketsRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.GumtreeListMarketsExecute(r)
+}
+
+/*
+GumtreeListMarkets List markets
+
+The Gumtree sites this API covers (uk, au, za) with currency and id formats.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGumtreeListMarketsRequest
+*/
+func (a *GumtreeAPIService) GumtreeListMarkets(ctx context.Context) ApiGumtreeListMarketsRequest {
+	return ApiGumtreeListMarketsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *GumtreeAPIService) GumtreeListMarketsExecute(r ApiGumtreeListMarketsRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GumtreeAPIService.GumtreeListMarkets")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/gumtree/markets"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGumtreeLocationSuggestionsRequest struct {
 	ctx context.Context
 	ApiService *GumtreeAPIService
 	query *string
+	market *string
 }
 
-// Town or postcode prefix, e.g. &#39;manch&#39;
+// Town, area or postcode prefix, e.g. &#39;manch&#39; or &#39;SW1A&#39;
 func (r ApiGumtreeLocationSuggestionsRequest) Query(query string) ApiGumtreeLocationSuggestionsRequest {
 	r.query = &query
+	return r
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeLocationSuggestionsRequest) Market(market string) ApiGumtreeLocationSuggestionsRequest {
+	r.market = &market
 	return r
 }
 
@@ -964,7 +1159,9 @@ func (r ApiGumtreeLocationSuggestionsRequest) Execute() (interface{}, *http.Resp
 /*
 GumtreeLocationSuggestions Location suggestions
 
-Resolve a place name or postcode to Gumtree locations with coordinates.
+Resolve a place name or postcode to Gumtree location ids (uk: with coordinates).
+
+The `id` (au/za) or `name` (uk) is what `/search` takes as `location`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeLocationSuggestionsRequest
@@ -1004,6 +1201,12 @@ func (a *GumtreeAPIService) GumtreeLocationSuggestionsExecute(r ApiGumtreeLocati
 	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	} else {
+		var defaultValue string = "uk"
+		r.market = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1097,6 +1300,7 @@ type ApiGumtreeSearchListingsRequest struct {
 	withPhotos *bool
 	filters *string
 	page *int32
+	market *string
 }
 
 // Search keywords, e.g. &#39;mountain bike&#39;
@@ -1105,57 +1309,61 @@ func (r ApiGumtreeSearchListingsRequest) Query(query string) ApiGumtreeSearchLis
 	return r
 }
 
-// Category slug, e.g. &#39;cars&#39;, &#39;for-sale&#39;, &#39;property-to-rent&#39;, &#39;jobs&#39;. Default &#39;all&#39;.
+// uk: category slug, e.g. &#39;cars&#39;, &#39;for-sale&#39;, &#39;property-to-rent&#39;, &#39;jobs&#39;, &#39;bicycles&#39;. au/za: numeric category id, e.g. &#39;18320&#39; (au cars) or &#39;9077&#39; (za cars). Use /categories to browse the tree. Default &#39;all&#39;.
 func (r ApiGumtreeSearchListingsRequest) Category(category string) ApiGumtreeSearchListingsRequest {
 	r.category = &category
 	return r
 }
 
-// Location slug (&#39;london&#39;), town name or UK postcode (&#39;SW1A 1AA&#39;). Default &#39;uk&#39;.
+// uk: location slug (&#39;london&#39;), town name or UK postcode (&#39;SW1A 1AA&#39;). au/za: numeric location id, e.g. &#39;3003435&#39; (au Sydney) or &#39;3100003&#39; (za Gauteng). Use /locations/autocomplete to resolve one. Default: the whole country.
 func (r ApiGumtreeSearchListingsRequest) Location(location string) ApiGumtreeSearchListingsRequest {
 	r.location = &location
 	return r
 }
 
-// Radius in miles
+// Radius around &#x60;location&#x60;: miles (uk) or km (au). Not offered by za.
 func (r ApiGumtreeSearchListingsRequest) Distance(distance float32) ApiGumtreeSearchListingsRequest {
 	r.distance = &distance
 	return r
 }
 
-// GBP; needs a category
+// Minimum price in the market&#39;s currency (uk: needs a category, not &#39;all&#39;)
 func (r ApiGumtreeSearchListingsRequest) MinPrice(minPrice int32) ApiGumtreeSearchListingsRequest {
 	r.minPrice = &minPrice
 	return r
 }
 
-// GBP; needs a category
+// Maximum price in the market&#39;s currency (uk: needs a category, not &#39;all&#39;)
 func (r ApiGumtreeSearchListingsRequest) MaxPrice(maxPrice int32) ApiGumtreeSearchListingsRequest {
 	r.maxPrice = &maxPrice
 	return r
 }
 
+// Result ordering (default relevance). &#39;distance&#39; needs uk, or au with a location.
 func (r ApiGumtreeSearchListingsRequest) Sort(sort string) ApiGumtreeSearchListingsRequest {
 	r.sort = &sort
 	return r
 }
 
+// uk/za: &#39;trade&#39; covers dealers, agencies and recruiters. au: not supported — use a category filter such as &#39;cars.forsaleby_s:ownr&#39;.
 func (r ApiGumtreeSearchListingsRequest) SellerType(sellerType string) ApiGumtreeSearchListingsRequest {
 	r.sellerType = &sellerType
 	return r
 }
 
+// uk only: only ads marked urgent
 func (r ApiGumtreeSearchListingsRequest) UrgentOnly(urgentOnly bool) ApiGumtreeSearchListingsRequest {
 	r.urgentOnly = &urgentOnly
 	return r
 }
 
+// uk only: only ads with photos
 func (r ApiGumtreeSearchListingsRequest) WithPhotos(withPhotos bool) ApiGumtreeSearchListingsRequest {
 	r.withPhotos = &withPhotos
 	return r
 }
 
-// Category filters as key:value pairs, e.g. &#39;vehicle_make:bmw,vehicle_fuel_type:petrol&#39;
+// Category-specific filters as comma-separated key:value pairs, e.g. &#39;vehicle_make:bmw,vehicle_fuel_type:petrol,min_vehicle_mileage:10000&#39; (uk), &#39;cars.carmake_s:toyota,cars.forsaleby_s:ownr&#39; (au) or &#39;ma:toyota,fu:petrol,max_km:100000&#39; (za). Range filters take min_&lt;key&gt;/max_&lt;key&gt;. Discover keys and values with /search/filters for the same market.
 func (r ApiGumtreeSearchListingsRequest) Filters(filters string) ApiGumtreeSearchListingsRequest {
 	r.filters = &filters
 	return r
@@ -1166,6 +1374,12 @@ func (r ApiGumtreeSearchListingsRequest) Page(page int32) ApiGumtreeSearchListin
 	return r
 }
 
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeSearchListingsRequest) Market(market string) ApiGumtreeSearchListingsRequest {
+	r.market = &market
+	return r
+}
+
 func (r ApiGumtreeSearchListingsRequest) Execute() (interface{}, *http.Response, error) {
 	return r.ApiService.GumtreeSearchListingsExecute(r)
 }
@@ -1173,7 +1387,10 @@ func (r ApiGumtreeSearchListingsRequest) Execute() (interface{}, *http.Response,
 /*
 GumtreeSearchListings Search listings
 
-Search gumtree.com listings. ~25-30 per page, up to 50 pages.
+Search Gumtree listings in the UK, Australia or South Africa.
+
+Up to 50 pages. Page size: uk 25, au 24 (plus up to 6 featured top ads),
+za 20. An au search runs a real browser (~10-20 s) and bills 2x.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGumtreeSearchListingsRequest
@@ -1217,9 +1434,6 @@ func (a *GumtreeAPIService) GumtreeSearchListingsExecute(r ApiGumtreeSearchListi
 	}
 	if r.location != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
-	} else {
-		var defaultValue string = "uk"
-		r.location = &defaultValue
 	}
 	if r.distance != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "distance", r.distance, "form", "")
@@ -1256,6 +1470,12 @@ func (a *GumtreeAPIService) GumtreeSearchListingsExecute(r ApiGumtreeSearchListi
 	} else {
 		var defaultValue int32 = 1
 		r.page = &defaultValue
+	}
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	} else {
+		var defaultValue string = "uk"
+		r.market = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1339,11 +1559,18 @@ type ApiGumtreeSearchSuggestionsRequest struct {
 	ctx context.Context
 	ApiService *GumtreeAPIService
 	query *string
+	market *string
 }
 
 // Partial search term, e.g. &#39;iph&#39;
 func (r ApiGumtreeSearchSuggestionsRequest) Query(query string) ApiGumtreeSearchSuggestionsRequest {
 	r.query = &query
+	return r
+}
+
+// Which Gumtree: &#39;uk&#39; (gumtree.com, GBP), &#39;au&#39; (gumtree.com.au, AUD) or &#39;za&#39; (gumtree.co.za, ZAR). Separate sites — ids from one market mean nothing in another.
+func (r ApiGumtreeSearchSuggestionsRequest) Market(market string) ApiGumtreeSearchSuggestionsRequest {
+	r.market = &market
 	return r
 }
 
@@ -1394,6 +1621,12 @@ func (a *GumtreeAPIService) GumtreeSearchSuggestionsExecute(r ApiGumtreeSearchSu
 	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	} else {
+		var defaultValue string = "uk"
+		r.market = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
