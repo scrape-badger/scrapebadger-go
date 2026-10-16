@@ -1326,7 +1326,7 @@ func main() {
 	si := "si_example" // string | Cached search params (optional)
 	ibp := "ibp_example" // string | Layout control (optional)
 	uds := "uds_example" // string | Google filter string (optional)
-	aiOverview := true // bool | Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s and 1 credit when the SERP defers the overview. (optional) (default to false)
+	aiOverview := true // bool | Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s when the SERP defers the overview; the request price is unchanged. (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1374,7 +1374,7 @@ Name | Type | Description  | Notes
  **si** | **string** | Cached search params | 
  **ibp** | **string** | Layout control | 
  **uds** | **string** | Google filter string | 
- **aiOverview** | **bool** | Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s and 1 credit when the SERP defers the overview. | [default to false]
+ **aiOverview** | **bool** | Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s when the SERP defers the overview; the request price is unchanged. | [default to false]
 
 ### Return type
 

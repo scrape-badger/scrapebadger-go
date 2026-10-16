@@ -3237,7 +3237,7 @@ func (r ApiGoogleGoogleWebSearchRequest) Uds(uds string) ApiGoogleGoogleWebSearc
 	return r
 }
 
-// Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s and 1 credit when the SERP defers the overview.
+// Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s when the SERP defers the overview; the request price is unchanged.
 func (r ApiGoogleGoogleWebSearchRequest) AiOverview(aiOverview bool) ApiGoogleGoogleWebSearchRequest {
 	r.aiOverview = &aiOverview
 	return r
