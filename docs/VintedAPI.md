@@ -636,7 +636,7 @@ Name | Type | Description  | Notes
 
 ## VintedSearchByImage
 
-> SearchResponse VintedSearchByImage(ctx).VintedImageSearchRequest(vintedImageSearchRequest).Execute()
+> PortalApiRoutersVintedSchemasSearchResponse VintedSearchByImage(ctx).VintedImageSearchRequest(vintedImageSearchRequest).Execute()
 
 Search by image
 
@@ -664,7 +664,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchByImage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedSearchByImage`: SearchResponse
+	// response from `VintedSearchByImage`: PortalApiRoutersVintedSchemasSearchResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedSearchByImage`: %v\n", resp)
 }
 ```
@@ -684,7 +684,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SearchResponse**](SearchResponse.md)
+[**PortalApiRoutersVintedSchemasSearchResponse**](PortalApiRoutersVintedSchemasSearchResponse.md)
 
 ### Authorization
 
@@ -702,7 +702,7 @@ Name | Type | Description  | Notes
 
 ## VintedSearchVintedItems
 
-> SearchResponse VintedSearchVintedItems(ctx).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).SizeIds(sizeIds).MaterialIds(materialIds).Time(time).SearchSessionId(searchSessionId).StatusIds(statusIds).Order(order).Execute()
+> PortalApiRoutersVintedSchemasSearchResponse VintedSearchVintedItems(ctx).Query(query).Market(market).SellerCountry(sellerCountry).Page(page).PerPage(perPage).PriceFrom(priceFrom).PriceTo(priceTo).BrandIds(brandIds).CatalogIds(catalogIds).ColorIds(colorIds).SizeIds(sizeIds).MaterialIds(materialIds).Time(time).SearchSessionId(searchSessionId).StatusIds(statusIds).Order(order).Execute()
 
 Search Vinted items
 
@@ -745,7 +745,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VintedAPI.VintedSearchVintedItems``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `VintedSearchVintedItems`: SearchResponse
+	// response from `VintedSearchVintedItems`: PortalApiRoutersVintedSchemasSearchResponse
 	fmt.Fprintf(os.Stdout, "Response from `VintedAPI.VintedSearchVintedItems`: %v\n", resp)
 }
 ```
@@ -780,7 +780,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SearchResponse**](SearchResponse.md)
+[**PortalApiRoutersVintedSchemasSearchResponse**](PortalApiRoutersVintedSchemasSearchResponse.md)
 
 ### Authorization
 

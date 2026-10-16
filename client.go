@@ -49,9 +49,13 @@ type APIClient struct {
 
 	// API Services
 
+	ASOSAPI *ASOSAPIService
+
 	AccountAPI *AccountAPIService
 
 	AirbnbAPI *AirbnbAPIService
+
+	AliExpressAPI *AliExpressAPIService
 
 	AmazonAPI *AmazonAPIService
 
@@ -60,6 +64,8 @@ type APIClient struct {
 	AppStoreAPI *AppStoreAPIService
 
 	BaiduAPI *BaiduAPIService
+
+	BestBuyAPI *BestBuyAPIService
 
 	BingAPI *BingAPIService
 
@@ -72,6 +78,8 @@ type APIClient struct {
 	DuckDuckGoAPI *DuckDuckGoAPIService
 
 	EBayAPI *EBayAPIService
+
+	EtsyAPI *EtsyAPIService
 
 	FacebookAPI *FacebookAPIService
 
@@ -104,6 +112,8 @@ type APIClient struct {
 	RedditAPI *RedditAPIService
 
 	RedfinAPI *RedfinAPIService
+
+	TargetAPI *TargetAPIService
 
 	TikTokAPI *TikTokAPIService
 
@@ -142,18 +152,22 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.ASOSAPI = (*ASOSAPIService)(&c.common)
 	c.AccountAPI = (*AccountAPIService)(&c.common)
 	c.AirbnbAPI = (*AirbnbAPIService)(&c.common)
+	c.AliExpressAPI = (*AliExpressAPIService)(&c.common)
 	c.AmazonAPI = (*AmazonAPIService)(&c.common)
 	c.ApartmentsAPI = (*ApartmentsAPIService)(&c.common)
 	c.AppStoreAPI = (*AppStoreAPIService)(&c.common)
 	c.BaiduAPI = (*BaiduAPIService)(&c.common)
+	c.BestBuyAPI = (*BestBuyAPIService)(&c.common)
 	c.BingAPI = (*BingAPIService)(&c.common)
 	c.BookingAPI = (*BookingAPIService)(&c.common)
 	c.ChatGPTAPI = (*ChatGPTAPIService)(&c.common)
 	c.DepopAPI = (*DepopAPIService)(&c.common)
 	c.DuckDuckGoAPI = (*DuckDuckGoAPIService)(&c.common)
 	c.EBayAPI = (*EBayAPIService)(&c.common)
+	c.EtsyAPI = (*EtsyAPIService)(&c.common)
 	c.FacebookAPI = (*FacebookAPIService)(&c.common)
 	c.GeminiAPI = (*GeminiAPIService)(&c.common)
 	c.GoogleAPI = (*GoogleAPIService)(&c.common)
@@ -170,6 +184,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RealtorAPI = (*RealtorAPIService)(&c.common)
 	c.RedditAPI = (*RedditAPIService)(&c.common)
 	c.RedfinAPI = (*RedfinAPIService)(&c.common)
+	c.TargetAPI = (*TargetAPIService)(&c.common)
 	c.TikTokAPI = (*TikTokAPIService)(&c.common)
 	c.TwitterAPI = (*TwitterAPIService)(&c.common)
 	c.VintedAPI = (*VintedAPIService)(&c.common)

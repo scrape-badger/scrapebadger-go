@@ -1259,7 +1259,7 @@ func (r ApiVintedSearchByImageRequest) VintedImageSearchRequest(vintedImageSearc
 	return r
 }
 
-func (r ApiVintedSearchByImageRequest) Execute() (*SearchResponse, *http.Response, error) {
+func (r ApiVintedSearchByImageRequest) Execute() (*PortalApiRoutersVintedSchemasSearchResponse, *http.Response, error) {
 	return r.ApiService.VintedSearchByImageExecute(r)
 }
 
@@ -1284,13 +1284,13 @@ func (a *VintedAPIService) VintedSearchByImage(ctx context.Context) ApiVintedSea
 }
 
 // Execute executes the request
-//  @return SearchResponse
-func (a *VintedAPIService) VintedSearchByImageExecute(r ApiVintedSearchByImageRequest) (*SearchResponse, *http.Response, error) {
+//  @return PortalApiRoutersVintedSchemasSearchResponse
+func (a *VintedAPIService) VintedSearchByImageExecute(r ApiVintedSearchByImageRequest) (*PortalApiRoutersVintedSchemasSearchResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *SearchResponse
+		localVarReturnValue  *PortalApiRoutersVintedSchemasSearchResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedSearchByImage")
@@ -1498,7 +1498,7 @@ func (r ApiVintedSearchVintedItemsRequest) Order(order string) ApiVintedSearchVi
 	return r
 }
 
-func (r ApiVintedSearchVintedItemsRequest) Execute() (*SearchResponse, *http.Response, error) {
+func (r ApiVintedSearchVintedItemsRequest) Execute() (*PortalApiRoutersVintedSchemasSearchResponse, *http.Response, error) {
 	return r.ApiService.VintedSearchVintedItemsExecute(r)
 }
 
@@ -1518,13 +1518,13 @@ func (a *VintedAPIService) VintedSearchVintedItems(ctx context.Context) ApiVinte
 }
 
 // Execute executes the request
-//  @return SearchResponse
-func (a *VintedAPIService) VintedSearchVintedItemsExecute(r ApiVintedSearchVintedItemsRequest) (*SearchResponse, *http.Response, error) {
+//  @return PortalApiRoutersVintedSchemasSearchResponse
+func (a *VintedAPIService) VintedSearchVintedItemsExecute(r ApiVintedSearchVintedItemsRequest) (*PortalApiRoutersVintedSchemasSearchResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *SearchResponse
+		localVarReturnValue  *PortalApiRoutersVintedSchemasSearchResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VintedAPIService.VintedSearchVintedItems")

@@ -16,41 +16,41 @@ import (
 	"fmt"
 )
 
-// checks if the SearchResponse type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &SearchResponse{}
+// checks if the PortalApiRoutersVintedSchemasSearchResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PortalApiRoutersVintedSchemasSearchResponse{}
 
-// SearchResponse Envelope returned by search and search_by_image.
-type SearchResponse struct {
+// PortalApiRoutersVintedSchemasSearchResponse Envelope returned by search and search_by_image.
+type PortalApiRoutersVintedSchemasSearchResponse struct {
 	Items []VintedItemSummary `json:"items"`
 	Pagination VintedPagination `json:"pagination"`
 	Market string `json:"market"`
 	SellerCountry NullableString `json:"seller_country,omitempty"`
 }
 
-type _SearchResponse SearchResponse
+type _PortalApiRoutersVintedSchemasSearchResponse PortalApiRoutersVintedSchemasSearchResponse
 
-// NewSearchResponse instantiates a new SearchResponse object
+// NewPortalApiRoutersVintedSchemasSearchResponse instantiates a new PortalApiRoutersVintedSchemasSearchResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSearchResponse(items []VintedItemSummary, pagination VintedPagination, market string) *SearchResponse {
-	this := SearchResponse{}
+func NewPortalApiRoutersVintedSchemasSearchResponse(items []VintedItemSummary, pagination VintedPagination, market string) *PortalApiRoutersVintedSchemasSearchResponse {
+	this := PortalApiRoutersVintedSchemasSearchResponse{}
 	this.Items = items
 	this.Pagination = pagination
 	this.Market = market
 	return &this
 }
 
-// NewSearchResponseWithDefaults instantiates a new SearchResponse object
+// NewPortalApiRoutersVintedSchemasSearchResponseWithDefaults instantiates a new PortalApiRoutersVintedSchemasSearchResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSearchResponseWithDefaults() *SearchResponse {
-	this := SearchResponse{}
+func NewPortalApiRoutersVintedSchemasSearchResponseWithDefaults() *PortalApiRoutersVintedSchemasSearchResponse {
+	this := PortalApiRoutersVintedSchemasSearchResponse{}
 	return &this
 }
 
 // GetItems returns the Items field value
-func (o *SearchResponse) GetItems() []VintedItemSummary {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetItems() []VintedItemSummary {
 	if o == nil {
 		var ret []VintedItemSummary
 		return ret
@@ -61,7 +61,7 @@ func (o *SearchResponse) GetItems() []VintedItemSummary {
 
 // GetItemsOk returns a tuple with the Items field value
 // and a boolean to check if the value has been set.
-func (o *SearchResponse) GetItemsOk() ([]VintedItemSummary, bool) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetItemsOk() ([]VintedItemSummary, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -69,12 +69,12 @@ func (o *SearchResponse) GetItemsOk() ([]VintedItemSummary, bool) {
 }
 
 // SetItems sets field value
-func (o *SearchResponse) SetItems(v []VintedItemSummary) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) SetItems(v []VintedItemSummary) {
 	o.Items = v
 }
 
 // GetPagination returns the Pagination field value
-func (o *SearchResponse) GetPagination() VintedPagination {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetPagination() VintedPagination {
 	if o == nil {
 		var ret VintedPagination
 		return ret
@@ -85,7 +85,7 @@ func (o *SearchResponse) GetPagination() VintedPagination {
 
 // GetPaginationOk returns a tuple with the Pagination field value
 // and a boolean to check if the value has been set.
-func (o *SearchResponse) GetPaginationOk() (*VintedPagination, bool) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetPaginationOk() (*VintedPagination, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,12 +93,12 @@ func (o *SearchResponse) GetPaginationOk() (*VintedPagination, bool) {
 }
 
 // SetPagination sets field value
-func (o *SearchResponse) SetPagination(v VintedPagination) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) SetPagination(v VintedPagination) {
 	o.Pagination = v
 }
 
 // GetMarket returns the Market field value
-func (o *SearchResponse) GetMarket() string {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetMarket() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -109,7 +109,7 @@ func (o *SearchResponse) GetMarket() string {
 
 // GetMarketOk returns a tuple with the Market field value
 // and a boolean to check if the value has been set.
-func (o *SearchResponse) GetMarketOk() (*string, bool) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetMarketOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -117,12 +117,12 @@ func (o *SearchResponse) GetMarketOk() (*string, bool) {
 }
 
 // SetMarket sets field value
-func (o *SearchResponse) SetMarket(v string) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) SetMarket(v string) {
 	o.Market = v
 }
 
 // GetSellerCountry returns the SellerCountry field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *SearchResponse) GetSellerCountry() string {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetSellerCountry() string {
 	if o == nil || IsNil(o.SellerCountry.Get()) {
 		var ret string
 		return ret
@@ -133,7 +133,7 @@ func (o *SearchResponse) GetSellerCountry() string {
 // GetSellerCountryOk returns a tuple with the SellerCountry field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *SearchResponse) GetSellerCountryOk() (*string, bool) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) GetSellerCountryOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -141,7 +141,7 @@ func (o *SearchResponse) GetSellerCountryOk() (*string, bool) {
 }
 
 // HasSellerCountry returns a boolean if a field has been set.
-func (o *SearchResponse) HasSellerCountry() bool {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) HasSellerCountry() bool {
 	if o != nil && o.SellerCountry.IsSet() {
 		return true
 	}
@@ -150,20 +150,20 @@ func (o *SearchResponse) HasSellerCountry() bool {
 }
 
 // SetSellerCountry gets a reference to the given NullableString and assigns it to the SellerCountry field.
-func (o *SearchResponse) SetSellerCountry(v string) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) SetSellerCountry(v string) {
 	o.SellerCountry.Set(&v)
 }
 // SetSellerCountryNil sets the value for SellerCountry to be an explicit nil
-func (o *SearchResponse) SetSellerCountryNil() {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) SetSellerCountryNil() {
 	o.SellerCountry.Set(nil)
 }
 
 // UnsetSellerCountry ensures that no value is present for SellerCountry, not even an explicit nil
-func (o *SearchResponse) UnsetSellerCountry() {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) UnsetSellerCountry() {
 	o.SellerCountry.Unset()
 }
 
-func (o SearchResponse) MarshalJSON() ([]byte, error) {
+func (o PortalApiRoutersVintedSchemasSearchResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -171,7 +171,7 @@ func (o SearchResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o SearchResponse) ToMap() (map[string]interface{}, error) {
+func (o PortalApiRoutersVintedSchemasSearchResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["items"] = o.Items
 	toSerialize["pagination"] = o.Pagination
@@ -182,7 +182,7 @@ func (o SearchResponse) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *SearchResponse) UnmarshalJSON(data []byte) (err error) {
+func (o *PortalApiRoutersVintedSchemasSearchResponse) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -206,53 +206,53 @@ func (o *SearchResponse) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varSearchResponse := _SearchResponse{}
+	varPortalApiRoutersVintedSchemasSearchResponse := _PortalApiRoutersVintedSchemasSearchResponse{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSearchResponse)
+	err = decoder.Decode(&varPortalApiRoutersVintedSchemasSearchResponse)
 
 	if err != nil {
 		return err
 	}
 
-	*o = SearchResponse(varSearchResponse)
+	*o = PortalApiRoutersVintedSchemasSearchResponse(varPortalApiRoutersVintedSchemasSearchResponse)
 
 	return err
 }
 
-type NullableSearchResponse struct {
-	value *SearchResponse
+type NullablePortalApiRoutersVintedSchemasSearchResponse struct {
+	value *PortalApiRoutersVintedSchemasSearchResponse
 	isSet bool
 }
 
-func (v NullableSearchResponse) Get() *SearchResponse {
+func (v NullablePortalApiRoutersVintedSchemasSearchResponse) Get() *PortalApiRoutersVintedSchemasSearchResponse {
 	return v.value
 }
 
-func (v *NullableSearchResponse) Set(val *SearchResponse) {
+func (v *NullablePortalApiRoutersVintedSchemasSearchResponse) Set(val *PortalApiRoutersVintedSchemasSearchResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSearchResponse) IsSet() bool {
+func (v NullablePortalApiRoutersVintedSchemasSearchResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSearchResponse) Unset() {
+func (v *NullablePortalApiRoutersVintedSchemasSearchResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSearchResponse(val *SearchResponse) *NullableSearchResponse {
-	return &NullableSearchResponse{value: val, isSet: true}
+func NewNullablePortalApiRoutersVintedSchemasSearchResponse(val *PortalApiRoutersVintedSchemasSearchResponse) *NullablePortalApiRoutersVintedSchemasSearchResponse {
+	return &NullablePortalApiRoutersVintedSchemasSearchResponse{value: val, isSet: true}
 }
 
-func (v NullableSearchResponse) MarshalJSON() ([]byte, error) {
+func (v NullablePortalApiRoutersVintedSchemasSearchResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSearchResponse) UnmarshalJSON(src []byte) error {
+func (v *NullablePortalApiRoutersVintedSchemasSearchResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

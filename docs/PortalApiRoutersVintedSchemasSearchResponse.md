@@ -1,4 +1,4 @@
-# SearchResponse
+# PortalApiRoutersVintedSchemasSearchResponse
 
 ## Properties
 
@@ -11,116 +11,116 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewSearchResponse
+### NewPortalApiRoutersVintedSchemasSearchResponse
 
-`func NewSearchResponse(items []VintedItemSummary, pagination VintedPagination, market string, ) *SearchResponse`
+`func NewPortalApiRoutersVintedSchemasSearchResponse(items []VintedItemSummary, pagination VintedPagination, market string, ) *PortalApiRoutersVintedSchemasSearchResponse`
 
-NewSearchResponse instantiates a new SearchResponse object
+NewPortalApiRoutersVintedSchemasSearchResponse instantiates a new PortalApiRoutersVintedSchemasSearchResponse object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewSearchResponseWithDefaults
+### NewPortalApiRoutersVintedSchemasSearchResponseWithDefaults
 
-`func NewSearchResponseWithDefaults() *SearchResponse`
+`func NewPortalApiRoutersVintedSchemasSearchResponseWithDefaults() *PortalApiRoutersVintedSchemasSearchResponse`
 
-NewSearchResponseWithDefaults instantiates a new SearchResponse object
+NewPortalApiRoutersVintedSchemasSearchResponseWithDefaults instantiates a new PortalApiRoutersVintedSchemasSearchResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetItems
 
-`func (o *SearchResponse) GetItems() []VintedItemSummary`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetItems() []VintedItemSummary`
 
 GetItems returns the Items field if non-nil, zero value otherwise.
 
 ### GetItemsOk
 
-`func (o *SearchResponse) GetItemsOk() (*[]VintedItemSummary, bool)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetItemsOk() (*[]VintedItemSummary, bool)`
 
 GetItemsOk returns a tuple with the Items field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetItems
 
-`func (o *SearchResponse) SetItems(v []VintedItemSummary)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) SetItems(v []VintedItemSummary)`
 
 SetItems sets Items field to given value.
 
 
 ### GetPagination
 
-`func (o *SearchResponse) GetPagination() VintedPagination`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetPagination() VintedPagination`
 
 GetPagination returns the Pagination field if non-nil, zero value otherwise.
 
 ### GetPaginationOk
 
-`func (o *SearchResponse) GetPaginationOk() (*VintedPagination, bool)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetPaginationOk() (*VintedPagination, bool)`
 
 GetPaginationOk returns a tuple with the Pagination field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPagination
 
-`func (o *SearchResponse) SetPagination(v VintedPagination)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) SetPagination(v VintedPagination)`
 
 SetPagination sets Pagination field to given value.
 
 
 ### GetMarket
 
-`func (o *SearchResponse) GetMarket() string`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetMarket() string`
 
 GetMarket returns the Market field if non-nil, zero value otherwise.
 
 ### GetMarketOk
 
-`func (o *SearchResponse) GetMarketOk() (*string, bool)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetMarketOk() (*string, bool)`
 
 GetMarketOk returns a tuple with the Market field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMarket
 
-`func (o *SearchResponse) SetMarket(v string)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) SetMarket(v string)`
 
 SetMarket sets Market field to given value.
 
 
 ### GetSellerCountry
 
-`func (o *SearchResponse) GetSellerCountry() string`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetSellerCountry() string`
 
 GetSellerCountry returns the SellerCountry field if non-nil, zero value otherwise.
 
 ### GetSellerCountryOk
 
-`func (o *SearchResponse) GetSellerCountryOk() (*string, bool)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) GetSellerCountryOk() (*string, bool)`
 
 GetSellerCountryOk returns a tuple with the SellerCountry field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSellerCountry
 
-`func (o *SearchResponse) SetSellerCountry(v string)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) SetSellerCountry(v string)`
 
 SetSellerCountry sets SellerCountry field to given value.
 
 ### HasSellerCountry
 
-`func (o *SearchResponse) HasSellerCountry() bool`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) HasSellerCountry() bool`
 
 HasSellerCountry returns a boolean if a field has been set.
 
 ### SetSellerCountryNil
 
-`func (o *SearchResponse) SetSellerCountryNil(b bool)`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) SetSellerCountryNil(b bool)`
 
  SetSellerCountryNil sets the value for SellerCountry to be an explicit nil
 
 ### UnsetSellerCountry
-`func (o *SearchResponse) UnsetSellerCountry()`
+`func (o *PortalApiRoutersVintedSchemasSearchResponse) UnsetSellerCountry()`
 
 UnsetSellerCountry ensures that no value is present for SellerCountry, not even an explicit nil
 
