@@ -178,6 +178,18 @@ func Test_scrapebadger_GoogleAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test GoogleAPIService GoogleGoogleLightWebSearch", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.GoogleAPI.GoogleGoogleLightWebSearch(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test GoogleAPIService GoogleGoogleScraperHealthCheck", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

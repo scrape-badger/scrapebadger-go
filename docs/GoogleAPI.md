@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**GoogleGoogleFlightsCalendarCheapestFarePerDate**](GoogleAPI.md#GoogleGoogleFlightsCalendarCheapestFarePerDate) | **Get** /v1/google/flights/calendar | Google Flights calendar — cheapest fare per date
 [**GoogleGoogleFlightsSearch**](GoogleAPI.md#GoogleGoogleFlightsSearch) | **Get** /v1/google/flights/search | Google Flights search
 [**GoogleGoogleLensVisualSearch**](GoogleAPI.md#GoogleGoogleLensVisualSearch) | **Get** /v1/google/lens/search | Google Lens visual search
+[**GoogleGoogleLightWebSearch**](GoogleAPI.md#GoogleGoogleLightWebSearch) | **Get** /v1/google/light/search | Google Light web search
 [**GoogleGoogleScraperHealthCheck**](GoogleAPI.md#GoogleGoogleScraperHealthCheck) | **Get** /v1/google/health | Google scraper health check
 [**GoogleGoogleScraperHealthCheckHead**](GoogleAPI.md#GoogleGoogleScraperHealthCheckHead) | **Head** /v1/google/health | Google scraper health check
 [**GoogleGoogleSearchSuggestions**](GoogleAPI.md#GoogleGoogleSearchSuggestions) | **Get** /v1/google/autocomplete | Google search suggestions
@@ -995,6 +996,98 @@ Name | Type | Description  | Notes
  **product** | **bool** | Only the tiles Google marked buyable (price + stock), drawn from the same grid | [default to false]
  **visualMatches** | **bool** | Always true in practice — &#x60;false&#x60; is reported back in &#x60;warnings&#x60; | [default to true]
  **exactMatches** | **bool** | Return only the pages hosting this image, flagged exact_match. Available for most images (8/10 in sampling); falls back to the full grid otherwise, saying so in warnings | [default to false]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GoogleGoogleLightWebSearch
+
+> interface{} GoogleGoogleLightWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).Execute()
+
+Google Light web search
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	q := "q_example" // string | Search query (supports Google operators)
+	gl := "gl_example" // string | Country code (optional) (default to "us")
+	hl := "hl_example" // string | Language code (optional) (default to "en")
+	num := int32(56) // int32 |  (optional) (default to 10)
+	start := int32(56) // int32 | Page offset (0, 10, 20...) (optional) (default to 0)
+	domain := "domain_example" // string | Google domain (optional) (default to "google.com")
+	location := "location_example" // string | City-level geo-targeting (optional)
+	uule := "uule_example" // string | Encoded location (optional)
+	lr := "lr_example" // string | Language restrict (e.g. lang_en) (optional)
+	tbs := "tbs_example" // string | Time filter (e.g. qdr:d) (optional)
+	safe := "safe_example" // string | Safe search: off or active (optional) (default to "off")
+	filter := int32(56) // int32 |  (optional)
+	nfpr := int32(56) // int32 | Disable auto-correction (optional) (default to 0)
+	output := "output_example" // string |  (optional) (default to "json")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.GoogleAPI.GoogleGoogleLightWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleGoogleLightWebSearch``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GoogleGoogleLightWebSearch`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `GoogleAPI.GoogleGoogleLightWebSearch`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGoogleGoogleLightWebSearchRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **q** | **string** | Search query (supports Google operators) | 
+ **gl** | **string** | Country code | [default to &quot;us&quot;]
+ **hl** | **string** | Language code | [default to &quot;en&quot;]
+ **num** | **int32** |  | [default to 10]
+ **start** | **int32** | Page offset (0, 10, 20...) | [default to 0]
+ **domain** | **string** | Google domain | [default to &quot;google.com&quot;]
+ **location** | **string** | City-level geo-targeting | 
+ **uule** | **string** | Encoded location | 
+ **lr** | **string** | Language restrict (e.g. lang_en) | 
+ **tbs** | **string** | Time filter (e.g. qdr:d) | 
+ **safe** | **string** | Safe search: off or active | [default to &quot;off&quot;]
+ **filter** | **int32** |  | 
+ **nfpr** | **int32** | Disable auto-correction | [default to 0]
+ **output** | **string** |  | [default to &quot;json&quot;]
 
 ### Return type
 

@@ -2481,6 +2481,293 @@ func (a *GoogleAPIService) GoogleGoogleLensVisualSearchExecute(r ApiGoogleGoogle
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGoogleGoogleLightWebSearchRequest struct {
+	ctx context.Context
+	ApiService *GoogleAPIService
+	q *string
+	gl *string
+	hl *string
+	num *int32
+	start *int32
+	domain *string
+	location *string
+	uule *string
+	lr *string
+	tbs *string
+	safe *string
+	filter *int32
+	nfpr *int32
+	output *string
+}
+
+// Search query (supports Google operators)
+func (r ApiGoogleGoogleLightWebSearchRequest) Q(q string) ApiGoogleGoogleLightWebSearchRequest {
+	r.q = &q
+	return r
+}
+
+// Country code
+func (r ApiGoogleGoogleLightWebSearchRequest) Gl(gl string) ApiGoogleGoogleLightWebSearchRequest {
+	r.gl = &gl
+	return r
+}
+
+// Language code
+func (r ApiGoogleGoogleLightWebSearchRequest) Hl(hl string) ApiGoogleGoogleLightWebSearchRequest {
+	r.hl = &hl
+	return r
+}
+
+func (r ApiGoogleGoogleLightWebSearchRequest) Num(num int32) ApiGoogleGoogleLightWebSearchRequest {
+	r.num = &num
+	return r
+}
+
+// Page offset (0, 10, 20...)
+func (r ApiGoogleGoogleLightWebSearchRequest) Start(start int32) ApiGoogleGoogleLightWebSearchRequest {
+	r.start = &start
+	return r
+}
+
+// Google domain
+func (r ApiGoogleGoogleLightWebSearchRequest) Domain(domain string) ApiGoogleGoogleLightWebSearchRequest {
+	r.domain = &domain
+	return r
+}
+
+// City-level geo-targeting
+func (r ApiGoogleGoogleLightWebSearchRequest) Location(location string) ApiGoogleGoogleLightWebSearchRequest {
+	r.location = &location
+	return r
+}
+
+// Encoded location
+func (r ApiGoogleGoogleLightWebSearchRequest) Uule(uule string) ApiGoogleGoogleLightWebSearchRequest {
+	r.uule = &uule
+	return r
+}
+
+// Language restrict (e.g. lang_en)
+func (r ApiGoogleGoogleLightWebSearchRequest) Lr(lr string) ApiGoogleGoogleLightWebSearchRequest {
+	r.lr = &lr
+	return r
+}
+
+// Time filter (e.g. qdr:d)
+func (r ApiGoogleGoogleLightWebSearchRequest) Tbs(tbs string) ApiGoogleGoogleLightWebSearchRequest {
+	r.tbs = &tbs
+	return r
+}
+
+// Safe search: off or active
+func (r ApiGoogleGoogleLightWebSearchRequest) Safe(safe string) ApiGoogleGoogleLightWebSearchRequest {
+	r.safe = &safe
+	return r
+}
+
+func (r ApiGoogleGoogleLightWebSearchRequest) Filter(filter int32) ApiGoogleGoogleLightWebSearchRequest {
+	r.filter = &filter
+	return r
+}
+
+// Disable auto-correction
+func (r ApiGoogleGoogleLightWebSearchRequest) Nfpr(nfpr int32) ApiGoogleGoogleLightWebSearchRequest {
+	r.nfpr = &nfpr
+	return r
+}
+
+func (r ApiGoogleGoogleLightWebSearchRequest) Output(output string) ApiGoogleGoogleLightWebSearchRequest {
+	r.output = &output
+	return r
+}
+
+func (r ApiGoogleGoogleLightWebSearchRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.GoogleGoogleLightWebSearchExecute(r)
+}
+
+/*
+GoogleGoogleLightWebSearch Google Light web search
+
+Organic results and related searches only. Costs 10 credits per successful
+uncached request, compared with 20 credits for regular Google Search.
+Light always skips rich SERP blocks; mode and ai_overview cannot enable them.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGoogleGoogleLightWebSearchRequest
+*/
+func (a *GoogleAPIService) GoogleGoogleLightWebSearch(ctx context.Context) ApiGoogleGoogleLightWebSearchRequest {
+	return ApiGoogleGoogleLightWebSearchRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *GoogleAPIService) GoogleGoogleLightWebSearchExecute(r ApiGoogleGoogleLightWebSearchRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GoogleAPIService.GoogleGoogleLightWebSearch")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/google/light/search"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.q == nil {
+		return localVarReturnValue, nil, reportError("q is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
+	if r.gl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "gl", r.gl, "form", "")
+	} else {
+		var defaultValue string = "us"
+		r.gl = &defaultValue
+	}
+	if r.hl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "hl", r.hl, "form", "")
+	} else {
+		var defaultValue string = "en"
+		r.hl = &defaultValue
+	}
+	if r.num != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "num", r.num, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		r.num = &defaultValue
+	}
+	if r.start != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "form", "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
+	}
+	if r.domain != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "domain", r.domain, "form", "")
+	} else {
+		var defaultValue string = "google.com"
+		r.domain = &defaultValue
+	}
+	if r.location != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
+	}
+	if r.uule != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "uule", r.uule, "form", "")
+	}
+	if r.lr != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lr", r.lr, "form", "")
+	}
+	if r.tbs != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tbs", r.tbs, "form", "")
+	}
+	if r.safe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "safe", r.safe, "form", "")
+	} else {
+		var defaultValue string = "off"
+		r.safe = &defaultValue
+	}
+	if r.filter != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter", r.filter, "form", "")
+	}
+	if r.nfpr != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "nfpr", r.nfpr, "form", "")
+	} else {
+		var defaultValue int32 = 0
+		r.nfpr = &defaultValue
+	}
+	if r.output != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "output", r.output, "form", "")
+	} else {
+		var defaultValue string = "json"
+		r.output = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGoogleGoogleScraperHealthCheckRequest struct {
 	ctx context.Context
 	ApiService *GoogleAPIService
