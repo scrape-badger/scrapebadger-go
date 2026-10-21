@@ -105,7 +105,7 @@ Name | Type | Description  | Notes
 
 ## EbayCompletedSoldListings
 
-> interface{} EbayCompletedSoldListings(ctx).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Language(language).Execute()
+> interface{} EbayCompletedSoldListings(ctx).Query(query).Seller(seller).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Language(language).Execute()
 
 Completed / sold listings
 
@@ -124,7 +124,8 @@ import (
 )
 
 func main() {
-	query := "query_example" // string | Search keywords
+	query := "query_example" // string | Search keywords. Optional when `seller` is set. (optional)
+	seller := "seller_example" // string | Only this seller's sold listings (eBay username). Works without `query`. (optional)
 	domain := "domain_example" // string | Marketplace domain (com, co.uk, de …) (optional) (default to "com")
 	categoryId := "categoryId_example" // string | Restrict to a category id (optional)
 	page := int32(56) // int32 |  (optional) (default to 1)
@@ -138,7 +139,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Language(language).Execute()
+	resp, r, err := apiClient.EBayAPI.EbayCompletedSoldListings(context.Background()).Query(query).Seller(seller).Domain(domain).CategoryId(categoryId).Page(page).PerPage(perPage).SortBy(sortBy).Condition(condition).MinPrice(minPrice).MaxPrice(maxPrice).Location(location).Language(language).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `EBayAPI.EbayCompletedSoldListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -159,7 +160,8 @@ Other parameters are passed through a pointer to a apiEbayCompletedSoldListingsR
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **query** | **string** | Search keywords | 
+ **query** | **string** | Search keywords. Optional when &#x60;seller&#x60; is set. | 
+ **seller** | **string** | Only this seller&#39;s sold listings (eBay username). Works without &#x60;query&#x60;. | 
  **domain** | **string** | Marketplace domain (com, co.uk, de …) | [default to &quot;com&quot;]
  **categoryId** | **string** | Restrict to a category id | 
  **page** | **int32** |  | [default to 1]

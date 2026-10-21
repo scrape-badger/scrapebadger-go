@@ -106,8 +106,6 @@ Name | Type | Description  | Notes
 
 Blended top search
 
-
-
 ### Example
 
 ```go
@@ -241,8 +239,6 @@ Name | Type | Description  | Notes
 > interface{} InstagramGetAudioTrack(ctx, audioId).Execute()
 
 Get audio track
-
-
 
 ### Example
 
@@ -460,8 +456,6 @@ Name | Type | Description  | Notes
 
 Get following
 
-
-
 ### Example
 
 ```go
@@ -534,8 +528,6 @@ Name | Type | Description  | Notes
 
 Get hashtag info
 
-
-
 ### Example
 
 ```go
@@ -603,8 +595,6 @@ Name | Type | Description  | Notes
 > interface{} InstagramGetHighlights(ctx, username).Execute()
 
 Get highlights
-
-
 
 ### Example
 
@@ -674,8 +664,6 @@ Name | Type | Description  | Notes
 
 Get likers
 
-
-
 ### Example
 
 ```go
@@ -743,8 +731,6 @@ Name | Type | Description  | Notes
 > interface{} InstagramGetLocation(ctx, locationPk).Execute()
 
 Get location
-
-
 
 ### Example
 
@@ -954,8 +940,6 @@ Name | Type | Description  | Notes
 
 Get tagged posts
 
-
-
 ### Example
 
 ```go
@@ -1101,8 +1085,6 @@ Name | Type | Description  | Notes
 > interface{} InstagramGetUserReels(ctx, username).Amount(amount).Cursor(cursor).Execute()
 
 Get user reels
-
-
 
 ### Example
 
@@ -1294,8 +1276,6 @@ Other parameters are passed through a pointer to a apiInstagramHealthHeadRequest
 
 Recent hashtag posts
 
-
-
 ### Example
 
 ```go
@@ -1368,8 +1348,6 @@ Name | Type | Description  | Notes
 
 Related profiles
 
-
-
 ### Example
 
 ```go
@@ -1438,8 +1416,6 @@ Name | Type | Description  | Notes
 
 Search hashtags
 
-
-
 ### Example
 
 ```go
@@ -1504,8 +1480,6 @@ Name | Type | Description  | Notes
 
 Search users
 
-
-
 ### Example
 
 ```go
@@ -1569,8 +1543,6 @@ Name | Type | Description  | Notes
 > interface{} InstagramTopHashtagPosts(ctx, tag).Amount(amount).Cursor(cursor).Execute()
 
 Top hashtag posts
-
-
 
 ### Example
 

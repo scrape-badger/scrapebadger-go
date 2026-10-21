@@ -218,6 +218,7 @@ type ApiEbayCompletedSoldListingsRequest struct {
 	ctx context.Context
 	ApiService *EBayAPIService
 	query *string
+	seller *string
 	domain *string
 	categoryId *string
 	page *int32
@@ -230,9 +231,15 @@ type ApiEbayCompletedSoldListingsRequest struct {
 	language *string
 }
 
-// Search keywords
+// Search keywords. Optional when &#x60;seller&#x60; is set.
 func (r ApiEbayCompletedSoldListingsRequest) Query(query string) ApiEbayCompletedSoldListingsRequest {
 	r.query = &query
+	return r
+}
+
+// Only this seller&#39;s sold listings (eBay username). Works without &#x60;query&#x60;.
+func (r ApiEbayCompletedSoldListingsRequest) Seller(seller string) ApiEbayCompletedSoldListingsRequest {
+	r.seller = &seller
 	return r
 }
 
@@ -302,6 +309,9 @@ EbayCompletedSoldListings Completed / sold listings
 
 Search completed/sold listings — eBay's sold-price history.
 
+Pass ``query``, ``seller`` or both. ``seller`` alone returns everything that
+seller sold, page by page, with no keyword needed.
+
 eBay pads a short result set with "results matching fewer words" and counts
 only the exact ones in ``pagination.total_results``. Results come back in
 eBay's own ranking order with the exact matches first, and each one carries
@@ -349,11 +359,13 @@ func (a *EBayAPIService) EbayCompletedSoldListingsExecute(r ApiEbayCompletedSold
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.query == nil {
-		return localVarReturnValue, nil, reportError("query is required and must be specified")
-	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	if r.query != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	}
+	if r.seller != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "seller", r.seller, "form", "")
+	}
 	if r.domain != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "domain", r.domain, "form", "")
 	} else {
