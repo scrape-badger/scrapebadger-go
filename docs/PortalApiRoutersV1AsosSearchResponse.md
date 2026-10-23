@@ -210,20 +210,20 @@ SetProducts sets Products field to given value.
 
 ### GetFacets
 
-`func (o *PortalApiRoutersV1AsosSearchResponse) GetFacets() []map[string]interface{}`
+`func (o *PortalApiRoutersV1AsosSearchResponse) GetFacets() []*map[string]interface{}`
 
 GetFacets returns the Facets field if non-nil, zero value otherwise.
 
 ### GetFacetsOk
 
-`func (o *PortalApiRoutersV1AsosSearchResponse) GetFacetsOk() (*[]map[string]interface{}, bool)`
+`func (o *PortalApiRoutersV1AsosSearchResponse) GetFacetsOk() (*[]*map[string]interface{}, bool)`
 
 GetFacetsOk returns a tuple with the Facets field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFacets
 
-`func (o *PortalApiRoutersV1AsosSearchResponse) SetFacets(v []map[string]interface{})`
+`func (o *PortalApiRoutersV1AsosSearchResponse) SetFacets(v []*map[string]interface{})`
 
 SetFacets sets Facets field to given value.
 

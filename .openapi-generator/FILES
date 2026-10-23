@@ -20,6 +20,7 @@ api_duck_duck_go.go
 api_e_bay.go
 api_etsy.go
 api_facebook.go
+api_feedback.go
 api_gemini.go
 api_google.go
 api_google_play.go
@@ -32,9 +33,12 @@ api_linked_in.go
 api_loop_net.go
 api_naver.go
 api_perplexity.go
+api_quote.go
 api_realtor.go
 api_reddit.go
 api_redfin.go
+api_requests.go
+api_results.go
 api_target.go
 api_tik_tok.go
 api_twitter.go
@@ -51,6 +55,7 @@ configuration.go
 docs/ASOSAPI.md
 docs/AccountAPI.md
 docs/AccountInfo.md
+docs/AgentTrialInfo.md
 docs/AirbnbAPI.md
 docs/AliExpressAPI.md
 docs/AmazonAPI.md
@@ -79,6 +84,8 @@ docs/ExtractRequest.md
 docs/ExtractRequestExtractRulesValue.md
 docs/ExtractRule.md
 docs/FacebookAPI.md
+docs/FeedbackAPI.md
+docs/FeedbackRequest.md
 docs/FilterRuleCreate.md
 docs/FilterRuleDeliveryLogListResponse.md
 docs/FilterRuleDeliveryLogResponse.md
@@ -117,10 +124,14 @@ docs/Product.md
 docs/ProductPrice.md
 docs/ProductResponse.md
 docs/Productcode.md
+docs/QuoteAPI.md
+docs/QuoteRequest.md
 docs/Ratings.md
 docs/RealtorAPI.md
 docs/RedditAPI.md
 docs/RedfinAPI.md
+docs/RequestsAPI.md
+docs/ResultsAPI.md
 docs/ScreenshotRequest.md
 docs/Searchterm.md
 docs/StatusesResponse.md
@@ -173,6 +184,7 @@ git_push.sh
 go.mod
 go.sum
 model_account_info.go
+model_agent_trial_info.go
 model_billing_log_list_response.go
 model_billing_log_response.go
 model_brandid.go
@@ -186,6 +198,7 @@ model_description.go
 model_extract_request.go
 model_extract_request_extract_rules_value.go
 model_extract_rule.go
+model_feedback_request.go
 model_filter_rule_create.go
 model_filter_rule_delivery_log_list_response.go
 model_filter_rule_delivery_log_response.go
@@ -212,6 +225,7 @@ model_product.go
 model_product_price.go
 model_product_response.go
 model_productcode.go
+model_quote_request.go
 model_ratings.go
 model_screenshot_request.go
 model_searchterm.go
@@ -268,6 +282,7 @@ test/api_duck_duck_go_test.go
 test/api_e_bay_test.go
 test/api_etsy_test.go
 test/api_facebook_test.go
+test/api_feedback_test.go
 test/api_gemini_test.go
 test/api_google_play_test.go
 test/api_google_test.go
@@ -280,9 +295,12 @@ test/api_linked_in_test.go
 test/api_loop_net_test.go
 test/api_naver_test.go
 test/api_perplexity_test.go
+test/api_quote_test.go
 test/api_realtor_test.go
 test/api_reddit_test.go
 test/api_redfin_test.go
+test/api_requests_test.go
+test/api_results_test.go
 test/api_target_test.go
 test/api_tik_tok_test.go
 test/api_twitter_test.go

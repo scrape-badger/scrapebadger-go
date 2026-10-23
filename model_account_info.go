@@ -27,6 +27,7 @@ type AccountInfo struct {
 	Tier NullableString `json:"tier"`
 	RateLimitPerMinute NullableInt32 `json:"rate_limit_per_minute"`
 	Subscription NullableSubscriptionInfo `json:"subscription,omitempty"`
+	AgentTrial NullableAgentTrialInfo `json:"agent_trial,omitempty"`
 }
 
 type _AccountInfo AccountInfo
@@ -219,6 +220,48 @@ func (o *AccountInfo) UnsetSubscription() {
 	o.Subscription.Unset()
 }
 
+// GetAgentTrial returns the AgentTrial field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AccountInfo) GetAgentTrial() AgentTrialInfo {
+	if o == nil || IsNil(o.AgentTrial.Get()) {
+		var ret AgentTrialInfo
+		return ret
+	}
+	return *o.AgentTrial.Get()
+}
+
+// GetAgentTrialOk returns a tuple with the AgentTrial field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AccountInfo) GetAgentTrialOk() (*AgentTrialInfo, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AgentTrial.Get(), o.AgentTrial.IsSet()
+}
+
+// HasAgentTrial returns a boolean if a field has been set.
+func (o *AccountInfo) HasAgentTrial() bool {
+	if o != nil && o.AgentTrial.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAgentTrial gets a reference to the given NullableAgentTrialInfo and assigns it to the AgentTrial field.
+func (o *AccountInfo) SetAgentTrial(v AgentTrialInfo) {
+	o.AgentTrial.Set(&v)
+}
+// SetAgentTrialNil sets the value for AgentTrial to be an explicit nil
+func (o *AccountInfo) SetAgentTrialNil() {
+	o.AgentTrial.Set(nil)
+}
+
+// UnsetAgentTrial ensures that no value is present for AgentTrial, not even an explicit nil
+func (o *AccountInfo) UnsetAgentTrial() {
+	o.AgentTrial.Unset()
+}
+
 func (o AccountInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -236,6 +279,9 @@ func (o AccountInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize["rate_limit_per_minute"] = o.RateLimitPerMinute.Get()
 	if o.Subscription.IsSet() {
 		toSerialize["subscription"] = o.Subscription.Get()
+	}
+	if o.AgentTrial.IsSet() {
+		toSerialize["agent_trial"] = o.AgentTrial.Get()
 	}
 	return toSerialize, nil
 }

@@ -321,20 +321,20 @@ HasAdditionalImageUrls returns a boolean if a field has been set.
 
 ### GetImages
 
-`func (o *Product) GetImages() []map[string]interface{}`
+`func (o *Product) GetImages() []*map[string]interface{}`
 
 GetImages returns the Images field if non-nil, zero value otherwise.
 
 ### GetImagesOk
 
-`func (o *Product) GetImagesOk() (*[]map[string]interface{}, bool)`
+`func (o *Product) GetImagesOk() (*[]*map[string]interface{}, bool)`
 
 GetImagesOk returns a tuple with the Images field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetImages
 
-`func (o *Product) SetImages(v []map[string]interface{})`
+`func (o *Product) SetImages(v []*map[string]interface{})`
 
 SetImages sets Images field to given value.
 
@@ -521,20 +521,20 @@ HasRatings returns a boolean if a field has been set.
 
 ### GetBreadcrumbs
 
-`func (o *Product) GetBreadcrumbs() []map[string]interface{}`
+`func (o *Product) GetBreadcrumbs() []*map[string]interface{}`
 
 GetBreadcrumbs returns the Breadcrumbs field if non-nil, zero value otherwise.
 
 ### GetBreadcrumbsOk
 
-`func (o *Product) GetBreadcrumbsOk() (*[]map[string]interface{}, bool)`
+`func (o *Product) GetBreadcrumbsOk() (*[]*map[string]interface{}, bool)`
 
 GetBreadcrumbsOk returns a tuple with the Breadcrumbs field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetBreadcrumbs
 
-`func (o *Product) SetBreadcrumbs(v []map[string]interface{})`
+`func (o *Product) SetBreadcrumbs(v []*map[string]interface{})`
 
 SetBreadcrumbs sets Breadcrumbs field to given value.
 

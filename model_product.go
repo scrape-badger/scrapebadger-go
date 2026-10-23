@@ -31,7 +31,7 @@ type Product struct {
 	Url NullableUrl `json:"url,omitempty"`
 	ImageUrl *Imageurl `json:"imageUrl,omitempty"`
 	AdditionalImageUrls []string `json:"additionalImageUrls,omitempty"`
-	Images []map[string]interface{} `json:"images,omitempty"`
+	Images []*map[string]interface{} `json:"images,omitempty"`
 	Variants []Variant `json:"variants,omitempty"`
 	IsSellingFast *Issellingfast `json:"isSellingFast,omitempty"`
 	IsRestockingSoon *Isrestockingsoon `json:"isRestockingSoon,omitempty"`
@@ -39,7 +39,7 @@ type Product struct {
 	Gender *Gender `json:"gender,omitempty"`
 	Description *Description `json:"description,omitempty"`
 	Ratings *Ratings `json:"ratings,omitempty"`
-	Breadcrumbs []map[string]interface{} `json:"breadcrumbs,omitempty"`
+	Breadcrumbs []*map[string]interface{} `json:"breadcrumbs,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -411,9 +411,9 @@ func (o *Product) SetAdditionalImageUrls(v []string) {
 }
 
 // GetImages returns the Images field value if set, zero value otherwise.
-func (o *Product) GetImages() []map[string]interface{} {
+func (o *Product) GetImages() []*map[string]interface{} {
 	if o == nil || IsNil(o.Images) {
-		var ret []map[string]interface{}
+		var ret []*map[string]interface{}
 		return ret
 	}
 	return o.Images
@@ -421,7 +421,7 @@ func (o *Product) GetImages() []map[string]interface{} {
 
 // GetImagesOk returns a tuple with the Images field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Product) GetImagesOk() ([]map[string]interface{}, bool) {
+func (o *Product) GetImagesOk() ([]*map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Images) {
 		return nil, false
 	}
@@ -437,8 +437,8 @@ func (o *Product) HasImages() bool {
 	return false
 }
 
-// SetImages gets a reference to the given []map[string]interface{} and assigns it to the Images field.
-func (o *Product) SetImages(v []map[string]interface{}) {
+// SetImages gets a reference to the given []*map[string]interface{} and assigns it to the Images field.
+func (o *Product) SetImages(v []*map[string]interface{}) {
 	o.Images = v
 }
 
@@ -667,9 +667,9 @@ func (o *Product) SetRatings(v Ratings) {
 }
 
 // GetBreadcrumbs returns the Breadcrumbs field value if set, zero value otherwise.
-func (o *Product) GetBreadcrumbs() []map[string]interface{} {
+func (o *Product) GetBreadcrumbs() []*map[string]interface{} {
 	if o == nil || IsNil(o.Breadcrumbs) {
-		var ret []map[string]interface{}
+		var ret []*map[string]interface{}
 		return ret
 	}
 	return o.Breadcrumbs
@@ -677,7 +677,7 @@ func (o *Product) GetBreadcrumbs() []map[string]interface{} {
 
 // GetBreadcrumbsOk returns a tuple with the Breadcrumbs field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Product) GetBreadcrumbsOk() ([]map[string]interface{}, bool) {
+func (o *Product) GetBreadcrumbsOk() ([]*map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Breadcrumbs) {
 		return nil, false
 	}
@@ -693,8 +693,8 @@ func (o *Product) HasBreadcrumbs() bool {
 	return false
 }
 
-// SetBreadcrumbs gets a reference to the given []map[string]interface{} and assigns it to the Breadcrumbs field.
-func (o *Product) SetBreadcrumbs(v []map[string]interface{}) {
+// SetBreadcrumbs gets a reference to the given []*map[string]interface{} and assigns it to the Breadcrumbs field.
+func (o *Product) SetBreadcrumbs(v []*map[string]interface{}) {
 	o.Breadcrumbs = v
 }
 

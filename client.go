@@ -83,6 +83,8 @@ type APIClient struct {
 
 	FacebookAPI *FacebookAPIService
 
+	FeedbackAPI *FeedbackAPIService
+
 	GeminiAPI *GeminiAPIService
 
 	GoogleAPI *GoogleAPIService
@@ -107,11 +109,17 @@ type APIClient struct {
 
 	PerplexityAPI *PerplexityAPIService
 
+	QuoteAPI *QuoteAPIService
+
 	RealtorAPI *RealtorAPIService
 
 	RedditAPI *RedditAPIService
 
 	RedfinAPI *RedfinAPIService
+
+	RequestsAPI *RequestsAPIService
+
+	ResultsAPI *ResultsAPIService
 
 	TargetAPI *TargetAPIService
 
@@ -169,6 +177,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.EBayAPI = (*EBayAPIService)(&c.common)
 	c.EtsyAPI = (*EtsyAPIService)(&c.common)
 	c.FacebookAPI = (*FacebookAPIService)(&c.common)
+	c.FeedbackAPI = (*FeedbackAPIService)(&c.common)
 	c.GeminiAPI = (*GeminiAPIService)(&c.common)
 	c.GoogleAPI = (*GoogleAPIService)(&c.common)
 	c.GooglePlayAPI = (*GooglePlayAPIService)(&c.common)
@@ -181,9 +190,12 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LoopNetAPI = (*LoopNetAPIService)(&c.common)
 	c.NaverAPI = (*NaverAPIService)(&c.common)
 	c.PerplexityAPI = (*PerplexityAPIService)(&c.common)
+	c.QuoteAPI = (*QuoteAPIService)(&c.common)
 	c.RealtorAPI = (*RealtorAPIService)(&c.common)
 	c.RedditAPI = (*RedditAPIService)(&c.common)
 	c.RedfinAPI = (*RedfinAPIService)(&c.common)
+	c.RequestsAPI = (*RequestsAPIService)(&c.common)
+	c.ResultsAPI = (*ResultsAPIService)(&c.common)
 	c.TargetAPI = (*TargetAPIService)(&c.common)
 	c.TikTokAPI = (*TikTokAPIService)(&c.common)
 	c.TwitterAPI = (*TwitterAPIService)(&c.common)

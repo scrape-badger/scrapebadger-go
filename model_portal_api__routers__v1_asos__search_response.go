@@ -28,7 +28,7 @@ type PortalApiRoutersV1AsosSearchResponse struct {
 	Limit int32 `json:"limit"`
 	NextOffset *NextOffset `json:"next_offset,omitempty"`
 	Products []Product `json:"products"`
-	Facets []map[string]interface{} `json:"facets,omitempty"`
+	Facets []*map[string]interface{} `json:"facets,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -273,9 +273,9 @@ func (o *PortalApiRoutersV1AsosSearchResponse) SetProducts(v []Product) {
 }
 
 // GetFacets returns the Facets field value if set, zero value otherwise.
-func (o *PortalApiRoutersV1AsosSearchResponse) GetFacets() []map[string]interface{} {
+func (o *PortalApiRoutersV1AsosSearchResponse) GetFacets() []*map[string]interface{} {
 	if o == nil || IsNil(o.Facets) {
-		var ret []map[string]interface{}
+		var ret []*map[string]interface{}
 		return ret
 	}
 	return o.Facets
@@ -283,7 +283,7 @@ func (o *PortalApiRoutersV1AsosSearchResponse) GetFacets() []map[string]interfac
 
 // GetFacetsOk returns a tuple with the Facets field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PortalApiRoutersV1AsosSearchResponse) GetFacetsOk() ([]map[string]interface{}, bool) {
+func (o *PortalApiRoutersV1AsosSearchResponse) GetFacetsOk() ([]*map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Facets) {
 		return nil, false
 	}
@@ -299,8 +299,8 @@ func (o *PortalApiRoutersV1AsosSearchResponse) HasFacets() bool {
 	return false
 }
 
-// SetFacets gets a reference to the given []map[string]interface{} and assigns it to the Facets field.
-func (o *PortalApiRoutersV1AsosSearchResponse) SetFacets(v []map[string]interface{}) {
+// SetFacets gets a reference to the given []*map[string]interface{} and assigns it to the Facets field.
+func (o *PortalApiRoutersV1AsosSearchResponse) SetFacets(v []*map[string]interface{}) {
 	o.Facets = v
 }
 

@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Tier** | **NullableString** |  | 
 **RateLimitPerMinute** | **NullableInt32** |  | 
 **Subscription** | Pointer to [**NullableSubscriptionInfo**](SubscriptionInfo.md) |  | [optional] 
+**AgentTrial** | Pointer to [**NullableAgentTrialInfo**](AgentTrialInfo.md) |  | [optional] 
 
 ## Methods
 
@@ -185,6 +186,41 @@ HasSubscription returns a boolean if a field has been set.
 `func (o *AccountInfo) UnsetSubscription()`
 
 UnsetSubscription ensures that no value is present for Subscription, not even an explicit nil
+### GetAgentTrial
+
+`func (o *AccountInfo) GetAgentTrial() AgentTrialInfo`
+
+GetAgentTrial returns the AgentTrial field if non-nil, zero value otherwise.
+
+### GetAgentTrialOk
+
+`func (o *AccountInfo) GetAgentTrialOk() (*AgentTrialInfo, bool)`
+
+GetAgentTrialOk returns a tuple with the AgentTrial field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAgentTrial
+
+`func (o *AccountInfo) SetAgentTrial(v AgentTrialInfo)`
+
+SetAgentTrial sets AgentTrial field to given value.
+
+### HasAgentTrial
+
+`func (o *AccountInfo) HasAgentTrial() bool`
+
+HasAgentTrial returns a boolean if a field has been set.
+
+### SetAgentTrialNil
+
+`func (o *AccountInfo) SetAgentTrialNil(b bool)`
+
+ SetAgentTrialNil sets the value for AgentTrial to be an explicit nil
+
+### UnsetAgentTrial
+`func (o *AccountInfo) UnsetAgentTrial()`
+
+UnsetAgentTrial ensures that no value is present for AgentTrial, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
