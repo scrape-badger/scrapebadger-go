@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 ## FacebookBrowseAMarketplaceCategory
 
-> interface{} FacebookBrowseAMarketplaceCategory(ctx, category).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).SortBy(sortBy).After(after).Execute()
+> interface{} FacebookBrowseAMarketplaceCategory(ctx, category).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).SortBy(sortBy).Radius(radius).After(after).Execute()
 
 Browse a Marketplace category
 
@@ -57,11 +57,12 @@ func main() {
 	minPrice := int32(56) // int32 |  (optional)
 	maxPrice := int32(56) // int32 |  (optional)
 	sortBy := "sortBy_example" // string |  (optional)
+	radius := int32(56) // int32 | Radius around the location (km, or miles in the US) (optional)
 	after := "after_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookBrowseAMarketplaceCategory(context.Background(), category).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).SortBy(sortBy).After(after).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookBrowseAMarketplaceCategory(context.Background(), category).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).SortBy(sortBy).Radius(radius).After(after).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookBrowseAMarketplaceCategory``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -91,6 +92,7 @@ Name | Type | Description  | Notes
  **minPrice** | **int32** |  | 
  **maxPrice** | **int32** |  | 
  **sortBy** | **string** |  | 
+ **radius** | **int32** | Radius around the location (km, or miles in the US) | 
  **after** | **string** |  | 
 
 ### Return type

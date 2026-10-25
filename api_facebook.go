@@ -31,6 +31,7 @@ type ApiFacebookBrowseAMarketplaceCategoryRequest struct {
 	minPrice *int32
 	maxPrice *int32
 	sortBy *string
+	radius *int32
 	after *string
 }
 
@@ -51,6 +52,12 @@ func (r ApiFacebookBrowseAMarketplaceCategoryRequest) MaxPrice(maxPrice int32) A
 
 func (r ApiFacebookBrowseAMarketplaceCategoryRequest) SortBy(sortBy string) ApiFacebookBrowseAMarketplaceCategoryRequest {
 	r.sortBy = &sortBy
+	return r
+}
+
+// Radius around the location (km, or miles in the US)
+func (r ApiFacebookBrowseAMarketplaceCategoryRequest) Radius(radius int32) ApiFacebookBrowseAMarketplaceCategoryRequest {
+	r.radius = &radius
 	return r
 }
 
@@ -116,6 +123,9 @@ func (a *FacebookAPIService) FacebookBrowseAMarketplaceCategoryExecute(r ApiFace
 	}
 	if r.sortBy != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort_by", r.sortBy, "form", "")
+	}
+	if r.radius != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "radius", r.radius, "form", "")
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "form", "")
