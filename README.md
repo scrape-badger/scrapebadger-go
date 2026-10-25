@@ -286,6 +286,7 @@ Class | Method | HTTP request | Description
 *FacebookAPI* | [**FacebookGetProfilePosts**](docs/FacebookAPI.md#facebookgetprofileposts) | **Get** /v1/facebook/profiles/{identifier}/posts | Get profile posts
 *FacebookAPI* | [**FacebookListCategories**](docs/FacebookAPI.md#facebooklistcategories) | **Get** /v1/facebook/marketplace/categories | List categories
 *FacebookAPI* | [**FacebookListLocations**](docs/FacebookAPI.md#facebooklistlocations) | **Get** /v1/facebook/marketplace/locations | List locations
+*FacebookAPI* | [**FacebookResolveATownPostcodeToAMarketplaceLocation**](docs/FacebookAPI.md#facebookresolveatownpostcodetoamarketplacelocation) | **Get** /v1/facebook/marketplace/locations/resolve | Resolve a town/postcode to a Marketplace location
 *FacebookAPI* | [**FacebookSearchAdvertiserPages**](docs/FacebookAPI.md#facebooksearchadvertiserpages) | **Get** /v1/facebook/ads/pages/search | Search advertiser pages
 *FacebookAPI* | [**FacebookSearchEvents**](docs/FacebookAPI.md#facebooksearchevents) | **Get** /v1/facebook/search/events | Search events
 *FacebookAPI* | [**FacebookSearchEverything**](docs/FacebookAPI.md#facebooksearcheverything) | **Get** /v1/facebook/search | Search everything

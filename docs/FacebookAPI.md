@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**FacebookGetProfilePosts**](FacebookAPI.md#FacebookGetProfilePosts) | **Get** /v1/facebook/profiles/{identifier}/posts | Get profile posts
 [**FacebookListCategories**](FacebookAPI.md#FacebookListCategories) | **Get** /v1/facebook/marketplace/categories | List categories
 [**FacebookListLocations**](FacebookAPI.md#FacebookListLocations) | **Get** /v1/facebook/marketplace/locations | List locations
+[**FacebookResolveATownPostcodeToAMarketplaceLocation**](FacebookAPI.md#FacebookResolveATownPostcodeToAMarketplaceLocation) | **Get** /v1/facebook/marketplace/locations/resolve | Resolve a town/postcode to a Marketplace location
 [**FacebookSearchAdvertiserPages**](FacebookAPI.md#FacebookSearchAdvertiserPages) | **Get** /v1/facebook/ads/pages/search | Search advertiser pages
 [**FacebookSearchEvents**](FacebookAPI.md#FacebookSearchEvents) | **Get** /v1/facebook/search/events | Search events
 [**FacebookSearchEverything**](FacebookAPI.md#FacebookSearchEverything) | **Get** /v1/facebook/search | Search everything
@@ -1006,6 +1007,78 @@ This endpoint does not need any parameter.
 
 Other parameters are passed through a pointer to a apiFacebookListLocationsRequest struct via the builder pattern
 
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## FacebookResolveATownPostcodeToAMarketplaceLocation
+
+> interface{} FacebookResolveATownPostcodeToAMarketplaceLocation(ctx).Query(query).Latitude(latitude).Longitude(longitude).Country(country).Execute()
+
+Resolve a town/postcode to a Marketplace location
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	query := "query_example" // string | Town, city, postcode or address (e.g. 'Durham', 'DH1 3LE') (optional)
+	latitude := float32(8.14) // float32 | Resolve this exact point instead (optional)
+	longitude := float32(8.14) // float32 |  (optional)
+	country := "country_example" // string | ISO country code hint for an ambiguous name (e.g. gb) (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.FacebookAPI.FacebookResolveATownPostcodeToAMarketplaceLocation(context.Background()).Query(query).Latitude(latitude).Longitude(longitude).Country(country).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookResolveATownPostcodeToAMarketplaceLocation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `FacebookResolveATownPostcodeToAMarketplaceLocation`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `FacebookAPI.FacebookResolveATownPostcodeToAMarketplaceLocation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiFacebookResolveATownPostcodeToAMarketplaceLocationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | **string** | Town, city, postcode or address (e.g. &#39;Durham&#39;, &#39;DH1 3LE&#39;) | 
+ **latitude** | **float32** | Resolve this exact point instead | 
+ **longitude** | **float32** |  | 
+ **country** | **string** | ISO country code hint for an ambiguous name (e.g. gb) | 
 
 ### Return type
 

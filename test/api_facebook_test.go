@@ -214,6 +214,18 @@ func Test_scrapebadger_FacebookAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test FacebookAPIService FacebookResolveATownPostcodeToAMarketplaceLocation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.FacebookAPI.FacebookResolveATownPostcodeToAMarketplaceLocation(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test FacebookAPIService FacebookSearchAdvertiserPages", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
