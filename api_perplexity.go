@@ -27,6 +27,7 @@ type ApiPerplexityAskPerplexityAQuestionRequest struct {
 	ApiService *PerplexityAPIService
 	prompt *string
 	country *string
+	strictCountry *bool
 }
 
 // The prompt to send to Perplexity (max 4096 characters).
@@ -38,6 +39,12 @@ func (r ApiPerplexityAskPerplexityAQuestionRequest) Prompt(prompt string) ApiPer
 // ISO-3166 alpha-2 egress country, e.g. &#39;US&#39;, &#39;GB&#39;, &#39;DE&#39;.
 func (r ApiPerplexityAskPerplexityAQuestionRequest) Country(country string) ApiPerplexityAskPerplexityAQuestionRequest {
 	r.country = &country
+	return r
+}
+
+// Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;.
+func (r ApiPerplexityAskPerplexityAQuestionRequest) StrictCountry(strictCountry bool) ApiPerplexityAskPerplexityAQuestionRequest {
+	r.strictCountry = &strictCountry
 	return r
 }
 
@@ -87,6 +94,12 @@ func (a *PerplexityAPIService) PerplexityAskPerplexityAQuestionExecute(r ApiPerp
 	parameterAddToHeaderOrQuery(localVarQueryParams, "prompt", r.prompt, "form", "")
 	if r.country != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "country", r.country, "form", "")
+	}
+	if r.strictCountry != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "strict_country", r.strictCountry, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.strictCountry = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -288,6 +301,7 @@ type ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest struct {
 	aliases *string
 	competitors *string
 	country *string
+	strictCountry *bool
 }
 
 // The prompt to ask Perplexity.
@@ -323,6 +337,12 @@ func (r ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest) Competi
 // ISO-3166 alpha-2 egress country.
 func (r ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest) Country(country string) ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest {
 	r.country = &country
+	return r
+}
+
+// Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;.
+func (r ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest) StrictCountry(strictCountry bool) ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest {
+	r.strictCountry = &strictCountry
 	return r
 }
 
@@ -385,6 +405,12 @@ func (a *PerplexityAPIService) PerplexityMeasureABrandSVisibilityInAPerplexityAn
 	}
 	if r.country != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "country", r.country, "form", "")
+	}
+	if r.strictCountry != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "strict_country", r.strictCountry, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.strictCountry = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
