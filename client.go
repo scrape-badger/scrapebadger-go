@@ -65,6 +65,8 @@ type APIClient struct {
 
 	BaiduAPI *BaiduAPIService
 
+	BatchAPI *BatchAPIService
+
 	BestBuyAPI *BestBuyAPIService
 
 	BingAPI *BingAPIService
@@ -168,6 +170,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ApartmentsAPI = (*ApartmentsAPIService)(&c.common)
 	c.AppStoreAPI = (*AppStoreAPIService)(&c.common)
 	c.BaiduAPI = (*BaiduAPIService)(&c.common)
+	c.BatchAPI = (*BatchAPIService)(&c.common)
 	c.BestBuyAPI = (*BestBuyAPIService)(&c.common)
 	c.BingAPI = (*BingAPIService)(&c.common)
 	c.BookingAPI = (*BookingAPIService)(&c.common)

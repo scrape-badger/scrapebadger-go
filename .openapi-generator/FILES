@@ -11,6 +11,7 @@ api_apartments.go
 api_app_store.go
 api_asos.go
 api_baidu.go
+api_batch.go
 api_best_buy.go
 api_bing.go
 api_booking.go
@@ -62,6 +63,11 @@ docs/AmazonAPI.md
 docs/ApartmentsAPI.md
 docs/AppStoreAPI.md
 docs/BaiduAPI.md
+docs/BatchAPI.md
+docs/BatchItem.md
+docs/BatchItemQueryValue.md
+docs/BatchItemQueryValueAnyOfInner.md
+docs/BatchRequest.md
 docs/BestBuyAPI.md
 docs/BillingLogListResponse.md
 docs/BillingLogResponse.md
@@ -174,6 +180,7 @@ docs/WebhookCreate.md
 docs/WebhookListItem.md
 docs/WebhookListResponse.md
 docs/WebhookResponse.md
+docs/WebhookSecret.md
 docs/WebhookTestRequest.md
 docs/WebhookTestResponse.md
 docs/YahooAPI.md
@@ -185,6 +192,10 @@ go.mod
 go.sum
 model_account_info.go
 model_agent_trial_info.go
+model_batch_item.go
+model_batch_item_query_value.go
+model_batch_item_query_value_any_of_inner.go
+model_batch_request.go
 model_billing_log_list_response.go
 model_billing_log_response.go
 model_brandid.go
@@ -262,6 +273,7 @@ model_webhook_create.go
 model_webhook_list_item.go
 model_webhook_list_response.go
 model_webhook_response.go
+model_webhook_secret.go
 model_webhook_test_request.go
 model_webhook_test_response.go
 response.go
@@ -273,6 +285,7 @@ test/api_apartments_test.go
 test/api_app_store_test.go
 test/api_asos_test.go
 test/api_baidu_test.go
+test/api_batch_test.go
 test/api_best_buy_test.go
 test/api_bing_test.go
 test/api_booking_test.go

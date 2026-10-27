@@ -34,4 +34,28 @@ func Test_scrapebadger_AccountAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AccountAPIService AccountGetTheWebhookSigningSecret", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AccountAPI.AccountGetTheWebhookSigningSecret(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AccountAPIService AccountRotateTheWebhookSigningSecret", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AccountAPI.AccountRotateTheWebhookSigningSecret(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 }
