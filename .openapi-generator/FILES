@@ -16,6 +16,7 @@ api_best_buy.go
 api_bing.go
 api_booking.go
 api_chat_gpt.go
+api_copilot.go
 api_depop.go
 api_duck_duck_go.go
 api_e_bay.go
@@ -81,6 +82,7 @@ docs/ChatGPTAPI.md
 docs/ColorsResponse.md
 docs/Colour.md
 docs/Colourwayid.md
+docs/CopilotAPI.md
 docs/DepopAPI.md
 docs/Description.md
 docs/DuckDuckGoAPI.md
@@ -290,6 +292,7 @@ test/api_best_buy_test.go
 test/api_bing_test.go
 test/api_booking_test.go
 test/api_chat_gpt_test.go
+test/api_copilot_test.go
 test/api_depop_test.go
 test/api_duck_duck_go_test.go
 test/api_e_bay_test.go
