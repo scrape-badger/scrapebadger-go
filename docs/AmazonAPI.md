@@ -441,7 +441,7 @@ Name | Type | Description  | Notes
 
 ## AmazonGetProductReviews
 
-> interface{} AmazonGetProductReviews(ctx, asin).Domain(domain).Page(page).SortBy(sortBy).Star(star).VerifiedOnly(verifiedOnly).MediaOnly(mediaOnly).Execute()
+> interface{} AmazonGetProductReviews(ctx, asin).Domain(domain).Page(page).SortBy(sortBy).Star(star).VerifiedOnly(verifiedOnly).MediaOnly(mediaOnly).Mode(mode).MaxPages(maxPages).PerStar(perStar).Limit(limit).WootOffer(wootOffer).Execute()
 
 Get product reviews
 
@@ -467,10 +467,15 @@ func main() {
 	star := "star_example" // string | 1-5 | one_star..five_star | positive | critical | all_stars (optional)
 	verifiedOnly := true // bool |  (optional) (default to false)
 	mediaOnly := true // bool |  (optional) (default to false)
+	mode := "mode_example" // string | public (anonymous featured block) | full (authenticated account pool) (optional) (default to "public")
+	maxPages := int32(56) // int32 | full mode: pages to walk per star sweep (optional) (default to 10)
+	perStar := true // bool | full mode: sweep each star filter and merge + dedupe (optional) (default to false)
+	limit := int32(56) // int32 | full mode: stop at this many distinct reviews (optional)
+	wootOffer := "wootOffer_example" // string | full mode + .com: URL (or slug) of a CURRENT woot.com offer page carrying the ASIN — unlocks the anonymous woot reviews endpoint as a bonus transport after the account pool (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AmazonAPI.AmazonGetProductReviews(context.Background(), asin).Domain(domain).Page(page).SortBy(sortBy).Star(star).VerifiedOnly(verifiedOnly).MediaOnly(mediaOnly).Execute()
+	resp, r, err := apiClient.AmazonAPI.AmazonGetProductReviews(context.Background(), asin).Domain(domain).Page(page).SortBy(sortBy).Star(star).VerifiedOnly(verifiedOnly).MediaOnly(mediaOnly).Mode(mode).MaxPages(maxPages).PerStar(perStar).Limit(limit).WootOffer(wootOffer).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AmazonAPI.AmazonGetProductReviews``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -502,6 +507,11 @@ Name | Type | Description  | Notes
  **star** | **string** | 1-5 | one_star..five_star | positive | critical | all_stars | 
  **verifiedOnly** | **bool** |  | [default to false]
  **mediaOnly** | **bool** |  | [default to false]
+ **mode** | **string** | public (anonymous featured block) | full (authenticated account pool) | [default to &quot;public&quot;]
+ **maxPages** | **int32** | full mode: pages to walk per star sweep | [default to 10]
+ **perStar** | **bool** | full mode: sweep each star filter and merge + dedupe | [default to false]
+ **limit** | **int32** | full mode: stop at this many distinct reviews | 
+ **wootOffer** | **string** | full mode + .com: URL (or slug) of a CURRENT woot.com offer page carrying the ASIN — unlocks the anonymous woot reviews endpoint as a bonus transport after the account pool | 
 
 ### Return type
 

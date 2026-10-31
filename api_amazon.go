@@ -902,6 +902,11 @@ type ApiAmazonGetProductReviewsRequest struct {
 	star *string
 	verifiedOnly *bool
 	mediaOnly *bool
+	mode *string
+	maxPages *int32
+	perStar *bool
+	limit *int32
+	wootOffer *string
 }
 
 func (r ApiAmazonGetProductReviewsRequest) Domain(domain string) ApiAmazonGetProductReviewsRequest {
@@ -937,6 +942,36 @@ func (r ApiAmazonGetProductReviewsRequest) MediaOnly(mediaOnly bool) ApiAmazonGe
 	return r
 }
 
+// public (anonymous featured block) | full (authenticated account pool)
+func (r ApiAmazonGetProductReviewsRequest) Mode(mode string) ApiAmazonGetProductReviewsRequest {
+	r.mode = &mode
+	return r
+}
+
+// full mode: pages to walk per star sweep
+func (r ApiAmazonGetProductReviewsRequest) MaxPages(maxPages int32) ApiAmazonGetProductReviewsRequest {
+	r.maxPages = &maxPages
+	return r
+}
+
+// full mode: sweep each star filter and merge + dedupe
+func (r ApiAmazonGetProductReviewsRequest) PerStar(perStar bool) ApiAmazonGetProductReviewsRequest {
+	r.perStar = &perStar
+	return r
+}
+
+// full mode: stop at this many distinct reviews
+func (r ApiAmazonGetProductReviewsRequest) Limit(limit int32) ApiAmazonGetProductReviewsRequest {
+	r.limit = &limit
+	return r
+}
+
+// full mode + .com: URL (or slug) of a CURRENT woot.com offer page carrying the ASIN — unlocks the anonymous woot reviews endpoint as a bonus transport after the account pool
+func (r ApiAmazonGetProductReviewsRequest) WootOffer(wootOffer string) ApiAmazonGetProductReviewsRequest {
+	r.wootOffer = &wootOffer
+	return r
+}
+
 func (r ApiAmazonGetProductReviewsRequest) Execute() (interface{}, *http.Response, error) {
 	return r.ApiService.AmazonGetProductReviewsExecute(r)
 }
@@ -952,6 +987,19 @@ history (``ratings_total`` reports the true total). ``pagination`` gives
 the filtered count and the last page, so paging past it returns an empty
 list. An unrecognised ``star`` or ``sort_by`` is rejected with 422 rather
 than silently answered with unfiltered reviews.
+
+``mode=full`` serves the rest, pool first and woot second: one pool
+account is leased and the authenticated review pages are walked until
+Amazon stops returning new rows (a gate, the review-limit banner or an
+expired session rotates the lease), then — when ``woot_offer`` names a
+current woot.com offer page carrying the ASIN (.com only) — Amazon-owned
+woot.com's anonymous reviews endpoint is fanned out as a bonus and merged
+in, deduped by review id. The same filter / sort / pagination contract
+applies to the collected set. When no source produced rows the answer is
+503 (``pool_exhausted``, or ``reviews_unavailable`` when both paths ran)
+— never an empty 200 that reads as "no reviews". Auth, rate limits,
+credits and usage logging are the gateway's, exactly as for every other
+mode of this endpoint.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param asin
@@ -1019,6 +1067,30 @@ func (a *AmazonAPIService) AmazonGetProductReviewsExecute(r ApiAmazonGetProductR
 	} else {
 		var defaultValue bool = false
 		r.mediaOnly = &defaultValue
+	}
+	if r.mode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mode", r.mode, "form", "")
+	} else {
+		var defaultValue string = "public"
+		r.mode = &defaultValue
+	}
+	if r.maxPages != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_pages", r.maxPages, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		r.maxPages = &defaultValue
+	}
+	if r.perStar != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "per_star", r.perStar, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.perStar = &defaultValue
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.wootOffer != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "woot_offer", r.wootOffer, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
