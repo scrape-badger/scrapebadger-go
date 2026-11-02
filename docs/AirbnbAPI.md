@@ -160,7 +160,7 @@ import (
 func main() {
 	roomId := "roomId_example" // string | 
 	month := int32(56) // int32 | Start month (1-12) (optional) (default to 1)
-	year := int32(56) // int32 | Start year (optional) (default to 2026)
+	year := int32(56) // int32 | Start year (current UTC year when omitted) (optional)
 	months := int32(56) // int32 | Number of months (max 12) (optional) (default to 12)
 	currency := "currency_example" // string |  (optional)
 	locale := "locale_example" // string |  (optional)
@@ -194,7 +194,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **month** | **int32** | Start month (1-12) | [default to 1]
- **year** | **int32** | Start year | [default to 2026]
+ **year** | **int32** | Start year (current UTC year when omitted) | 
  **months** | **int32** | Number of months (max 12) | [default to 12]
  **currency** | **string** |  | 
  **locale** | **string** |  | 

@@ -266,7 +266,7 @@ func (r ApiAirbnbGetAvailabilityCalendarRequest) Month(month int32) ApiAirbnbGet
 	return r
 }
 
-// Start year
+// Start year (current UTC year when omitted)
 func (r ApiAirbnbGetAvailabilityCalendarRequest) Year(year int32) ApiAirbnbGetAvailabilityCalendarRequest {
 	r.year = &year
 	return r
@@ -340,9 +340,6 @@ func (a *AirbnbAPIService) AirbnbGetAvailabilityCalendarExecute(r ApiAirbnbGetAv
 	}
 	if r.year != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "year", r.year, "form", "")
-	} else {
-		var defaultValue int32 = 2026
-		r.year = &defaultValue
 	}
 	if r.months != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "months", r.months, "form", "")
