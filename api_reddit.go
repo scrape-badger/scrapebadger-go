@@ -2733,13 +2733,13 @@ type ApiRedditSearchRedditPostsRequest struct {
 	after *string
 }
 
-// Search query
+// Search query (Reddit search syntax), at most 256 UTF-8 bytes
 func (r ApiRedditSearchRedditPostsRequest) Q(q string) ApiRedditSearchRedditPostsRequest {
 	r.q = &q
 	return r
 }
 
-// Restrict to subreddit
+// Restrict to a subreddit, or several joined with + (sales+startups)
 func (r ApiRedditSearchRedditPostsRequest) Subreddit(subreddit string) ApiRedditSearchRedditPostsRequest {
 	r.subreddit = &subreddit
 	return r
@@ -2774,11 +2774,16 @@ func (r ApiRedditSearchRedditPostsRequest) Execute() (interface{}, *http.Respons
 /*
 RedditSearchRedditPosts Search Reddit posts
 
-Search Reddit's current web UI globally or within a subreddit.
+Search Reddit's current web UI globally or within one or more subreddits.
 
 Pass pagination.after unchanged with the same query, scope, sort and time
 filter. Search cursors expire after 30 minutes. Reddit's native page may
 contain fewer rows than limit; continue while after is present.
+
+Reddit reads only the first 256 UTF-8 bytes of a search query and ignores
+the rest, so a longer query returns 422. Several subreddits are searched as
+(q) (subreddit:a OR subreddit:b ...), and that whole string counts toward
+the limit: split long subreddit lists across requests.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRedditSearchRedditPostsRequest
@@ -2925,7 +2930,7 @@ type ApiRedditSearchSubredditsRequest struct {
 	after *string
 }
 
-// Search query
+// Search query, at most 256 UTF-8 bytes
 func (r ApiRedditSearchSubredditsRequest) Q(q string) ApiRedditSearchSubredditsRequest {
 	r.q = &q
 	return r
@@ -2952,7 +2957,8 @@ Search communities using Reddit's current web UI ranking and pagination.
 
 Pass pagination.after unchanged with the same query. Search cursors expire
 after 30 minutes. weekly_visitors and weekly_contributions are activity
-counters, separate from the subscriber count.
+counters, separate from the subscriber count. A query over 256 UTF-8 bytes
+returns 422, because Reddit would silently drop the rest.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRedditSearchSubredditsRequest
@@ -3084,7 +3090,7 @@ type ApiRedditSearchUsersRequest struct {
 	after *string
 }
 
-// Search query
+// Search query, at most 256 UTF-8 bytes
 func (r ApiRedditSearchUsersRequest) Q(q string) ApiRedditSearchUsersRequest {
 	r.q = &q
 	return r
@@ -3110,7 +3116,8 @@ RedditSearchUsers Search users
 Search profiles using Reddit's current web UI ranking and pagination.
 
 Pass pagination.after unchanged with the same query. Search cursors expire
-after 30 minutes. The native page may contain fewer rows than limit.
+after 30 minutes. The native page may contain fewer rows than limit. A query
+over 256 UTF-8 bytes returns 422, because Reddit would silently drop the rest.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiRedditSearchUsersRequest

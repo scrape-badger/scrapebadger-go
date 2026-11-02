@@ -1401,8 +1401,8 @@ import (
 )
 
 func main() {
-	q := "q_example" // string | Search query
-	subreddit := "subreddit_example" // string | Restrict to subreddit (optional)
+	q := "q_example" // string | Search query (Reddit search syntax), at most 256 UTF-8 bytes
+	subreddit := "subreddit_example" // string | Restrict to a subreddit, or several joined with + (sales+startups) (optional)
 	sort := "sort_example" // string | Sort: relevance, hot, top, new, comments (optional) (default to "relevance")
 	t := "t_example" // string | Time: hour, day, week, month, year, all (optional) (default to "all")
 	limit := int32(56) // int32 |  (optional) (default to 25)
@@ -1431,8 +1431,8 @@ Other parameters are passed through a pointer to a apiRedditSearchRedditPostsReq
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **q** | **string** | Search query | 
- **subreddit** | **string** | Restrict to subreddit | 
+ **q** | **string** | Search query (Reddit search syntax), at most 256 UTF-8 bytes | 
+ **subreddit** | **string** | Restrict to a subreddit, or several joined with + (sales+startups) | 
  **sort** | **string** | Sort: relevance, hot, top, new, comments | [default to &quot;relevance&quot;]
  **t** | **string** | Time: hour, day, week, month, year, all | [default to &quot;all&quot;]
  **limit** | **int32** |  | [default to 25]
@@ -1477,7 +1477,7 @@ import (
 )
 
 func main() {
-	q := "q_example" // string | Search query
+	q := "q_example" // string | Search query, at most 256 UTF-8 bytes
 	limit := int32(56) // int32 |  (optional) (default to 25)
 	after := "after_example" // string |  (optional)
 
@@ -1504,7 +1504,7 @@ Other parameters are passed through a pointer to a apiRedditSearchSubredditsRequ
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **q** | **string** | Search query | 
+ **q** | **string** | Search query, at most 256 UTF-8 bytes | 
  **limit** | **int32** |  | [default to 25]
  **after** | **string** |  | 
 
@@ -1547,7 +1547,7 @@ import (
 )
 
 func main() {
-	q := "q_example" // string | Search query
+	q := "q_example" // string | Search query, at most 256 UTF-8 bytes
 	limit := int32(56) // int32 |  (optional) (default to 25)
 	after := "after_example" // string |  (optional)
 
@@ -1574,7 +1574,7 @@ Other parameters are passed through a pointer to a apiRedditSearchUsersRequest s
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **q** | **string** | Search query | 
+ **q** | **string** | Search query, at most 256 UTF-8 bytes | 
  **limit** | **int32** |  | [default to 25]
  **after** | **string** |  | 
 
