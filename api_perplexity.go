@@ -28,6 +28,7 @@ type ApiPerplexityAskPerplexityAQuestionRequest struct {
 	prompt *string
 	country *string
 	strictCountry *bool
+	location *string
 }
 
 // The prompt to send to Perplexity (max 4096 characters).
@@ -45,6 +46,12 @@ func (r ApiPerplexityAskPerplexityAQuestionRequest) Country(country string) ApiP
 // Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;.
 func (r ApiPerplexityAskPerplexityAQuestionRequest) StrictCountry(strictCountry bool) ApiPerplexityAskPerplexityAQuestionRequest {
 	r.strictCountry = &strictCountry
+	return r
+}
+
+// Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or &#39;lat,lng&#39; in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP&#39;s city. It does not pick the egress: &#x60;country&#x60; does.
+func (r ApiPerplexityAskPerplexityAQuestionRequest) Location(location string) ApiPerplexityAskPerplexityAQuestionRequest {
+	r.location = &location
 	return r
 }
 
@@ -100,6 +107,9 @@ func (a *PerplexityAPIService) PerplexityAskPerplexityAQuestionExecute(r ApiPerp
 	} else {
 		var defaultValue bool = false
 		r.strictCountry = &defaultValue
+	}
+	if r.location != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -302,6 +312,7 @@ type ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest struct {
 	competitors *string
 	country *string
 	strictCountry *bool
+	location *string
 }
 
 // The prompt to ask Perplexity.
@@ -343,6 +354,12 @@ func (r ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest) Country
 // Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;.
 func (r ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest) StrictCountry(strictCountry bool) ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest {
 	r.strictCountry = &strictCountry
+	return r
+}
+
+// Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or &#39;lat,lng&#39; in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP&#39;s city. It does not pick the egress: &#x60;country&#x60; does.
+func (r ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest) Location(location string) ApiPerplexityMeasureABrandSVisibilityInAPerplexityAnswerRequest {
+	r.location = &location
 	return r
 }
 
@@ -411,6 +428,9 @@ func (a *PerplexityAPIService) PerplexityMeasureABrandSVisibilityInAPerplexityAn
 	} else {
 		var defaultValue bool = false
 		r.strictCountry = &defaultValue
+	}
+	if r.location != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

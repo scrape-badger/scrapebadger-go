@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## PerplexityAskPerplexityAQuestion
 
-> interface{} PerplexityAskPerplexityAQuestion(ctx).Prompt(prompt).Country(country).StrictCountry(strictCountry).Execute()
+> interface{} PerplexityAskPerplexityAQuestion(ctx).Prompt(prompt).Country(country).StrictCountry(strictCountry).Location(location).Execute()
 
 Ask Perplexity a question
 
@@ -37,10 +37,11 @@ func main() {
 	prompt := "prompt_example" // string | The prompt to send to Perplexity (max 4096 characters).
 	country := "country_example" // string | ISO-3166 alpha-2 egress country, e.g. 'US', 'GB', 'DE'. (optional)
 	strictCountry := true // bool | Answer only from an exit in `country`, never another one; 503 `country_unavailable` (not billed) when none answers. Requires `country`. (optional) (default to false)
+	location := "location_example" // string | Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or 'lat,lng' in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP's city. It does not pick the egress: `country` does. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PerplexityAPI.PerplexityAskPerplexityAQuestion(context.Background()).Prompt(prompt).Country(country).StrictCountry(strictCountry).Execute()
+	resp, r, err := apiClient.PerplexityAPI.PerplexityAskPerplexityAQuestion(context.Background()).Prompt(prompt).Country(country).StrictCountry(strictCountry).Location(location).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PerplexityAPI.PerplexityAskPerplexityAQuestion``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -64,6 +65,7 @@ Name | Type | Description  | Notes
  **prompt** | **string** | The prompt to send to Perplexity (max 4096 characters). | 
  **country** | **string** | ISO-3166 alpha-2 egress country, e.g. &#39;US&#39;, &#39;GB&#39;, &#39;DE&#39;. | 
  **strictCountry** | **bool** | Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;. | [default to false]
+ **location** | **string** | Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or &#39;lat,lng&#39; in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP&#39;s city. It does not pick the egress: &#x60;country&#x60; does. | 
 
 ### Return type
 
@@ -146,7 +148,7 @@ Other parameters are passed through a pointer to a apiPerplexityAskPerplexityAQu
 
 ## PerplexityMeasureABrandSVisibilityInAPerplexityAnswer
 
-> interface{} PerplexityMeasureABrandSVisibilityInAPerplexityAnswer(ctx).Prompt(prompt).Brand(brand).Domain(domain).Aliases(aliases).Competitors(competitors).Country(country).StrictCountry(strictCountry).Execute()
+> interface{} PerplexityMeasureABrandSVisibilityInAPerplexityAnswer(ctx).Prompt(prompt).Brand(brand).Domain(domain).Aliases(aliases).Competitors(competitors).Country(country).StrictCountry(strictCountry).Location(location).Execute()
 
 Measure a brand's visibility in a Perplexity answer
 
@@ -172,10 +174,11 @@ func main() {
 	competitors := "competitors_example" // string | Comma-separated competitor names. (optional)
 	country := "country_example" // string | ISO-3166 alpha-2 egress country. (optional)
 	strictCountry := true // bool | Answer only from an exit in `country`, never another one; 503 `country_unavailable` (not billed) when none answers. Requires `country`. (optional) (default to false)
+	location := "location_example" // string | Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or 'lat,lng' in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP's city. It does not pick the egress: `country` does. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PerplexityAPI.PerplexityMeasureABrandSVisibilityInAPerplexityAnswer(context.Background()).Prompt(prompt).Brand(brand).Domain(domain).Aliases(aliases).Competitors(competitors).Country(country).StrictCountry(strictCountry).Execute()
+	resp, r, err := apiClient.PerplexityAPI.PerplexityMeasureABrandSVisibilityInAPerplexityAnswer(context.Background()).Prompt(prompt).Brand(brand).Domain(domain).Aliases(aliases).Competitors(competitors).Country(country).StrictCountry(strictCountry).Location(location).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PerplexityAPI.PerplexityMeasureABrandSVisibilityInAPerplexityAnswer``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -203,6 +206,7 @@ Name | Type | Description  | Notes
  **competitors** | **string** | Comma-separated competitor names. | 
  **country** | **string** | ISO-3166 alpha-2 egress country. | 
  **strictCountry** | **bool** | Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;. | [default to false]
+ **location** | **string** | Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or &#39;lat,lng&#39; in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP&#39;s city. It does not pick the egress: &#x60;country&#x60; does. | 
 
 ### Return type
 
