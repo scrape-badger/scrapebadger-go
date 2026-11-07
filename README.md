@@ -683,6 +683,8 @@ Class | Method | HTTP request | Description
 *YandexAPI* | [**YandexWebSearch**](docs/YandexAPI.md#yandexwebsearch) | **Get** /v1/yandex/search | Web search
 *YandexAPI* | [**YandexYandexScraperHealthCheck**](docs/YandexAPI.md#yandexyandexscraperhealthcheck) | **Get** /v1/yandex/health | Yandex scraper health check
 *YandexAPI* | [**YandexYandexScraperHealthCheckHead**](docs/YandexAPI.md#yandexyandexscraperhealthcheckhead) | **Head** /v1/yandex/health | Yandex scraper health check
+*YelpAPI* | [**YelpListMarkets**](docs/YelpAPI.md#yelplistmarkets) | **Get** /v1/yelp/markets | List markets
+*YelpAPI* | [**YelpSearchBusinesses**](docs/YelpAPI.md#yelpsearchbusinesses) | **Get** /v1/yelp/search | Search businesses
 *YouTubeAPI* | [**YoutubeBatchVideoDetail**](docs/YouTubeAPI.md#youtubebatchvideodetail) | **Post** /v1/youtube/videos/batch | Batch video detail
 *YouTubeAPI* | [**YoutubeChannelAbout**](docs/YouTubeAPI.md#youtubechannelabout) | **Get** /v1/youtube/channels/{channel_id}/about | Channel about
 *YouTubeAPI* | [**YoutubeChannelPlaylists**](docs/YouTubeAPI.md#youtubechannelplaylists) | **Get** /v1/youtube/channels/{channel_id}/playlists | Channel playlists
@@ -910,6 +912,16 @@ Class | Method | HTTP request | Description
  - [WebhookSecret](docs/WebhookSecret.md)
  - [WebhookTestRequest](docs/WebhookTestRequest.md)
  - [WebhookTestResponse](docs/WebhookTestResponse.md)
+ - [YelpBusiness](docs/YelpBusiness.md)
+ - [YelpCategory](docs/YelpCategory.md)
+ - [YelpFilterGroup](docs/YelpFilterGroup.md)
+ - [YelpFilterOption](docs/YelpFilterOption.md)
+ - [YelpHours](docs/YelpHours.md)
+ - [YelpLink](docs/YelpLink.md)
+ - [YelpMarket](docs/YelpMarket.md)
+ - [YelpMarketsResponse](docs/YelpMarketsResponse.md)
+ - [YelpResolvedLocation](docs/YelpResolvedLocation.md)
+ - [YelpSearchResponse](docs/YelpSearchResponse.md)
 
 
 ## Documentation For Authorization

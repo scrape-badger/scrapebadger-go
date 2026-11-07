@@ -149,6 +149,8 @@ type APIClient struct {
 
 	YandexAPI *YandexAPIService
 
+	YelpAPI *YelpAPIService
+
 	YouTubeAPI *YouTubeAPIService
 
 	ZillowAPI *ZillowAPIService
@@ -220,6 +222,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.WebAPI = (*WebAPIService)(&c.common)
 	c.YahooAPI = (*YahooAPIService)(&c.common)
 	c.YandexAPI = (*YandexAPIService)(&c.common)
+	c.YelpAPI = (*YelpAPIService)(&c.common)
 	c.YouTubeAPI = (*YouTubeAPIService)(&c.common)
 	c.ZillowAPI = (*ZillowAPIService)(&c.common)
 
