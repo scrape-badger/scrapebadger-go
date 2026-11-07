@@ -18,37 +18,28 @@ import (
 
 // Description struct for Description
 type Description struct {
-	Any *interface{}
-	MapmapOfStringAny *map[string]interface{}
+	String *string
 }
 
 // Unmarshal JSON data into any of the pointers in the struct
 func (dst *Description) UnmarshalJSON(data []byte) error {
 	var err error
-	// try to unmarshal JSON data into Any
-	err = json.Unmarshal(data, &dst.Any);
-	if err == nil {
-		jsonAny, _ := json.Marshal(dst.Any)
-		if string(jsonAny) == "{}" { // empty struct
-			dst.Any = nil
-		} else {
-			return nil // data stored in dst.Any, return on the first match
-		}
-	} else {
-		dst.Any = nil
+	// this object is nullable so check if the payload is null or empty string
+	if string(data) == "" || string(data) == "{}" {
+		return nil
 	}
 
-	// try to unmarshal JSON data into MapmapOfStringAny
-	err = json.Unmarshal(data, &dst.MapmapOfStringAny);
+	// try to unmarshal JSON data into String
+	err = json.Unmarshal(data, &dst.String);
 	if err == nil {
-		jsonMapmapOfStringAny, _ := json.Marshal(dst.MapmapOfStringAny)
-		if string(jsonMapmapOfStringAny) == "{}" { // empty struct
-			dst.MapmapOfStringAny = nil
+		jsonString, _ := json.Marshal(dst.String)
+		if string(jsonString) == "{}" { // empty struct
+			dst.String = nil
 		} else {
-			return nil // data stored in dst.MapmapOfStringAny, return on the first match
+			return nil // data stored in dst.String, return on the first match
 		}
 	} else {
-		dst.MapmapOfStringAny = nil
+		dst.String = nil
 	}
 
 	return fmt.Errorf("data failed to match schemas in anyOf(Description)")
@@ -56,12 +47,8 @@ func (dst *Description) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src *Description) MarshalJSON() ([]byte, error) {
-	if src.Any != nil {
-		return json.Marshal(&src.Any)
-	}
-
-	if src.MapmapOfStringAny != nil {
-		return json.Marshal(&src.MapmapOfStringAny)
+	if src.String != nil {
+		return json.Marshal(&src.String)
 	}
 
 	return nil, nil // no data in anyOf schemas

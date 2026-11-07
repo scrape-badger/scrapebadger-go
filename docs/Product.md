@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **IsRestockingSoon** | Pointer to [**Isrestockingsoon**](Isrestockingsoon.md) |  | [optional] 
 **IsInStock** | Pointer to [**Isinstock**](Isinstock.md) |  | [optional] 
 **Gender** | Pointer to [**Gender**](Gender.md) |  | [optional] 
-**Description** | Pointer to [**Description**](Description.md) |  | [optional] 
+**Description** | Pointer to [**Description1**](Description1.md) |  | [optional] 
 **Ratings** | Pointer to [**Ratings**](Ratings.md) |  | [optional] 
 **Breadcrumbs** | Pointer to **[]map[string]interface{}** |  | [optional] 
 
@@ -471,20 +471,20 @@ HasGender returns a boolean if a field has been set.
 
 ### GetDescription
 
-`func (o *Product) GetDescription() Description`
+`func (o *Product) GetDescription() Description1`
 
 GetDescription returns the Description field if non-nil, zero value otherwise.
 
 ### GetDescriptionOk
 
-`func (o *Product) GetDescriptionOk() (*Description, bool)`
+`func (o *Product) GetDescriptionOk() (*Description1, bool)`
 
 GetDescriptionOk returns a tuple with the Description field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDescription
 
-`func (o *Product) SetDescription(v Description)`
+`func (o *Product) SetDescription(v Description1)`
 
 SetDescription sets Description field to given value.
 

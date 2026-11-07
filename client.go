@@ -63,6 +63,8 @@ type APIClient struct {
 
 	AppStoreAPI *AppStoreAPIService
 
+	AutoScout24API *AutoScout24APIService
+
 	BaiduAPI *BaiduAPIService
 
 	BatchAPI *BatchAPIService
@@ -72,6 +74,8 @@ type APIClient struct {
 	BingAPI *BingAPIService
 
 	BookingAPI *BookingAPIService
+
+	BraveAPI *BraveAPIService
 
 	ChatGPTAPI *ChatGPTAPIService
 
@@ -90,6 +94,8 @@ type APIClient struct {
 	FeedbackAPI *FeedbackAPIService
 
 	GeminiAPI *GeminiAPIService
+
+	GitHubAPI *GitHubAPIService
 
 	GoogleAPI *GoogleAPIService
 
@@ -171,11 +177,13 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AmazonAPI = (*AmazonAPIService)(&c.common)
 	c.ApartmentsAPI = (*ApartmentsAPIService)(&c.common)
 	c.AppStoreAPI = (*AppStoreAPIService)(&c.common)
+	c.AutoScout24API = (*AutoScout24APIService)(&c.common)
 	c.BaiduAPI = (*BaiduAPIService)(&c.common)
 	c.BatchAPI = (*BatchAPIService)(&c.common)
 	c.BestBuyAPI = (*BestBuyAPIService)(&c.common)
 	c.BingAPI = (*BingAPIService)(&c.common)
 	c.BookingAPI = (*BookingAPIService)(&c.common)
+	c.BraveAPI = (*BraveAPIService)(&c.common)
 	c.ChatGPTAPI = (*ChatGPTAPIService)(&c.common)
 	c.CopilotAPI = (*CopilotAPIService)(&c.common)
 	c.DepopAPI = (*DepopAPIService)(&c.common)
@@ -185,6 +193,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.FacebookAPI = (*FacebookAPIService)(&c.common)
 	c.FeedbackAPI = (*FeedbackAPIService)(&c.common)
 	c.GeminiAPI = (*GeminiAPIService)(&c.common)
+	c.GitHubAPI = (*GitHubAPIService)(&c.common)
 	c.GoogleAPI = (*GoogleAPIService)(&c.common)
 	c.GooglePlayAPI = (*GooglePlayAPIService)(&c.common)
 	c.GumtreeAPI = (*GumtreeAPIService)(&c.common)

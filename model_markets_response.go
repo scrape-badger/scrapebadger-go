@@ -21,7 +21,7 @@ var _ MappedNullable = &MarketsResponse{}
 
 // MarketsResponse Envelope returned by the market reference endpoint.
 type MarketsResponse struct {
-	Markets []map[string]interface{} `json:"markets"`
+	Markets []*map[string]interface{} `json:"markets"`
 }
 
 type _MarketsResponse MarketsResponse
@@ -30,7 +30,7 @@ type _MarketsResponse MarketsResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMarketsResponse(markets []map[string]interface{}) *MarketsResponse {
+func NewMarketsResponse(markets []*map[string]interface{}) *MarketsResponse {
 	this := MarketsResponse{}
 	this.Markets = markets
 	return &this
@@ -45,9 +45,9 @@ func NewMarketsResponseWithDefaults() *MarketsResponse {
 }
 
 // GetMarkets returns the Markets field value
-func (o *MarketsResponse) GetMarkets() []map[string]interface{} {
+func (o *MarketsResponse) GetMarkets() []*map[string]interface{} {
 	if o == nil {
-		var ret []map[string]interface{}
+		var ret []*map[string]interface{}
 		return ret
 	}
 
@@ -56,7 +56,7 @@ func (o *MarketsResponse) GetMarkets() []map[string]interface{} {
 
 // GetMarketsOk returns a tuple with the Markets field value
 // and a boolean to check if the value has been set.
-func (o *MarketsResponse) GetMarketsOk() ([]map[string]interface{}, bool) {
+func (o *MarketsResponse) GetMarketsOk() ([]*map[string]interface{}, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -64,7 +64,7 @@ func (o *MarketsResponse) GetMarketsOk() ([]map[string]interface{}, bool) {
 }
 
 // SetMarkets sets field value
-func (o *MarketsResponse) SetMarkets(v []map[string]interface{}) {
+func (o *MarketsResponse) SetMarkets(v []*map[string]interface{}) {
 	o.Markets = v
 }
 

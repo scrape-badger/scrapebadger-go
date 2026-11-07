@@ -37,7 +37,7 @@ type Product struct {
 	IsRestockingSoon *Isrestockingsoon `json:"isRestockingSoon,omitempty"`
 	IsInStock *Isinstock `json:"isInStock,omitempty"`
 	Gender *Gender `json:"gender,omitempty"`
-	Description *Description `json:"description,omitempty"`
+	Description *Description1 `json:"description,omitempty"`
 	Ratings *Ratings `json:"ratings,omitempty"`
 	Breadcrumbs []*map[string]interface{} `json:"breadcrumbs,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -603,9 +603,9 @@ func (o *Product) SetGender(v Gender) {
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
-func (o *Product) GetDescription() Description {
+func (o *Product) GetDescription() Description1 {
 	if o == nil || IsNil(o.Description) {
-		var ret Description
+		var ret Description1
 		return ret
 	}
 	return *o.Description
@@ -613,7 +613,7 @@ func (o *Product) GetDescription() Description {
 
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Product) GetDescriptionOk() (*Description, bool) {
+func (o *Product) GetDescriptionOk() (*Description1, bool) {
 	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
@@ -629,8 +629,8 @@ func (o *Product) HasDescription() bool {
 	return false
 }
 
-// SetDescription gets a reference to the given Description and assigns it to the Description field.
-func (o *Product) SetDescription(v Description) {
+// SetDescription gets a reference to the given Description1 and assigns it to the Description field.
+func (o *Product) SetDescription(v Description1) {
 	o.Description = &v
 }
 
