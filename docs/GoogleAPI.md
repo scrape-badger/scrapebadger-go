@@ -1017,7 +1017,7 @@ Name | Type | Description  | Notes
 
 ## GoogleGoogleLightWebSearch
 
-> interface{} GoogleGoogleLightWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).Execute()
+> interface{} GoogleGoogleLightWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Device(device).UserAgent(userAgent).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).Execute()
 
 Google Light web search
 
@@ -1050,10 +1050,38 @@ func main() {
 	filter := int32(56) // int32 |  (optional)
 	nfpr := int32(56) // int32 | Disable auto-correction (optional) (default to 0)
 	output := "output_example" // string |  (optional) (default to "json")
+	googleDomain := "googleDomain_example" // string | Alias for domain; Google requests use google.com with country targeting. (optional)
+	lat := float32(8.14) // float32 | Latitude; supply together with lon instead of location or uule. (optional)
+	lon := float32(8.14) // float32 | Longitude; supply together with lat. (optional)
+	radius := float32(8.14) // float32 | Location accuracy in meters; requires lat/lon or a named city with a known center. (optional)
+	colorScheme := "colorScheme_example" // string | Google color scheme. (optional)
+	tbm := "tbm_example" // string | Google search type. Use output=html for verticals; dedicated APIs provide parsed vertical results. (optional)
+	udm := "udm_example" // string | Google result filter: 14 web, 18 forums. Other verticals require output=html. (optional)
+	noCache := true // bool | Bypass result caches and request a fresh Google fetch. (optional) (default to false)
+	asDt := "asDt_example" // string | Site restriction mode: i includes, e excludes as_sitesearch. (optional)
+	asEpq := "asEpq_example" // string | Exact phrase. (optional)
+	asEq := "asEq_example" // string | Words to exclude. (optional)
+	asLq := "asLq_example" // string | Find pages linking to this URL; availability depends on Google. (optional)
+	asNlo := "asNlo_example" // string | Numeric range minimum. (optional)
+	asNhi := "asNhi_example" // string | Numeric range maximum. (optional)
+	asOq := "asOq_example" // string | Match any of these words. (optional)
+	asQ := "asQ_example" // string | Additional query words. (optional)
+	asQdr := "asQdr_example" // string | Time range, such as d, w, m or y1. (optional)
+	asRq := "asRq_example" // string | Related URL; availability depends on Google. (optional)
+	asSitesearch := "asSitesearch_example" // string | Restrict results to a site. (optional)
+	device := "device_example" // string | Device target. (optional)
+	userAgent := "userAgent_example" // string | Custom User-Agent. (optional)
+	cr := "cr_example" // string | Country restrict. (optional)
+	ludocid := "ludocid_example" // string | Place CID. (optional)
+	lsig := "lsig_example" // string | Map view ID. (optional)
+	kgmid := "kgmid_example" // string | Knowledge Graph entity ID. (optional)
+	si := "si_example" // string | Cached Google parameters. (optional)
+	ibp := "ibp_example" // string | Layout control. (optional)
+	uds := "uds_example" // string | Google filter string. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GoogleAPI.GoogleGoogleLightWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).Execute()
+	resp, r, err := apiClient.GoogleAPI.GoogleGoogleLightWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Device(device).UserAgent(userAgent).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleGoogleLightWebSearch``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1088,6 +1116,34 @@ Name | Type | Description  | Notes
  **filter** | **int32** |  | 
  **nfpr** | **int32** | Disable auto-correction | [default to 0]
  **output** | **string** |  | [default to &quot;json&quot;]
+ **googleDomain** | **string** | Alias for domain; Google requests use google.com with country targeting. | 
+ **lat** | **float32** | Latitude; supply together with lon instead of location or uule. | 
+ **lon** | **float32** | Longitude; supply together with lat. | 
+ **radius** | **float32** | Location accuracy in meters; requires lat/lon or a named city with a known center. | 
+ **colorScheme** | **string** | Google color scheme. | 
+ **tbm** | **string** | Google search type. Use output&#x3D;html for verticals; dedicated APIs provide parsed vertical results. | 
+ **udm** | **string** | Google result filter: 14 web, 18 forums. Other verticals require output&#x3D;html. | 
+ **noCache** | **bool** | Bypass result caches and request a fresh Google fetch. | [default to false]
+ **asDt** | **string** | Site restriction mode: i includes, e excludes as_sitesearch. | 
+ **asEpq** | **string** | Exact phrase. | 
+ **asEq** | **string** | Words to exclude. | 
+ **asLq** | **string** | Find pages linking to this URL; availability depends on Google. | 
+ **asNlo** | **string** | Numeric range minimum. | 
+ **asNhi** | **string** | Numeric range maximum. | 
+ **asOq** | **string** | Match any of these words. | 
+ **asQ** | **string** | Additional query words. | 
+ **asQdr** | **string** | Time range, such as d, w, m or y1. | 
+ **asRq** | **string** | Related URL; availability depends on Google. | 
+ **asSitesearch** | **string** | Restrict results to a site. | 
+ **device** | **string** | Device target. | 
+ **userAgent** | **string** | Custom User-Agent. | 
+ **cr** | **string** | Country restrict. | 
+ **ludocid** | **string** | Place CID. | 
+ **lsig** | **string** | Map view ID. | 
+ **kgmid** | **string** | Knowledge Graph entity ID. | 
+ **si** | **string** | Cached Google parameters. | 
+ **ibp** | **string** | Layout control. | 
+ **uds** | **string** | Google filter string. | 
 
 ### Return type
 
@@ -1377,7 +1433,7 @@ Name | Type | Description  | Notes
 
 ## GoogleGoogleWebSearch
 
-> interface{} GoogleGoogleWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Execute()
+> interface{} GoogleGoogleWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Mode(mode).ExpandRelatedQuestions(expandRelatedQuestions).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Execute()
 
 Google web search
 
@@ -1420,10 +1476,31 @@ func main() {
 	ibp := "ibp_example" // string | Layout control (optional)
 	uds := "uds_example" // string | Google filter string (optional)
 	aiOverview := true // bool | Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s when the SERP defers the overview; the request price is unchanged. (optional) (default to false)
+	mode := "mode_example" // string |  (optional) (default to "full")
+	expandRelatedQuestions := "expandRelatedQuestions_example" // string | Open all People Also Ask answers (true) or the first N (0-99). (optional)
+	googleDomain := "googleDomain_example" // string | Alias for domain; Google requests use google.com with country targeting. (optional)
+	lat := float32(8.14) // float32 | Latitude; supply together with lon instead of location or uule. (optional)
+	lon := float32(8.14) // float32 | Longitude; supply together with lat. (optional)
+	radius := float32(8.14) // float32 | Location accuracy in meters; requires lat/lon or a named city with a known center. (optional)
+	colorScheme := "colorScheme_example" // string | Google color scheme. (optional)
+	tbm := "tbm_example" // string | Google search type. Use output=html for verticals; dedicated APIs provide parsed vertical results. (optional)
+	udm := "udm_example" // string | Google result filter: 14 web, 18 forums. Other verticals require output=html. (optional)
+	noCache := true // bool | Bypass result caches and request a fresh Google fetch. (optional) (default to false)
+	asDt := "asDt_example" // string | Site restriction mode: i includes, e excludes as_sitesearch. (optional)
+	asEpq := "asEpq_example" // string | Exact phrase. (optional)
+	asEq := "asEq_example" // string | Words to exclude. (optional)
+	asLq := "asLq_example" // string | Find pages linking to this URL; availability depends on Google. (optional)
+	asNlo := "asNlo_example" // string | Numeric range minimum. (optional)
+	asNhi := "asNhi_example" // string | Numeric range maximum. (optional)
+	asOq := "asOq_example" // string | Match any of these words. (optional)
+	asQ := "asQ_example" // string | Additional query words. (optional)
+	asQdr := "asQdr_example" // string | Time range, such as d, w, m or y1. (optional)
+	asRq := "asRq_example" // string | Related URL; availability depends on Google. (optional)
+	asSitesearch := "asSitesearch_example" // string | Restrict results to a site. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GoogleAPI.GoogleGoogleWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Execute()
+	resp, r, err := apiClient.GoogleAPI.GoogleGoogleWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Mode(mode).ExpandRelatedQuestions(expandRelatedQuestions).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleGoogleWebSearch``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1468,6 +1545,27 @@ Name | Type | Description  | Notes
  **ibp** | **string** | Layout control | 
  **uds** | **string** | Google filter string | 
  **aiOverview** | **bool** | Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s when the SERP defers the overview; the request price is unchanged. | [default to false]
+ **mode** | **string** |  | [default to &quot;full&quot;]
+ **expandRelatedQuestions** | **string** | Open all People Also Ask answers (true) or the first N (0-99). | 
+ **googleDomain** | **string** | Alias for domain; Google requests use google.com with country targeting. | 
+ **lat** | **float32** | Latitude; supply together with lon instead of location or uule. | 
+ **lon** | **float32** | Longitude; supply together with lat. | 
+ **radius** | **float32** | Location accuracy in meters; requires lat/lon or a named city with a known center. | 
+ **colorScheme** | **string** | Google color scheme. | 
+ **tbm** | **string** | Google search type. Use output&#x3D;html for verticals; dedicated APIs provide parsed vertical results. | 
+ **udm** | **string** | Google result filter: 14 web, 18 forums. Other verticals require output&#x3D;html. | 
+ **noCache** | **bool** | Bypass result caches and request a fresh Google fetch. | [default to false]
+ **asDt** | **string** | Site restriction mode: i includes, e excludes as_sitesearch. | 
+ **asEpq** | **string** | Exact phrase. | 
+ **asEq** | **string** | Words to exclude. | 
+ **asLq** | **string** | Find pages linking to this URL; availability depends on Google. | 
+ **asNlo** | **string** | Numeric range minimum. | 
+ **asNhi** | **string** | Numeric range maximum. | 
+ **asOq** | **string** | Match any of these words. | 
+ **asQ** | **string** | Additional query words. | 
+ **asQdr** | **string** | Time range, such as d, w, m or y1. | 
+ **asRq** | **string** | Related URL; availability depends on Google. | 
+ **asSitesearch** | **string** | Restrict results to a site. | 
 
 ### Return type
 

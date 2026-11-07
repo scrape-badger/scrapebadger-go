@@ -2498,6 +2498,34 @@ type ApiGoogleGoogleLightWebSearchRequest struct {
 	filter *int32
 	nfpr *int32
 	output *string
+	googleDomain *string
+	lat *float32
+	lon *float32
+	radius *float32
+	colorScheme *string
+	tbm *string
+	udm *string
+	noCache *bool
+	asDt *string
+	asEpq *string
+	asEq *string
+	asLq *string
+	asNlo *string
+	asNhi *string
+	asOq *string
+	asQ *string
+	asQdr *string
+	asRq *string
+	asSitesearch *string
+	device *string
+	userAgent *string
+	cr *string
+	ludocid *string
+	lsig *string
+	kgmid *string
+	si *string
+	ibp *string
+	uds *string
 }
 
 // Search query (supports Google operators)
@@ -2578,6 +2606,174 @@ func (r ApiGoogleGoogleLightWebSearchRequest) Nfpr(nfpr int32) ApiGoogleGoogleLi
 
 func (r ApiGoogleGoogleLightWebSearchRequest) Output(output string) ApiGoogleGoogleLightWebSearchRequest {
 	r.output = &output
+	return r
+}
+
+// Alias for domain; Google requests use google.com with country targeting.
+func (r ApiGoogleGoogleLightWebSearchRequest) GoogleDomain(googleDomain string) ApiGoogleGoogleLightWebSearchRequest {
+	r.googleDomain = &googleDomain
+	return r
+}
+
+// Latitude; supply together with lon instead of location or uule.
+func (r ApiGoogleGoogleLightWebSearchRequest) Lat(lat float32) ApiGoogleGoogleLightWebSearchRequest {
+	r.lat = &lat
+	return r
+}
+
+// Longitude; supply together with lat.
+func (r ApiGoogleGoogleLightWebSearchRequest) Lon(lon float32) ApiGoogleGoogleLightWebSearchRequest {
+	r.lon = &lon
+	return r
+}
+
+// Location accuracy in meters; requires lat/lon or a named city with a known center.
+func (r ApiGoogleGoogleLightWebSearchRequest) Radius(radius float32) ApiGoogleGoogleLightWebSearchRequest {
+	r.radius = &radius
+	return r
+}
+
+// Google color scheme.
+func (r ApiGoogleGoogleLightWebSearchRequest) ColorScheme(colorScheme string) ApiGoogleGoogleLightWebSearchRequest {
+	r.colorScheme = &colorScheme
+	return r
+}
+
+// Google search type. Use output&#x3D;html for verticals; dedicated APIs provide parsed vertical results.
+func (r ApiGoogleGoogleLightWebSearchRequest) Tbm(tbm string) ApiGoogleGoogleLightWebSearchRequest {
+	r.tbm = &tbm
+	return r
+}
+
+// Google result filter: 14 web, 18 forums. Other verticals require output&#x3D;html.
+func (r ApiGoogleGoogleLightWebSearchRequest) Udm(udm string) ApiGoogleGoogleLightWebSearchRequest {
+	r.udm = &udm
+	return r
+}
+
+// Bypass result caches and request a fresh Google fetch.
+func (r ApiGoogleGoogleLightWebSearchRequest) NoCache(noCache bool) ApiGoogleGoogleLightWebSearchRequest {
+	r.noCache = &noCache
+	return r
+}
+
+// Site restriction mode: i includes, e excludes as_sitesearch.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsDt(asDt string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asDt = &asDt
+	return r
+}
+
+// Exact phrase.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsEpq(asEpq string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asEpq = &asEpq
+	return r
+}
+
+// Words to exclude.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsEq(asEq string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asEq = &asEq
+	return r
+}
+
+// Find pages linking to this URL; availability depends on Google.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsLq(asLq string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asLq = &asLq
+	return r
+}
+
+// Numeric range minimum.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsNlo(asNlo string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asNlo = &asNlo
+	return r
+}
+
+// Numeric range maximum.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsNhi(asNhi string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asNhi = &asNhi
+	return r
+}
+
+// Match any of these words.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsOq(asOq string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asOq = &asOq
+	return r
+}
+
+// Additional query words.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsQ(asQ string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asQ = &asQ
+	return r
+}
+
+// Time range, such as d, w, m or y1.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsQdr(asQdr string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asQdr = &asQdr
+	return r
+}
+
+// Related URL; availability depends on Google.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsRq(asRq string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asRq = &asRq
+	return r
+}
+
+// Restrict results to a site.
+func (r ApiGoogleGoogleLightWebSearchRequest) AsSitesearch(asSitesearch string) ApiGoogleGoogleLightWebSearchRequest {
+	r.asSitesearch = &asSitesearch
+	return r
+}
+
+// Device target.
+func (r ApiGoogleGoogleLightWebSearchRequest) Device(device string) ApiGoogleGoogleLightWebSearchRequest {
+	r.device = &device
+	return r
+}
+
+// Custom User-Agent.
+func (r ApiGoogleGoogleLightWebSearchRequest) UserAgent(userAgent string) ApiGoogleGoogleLightWebSearchRequest {
+	r.userAgent = &userAgent
+	return r
+}
+
+// Country restrict.
+func (r ApiGoogleGoogleLightWebSearchRequest) Cr(cr string) ApiGoogleGoogleLightWebSearchRequest {
+	r.cr = &cr
+	return r
+}
+
+// Place CID.
+func (r ApiGoogleGoogleLightWebSearchRequest) Ludocid(ludocid string) ApiGoogleGoogleLightWebSearchRequest {
+	r.ludocid = &ludocid
+	return r
+}
+
+// Map view ID.
+func (r ApiGoogleGoogleLightWebSearchRequest) Lsig(lsig string) ApiGoogleGoogleLightWebSearchRequest {
+	r.lsig = &lsig
+	return r
+}
+
+// Knowledge Graph entity ID.
+func (r ApiGoogleGoogleLightWebSearchRequest) Kgmid(kgmid string) ApiGoogleGoogleLightWebSearchRequest {
+	r.kgmid = &kgmid
+	return r
+}
+
+// Cached Google parameters.
+func (r ApiGoogleGoogleLightWebSearchRequest) Si(si string) ApiGoogleGoogleLightWebSearchRequest {
+	r.si = &si
+	return r
+}
+
+// Layout control.
+func (r ApiGoogleGoogleLightWebSearchRequest) Ibp(ibp string) ApiGoogleGoogleLightWebSearchRequest {
+	r.ibp = &ibp
+	return r
+}
+
+// Google filter string.
+func (r ApiGoogleGoogleLightWebSearchRequest) Uds(uds string) ApiGoogleGoogleLightWebSearchRequest {
+	r.uds = &uds
 	return r
 }
 
@@ -2689,6 +2885,93 @@ func (a *GoogleAPIService) GoogleGoogleLightWebSearchExecute(r ApiGoogleGoogleLi
 	} else {
 		var defaultValue string = "json"
 		r.output = &defaultValue
+	}
+	if r.googleDomain != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "google_domain", r.googleDomain, "form", "")
+	}
+	if r.lat != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lat", r.lat, "form", "")
+	}
+	if r.lon != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lon", r.lon, "form", "")
+	}
+	if r.radius != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "radius", r.radius, "form", "")
+	}
+	if r.colorScheme != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "color_scheme", r.colorScheme, "form", "")
+	}
+	if r.tbm != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tbm", r.tbm, "form", "")
+	}
+	if r.udm != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "udm", r.udm, "form", "")
+	}
+	if r.noCache != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "no_cache", r.noCache, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.noCache = &defaultValue
+	}
+	if r.asDt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_dt", r.asDt, "form", "")
+	}
+	if r.asEpq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_epq", r.asEpq, "form", "")
+	}
+	if r.asEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_eq", r.asEq, "form", "")
+	}
+	if r.asLq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_lq", r.asLq, "form", "")
+	}
+	if r.asNlo != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_nlo", r.asNlo, "form", "")
+	}
+	if r.asNhi != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_nhi", r.asNhi, "form", "")
+	}
+	if r.asOq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_oq", r.asOq, "form", "")
+	}
+	if r.asQ != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_q", r.asQ, "form", "")
+	}
+	if r.asQdr != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_qdr", r.asQdr, "form", "")
+	}
+	if r.asRq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_rq", r.asRq, "form", "")
+	}
+	if r.asSitesearch != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_sitesearch", r.asSitesearch, "form", "")
+	}
+	if r.device != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "device", r.device, "form", "")
+	}
+	if r.userAgent != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "user_agent", r.userAgent, "form", "")
+	}
+	if r.cr != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cr", r.cr, "form", "")
+	}
+	if r.ludocid != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ludocid", r.ludocid, "form", "")
+	}
+	if r.lsig != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lsig", r.lsig, "form", "")
+	}
+	if r.kgmid != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "kgmid", r.kgmid, "form", "")
+	}
+	if r.si != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "si", r.si, "form", "")
+	}
+	if r.ibp != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ibp", r.ibp, "form", "")
+	}
+	if r.uds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "uds", r.uds, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3386,6 +3669,27 @@ type ApiGoogleGoogleWebSearchRequest struct {
 	ibp *string
 	uds *string
 	aiOverview *bool
+	mode *string
+	expandRelatedQuestions *string
+	googleDomain *string
+	lat *float32
+	lon *float32
+	radius *float32
+	colorScheme *string
+	tbm *string
+	udm *string
+	noCache *bool
+	asDt *string
+	asEpq *string
+	asEq *string
+	asLq *string
+	asNlo *string
+	asNhi *string
+	asOq *string
+	asQ *string
+	asQdr *string
+	asRq *string
+	asSitesearch *string
 }
 
 // Search query (supports Google operators)
@@ -3527,6 +3831,131 @@ func (r ApiGoogleGoogleWebSearchRequest) Uds(uds string) ApiGoogleGoogleWebSearc
 // Chase deferred AI Overview page_token with a follow-up fetch and merge the result. Adds ~1s when the SERP defers the overview; the request price is unchanged.
 func (r ApiGoogleGoogleWebSearchRequest) AiOverview(aiOverview bool) ApiGoogleGoogleWebSearchRequest {
 	r.aiOverview = &aiOverview
+	return r
+}
+
+func (r ApiGoogleGoogleWebSearchRequest) Mode(mode string) ApiGoogleGoogleWebSearchRequest {
+	r.mode = &mode
+	return r
+}
+
+// Open all People Also Ask answers (true) or the first N (0-99).
+func (r ApiGoogleGoogleWebSearchRequest) ExpandRelatedQuestions(expandRelatedQuestions string) ApiGoogleGoogleWebSearchRequest {
+	r.expandRelatedQuestions = &expandRelatedQuestions
+	return r
+}
+
+// Alias for domain; Google requests use google.com with country targeting.
+func (r ApiGoogleGoogleWebSearchRequest) GoogleDomain(googleDomain string) ApiGoogleGoogleWebSearchRequest {
+	r.googleDomain = &googleDomain
+	return r
+}
+
+// Latitude; supply together with lon instead of location or uule.
+func (r ApiGoogleGoogleWebSearchRequest) Lat(lat float32) ApiGoogleGoogleWebSearchRequest {
+	r.lat = &lat
+	return r
+}
+
+// Longitude; supply together with lat.
+func (r ApiGoogleGoogleWebSearchRequest) Lon(lon float32) ApiGoogleGoogleWebSearchRequest {
+	r.lon = &lon
+	return r
+}
+
+// Location accuracy in meters; requires lat/lon or a named city with a known center.
+func (r ApiGoogleGoogleWebSearchRequest) Radius(radius float32) ApiGoogleGoogleWebSearchRequest {
+	r.radius = &radius
+	return r
+}
+
+// Google color scheme.
+func (r ApiGoogleGoogleWebSearchRequest) ColorScheme(colorScheme string) ApiGoogleGoogleWebSearchRequest {
+	r.colorScheme = &colorScheme
+	return r
+}
+
+// Google search type. Use output&#x3D;html for verticals; dedicated APIs provide parsed vertical results.
+func (r ApiGoogleGoogleWebSearchRequest) Tbm(tbm string) ApiGoogleGoogleWebSearchRequest {
+	r.tbm = &tbm
+	return r
+}
+
+// Google result filter: 14 web, 18 forums. Other verticals require output&#x3D;html.
+func (r ApiGoogleGoogleWebSearchRequest) Udm(udm string) ApiGoogleGoogleWebSearchRequest {
+	r.udm = &udm
+	return r
+}
+
+// Bypass result caches and request a fresh Google fetch.
+func (r ApiGoogleGoogleWebSearchRequest) NoCache(noCache bool) ApiGoogleGoogleWebSearchRequest {
+	r.noCache = &noCache
+	return r
+}
+
+// Site restriction mode: i includes, e excludes as_sitesearch.
+func (r ApiGoogleGoogleWebSearchRequest) AsDt(asDt string) ApiGoogleGoogleWebSearchRequest {
+	r.asDt = &asDt
+	return r
+}
+
+// Exact phrase.
+func (r ApiGoogleGoogleWebSearchRequest) AsEpq(asEpq string) ApiGoogleGoogleWebSearchRequest {
+	r.asEpq = &asEpq
+	return r
+}
+
+// Words to exclude.
+func (r ApiGoogleGoogleWebSearchRequest) AsEq(asEq string) ApiGoogleGoogleWebSearchRequest {
+	r.asEq = &asEq
+	return r
+}
+
+// Find pages linking to this URL; availability depends on Google.
+func (r ApiGoogleGoogleWebSearchRequest) AsLq(asLq string) ApiGoogleGoogleWebSearchRequest {
+	r.asLq = &asLq
+	return r
+}
+
+// Numeric range minimum.
+func (r ApiGoogleGoogleWebSearchRequest) AsNlo(asNlo string) ApiGoogleGoogleWebSearchRequest {
+	r.asNlo = &asNlo
+	return r
+}
+
+// Numeric range maximum.
+func (r ApiGoogleGoogleWebSearchRequest) AsNhi(asNhi string) ApiGoogleGoogleWebSearchRequest {
+	r.asNhi = &asNhi
+	return r
+}
+
+// Match any of these words.
+func (r ApiGoogleGoogleWebSearchRequest) AsOq(asOq string) ApiGoogleGoogleWebSearchRequest {
+	r.asOq = &asOq
+	return r
+}
+
+// Additional query words.
+func (r ApiGoogleGoogleWebSearchRequest) AsQ(asQ string) ApiGoogleGoogleWebSearchRequest {
+	r.asQ = &asQ
+	return r
+}
+
+// Time range, such as d, w, m or y1.
+func (r ApiGoogleGoogleWebSearchRequest) AsQdr(asQdr string) ApiGoogleGoogleWebSearchRequest {
+	r.asQdr = &asQdr
+	return r
+}
+
+// Related URL; availability depends on Google.
+func (r ApiGoogleGoogleWebSearchRequest) AsRq(asRq string) ApiGoogleGoogleWebSearchRequest {
+	r.asRq = &asRq
+	return r
+}
+
+// Restrict results to a site.
+func (r ApiGoogleGoogleWebSearchRequest) AsSitesearch(asSitesearch string) ApiGoogleGoogleWebSearchRequest {
+	r.asSitesearch = &asSitesearch
 	return r
 }
 
@@ -3672,6 +4101,75 @@ func (a *GoogleAPIService) GoogleGoogleWebSearchExecute(r ApiGoogleGoogleWebSear
 	} else {
 		var defaultValue bool = false
 		r.aiOverview = &defaultValue
+	}
+	if r.mode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mode", r.mode, "form", "")
+	} else {
+		var defaultValue string = "full"
+		r.mode = &defaultValue
+	}
+	if r.expandRelatedQuestions != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "expand_related_questions", r.expandRelatedQuestions, "form", "")
+	}
+	if r.googleDomain != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "google_domain", r.googleDomain, "form", "")
+	}
+	if r.lat != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lat", r.lat, "form", "")
+	}
+	if r.lon != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lon", r.lon, "form", "")
+	}
+	if r.radius != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "radius", r.radius, "form", "")
+	}
+	if r.colorScheme != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "color_scheme", r.colorScheme, "form", "")
+	}
+	if r.tbm != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tbm", r.tbm, "form", "")
+	}
+	if r.udm != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "udm", r.udm, "form", "")
+	}
+	if r.noCache != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "no_cache", r.noCache, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.noCache = &defaultValue
+	}
+	if r.asDt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_dt", r.asDt, "form", "")
+	}
+	if r.asEpq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_epq", r.asEpq, "form", "")
+	}
+	if r.asEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_eq", r.asEq, "form", "")
+	}
+	if r.asLq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_lq", r.asLq, "form", "")
+	}
+	if r.asNlo != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_nlo", r.asNlo, "form", "")
+	}
+	if r.asNhi != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_nhi", r.asNhi, "form", "")
+	}
+	if r.asOq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_oq", r.asOq, "form", "")
+	}
+	if r.asQ != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_q", r.asQ, "form", "")
+	}
+	if r.asQdr != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_qdr", r.asQdr, "form", "")
+	}
+	if r.asRq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_rq", r.asRq, "form", "")
+	}
+	if r.asSitesearch != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "as_sitesearch", r.asSitesearch, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
