@@ -71,6 +71,8 @@ docs/Article.md
 docs/AutoScout24API.md
 docs/AutoScout24FiltersResponse.md
 docs/AutoScout24Listing.md
+docs/AutoScout24ListingDetail.md
+docs/AutoScout24ListingResponse.md
 docs/AutoScout24Market.md
 docs/AutoScout24MarketsResponse.md
 docs/AutoScout24SearchResponse.md
@@ -273,6 +275,8 @@ model_agent_trial_info.go
 model_article.go
 model_auto_scout24_filters_response.go
 model_auto_scout24_listing.go
+model_auto_scout24_listing_detail.go
+model_auto_scout24_listing_response.go
 model_auto_scout24_market.go
 model_auto_scout24_markets_response.go
 model_auto_scout24_search_response.go

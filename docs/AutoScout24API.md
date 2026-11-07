@@ -5,6 +5,7 @@ All URIs are relative to *https://scrapebadger.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Autoscout24CheckAutoscout24Health**](AutoScout24API.md#Autoscout24CheckAutoscout24Health) | **Get** /v1/autoscout24/health | Check AutoScout24 health
+[**Autoscout24GetListing**](AutoScout24API.md#Autoscout24GetListing) | **Get** /v1/autoscout24/listing | Get listing
 [**Autoscout24ListMarkets**](AutoScout24API.md#Autoscout24ListMarkets) | **Get** /v1/autoscout24/markets | List markets
 [**Autoscout24ListSearchFilters**](AutoScout24API.md#Autoscout24ListSearchFilters) | **Get** /v1/autoscout24/filters | List search filters
 [**Autoscout24SearchVehicles**](AutoScout24API.md#Autoscout24SearchVehicles) | **Get** /v1/autoscout24/search | Search vehicles
@@ -55,6 +56,76 @@ Other parameters are passed through a pointer to a apiAutoscout24CheckAutoscout2
 ### Return type
 
 **interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## Autoscout24GetListing
+
+> AutoScout24ListingResponse Autoscout24GetListing(ctx).Url(url).ListingId(listingId).Market(market).Execute()
+
+Get listing
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	url := "url_example" // string | Full HTTPS listing URL from search results. Supply url or listing_id, not both. (optional)
+	listingId := "listingId_example" // string | Listing UUID from search results; requires no SEO slug. (optional)
+	market := "market_example" // string | Inferred from URL, otherwise de. Explicit market must match the URL host. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AutoScout24API.Autoscout24GetListing(context.Background()).Url(url).ListingId(listingId).Market(market).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AutoScout24API.Autoscout24GetListing``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `Autoscout24GetListing`: AutoScout24ListingResponse
+	fmt.Fprintf(os.Stdout, "Response from `AutoScout24API.Autoscout24GetListing`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAutoscout24GetListingRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **url** | **string** | Full HTTPS listing URL from search results. Supply url or listing_id, not both. | 
+ **listingId** | **string** | Listing UUID from search results; requires no SEO slug. | 
+ **market** | **string** | Inferred from URL, otherwise de. Explicit market must match the URL host. | 
+
+### Return type
+
+[**AutoScout24ListingResponse**](AutoScout24ListingResponse.md)
 
 ### Authorization
 

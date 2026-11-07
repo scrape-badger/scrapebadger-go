@@ -34,6 +34,18 @@ func Test_scrapebadger_AutoScout24APIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AutoScout24APIService Autoscout24GetListing", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AutoScout24API.Autoscout24GetListing(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AutoScout24APIService Autoscout24ListMarkets", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

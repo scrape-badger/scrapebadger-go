@@ -133,6 +133,163 @@ func (a *AutoScout24APIService) Autoscout24CheckAutoscout24HealthExecute(r ApiAu
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiAutoscout24GetListingRequest struct {
+	ctx context.Context
+	ApiService *AutoScout24APIService
+	url *string
+	listingId *string
+	market *string
+}
+
+// Full HTTPS listing URL from search results. Supply url or listing_id, not both.
+func (r ApiAutoscout24GetListingRequest) Url(url string) ApiAutoscout24GetListingRequest {
+	r.url = &url
+	return r
+}
+
+// Listing UUID from search results; requires no SEO slug.
+func (r ApiAutoscout24GetListingRequest) ListingId(listingId string) ApiAutoscout24GetListingRequest {
+	r.listingId = &listingId
+	return r
+}
+
+// Inferred from URL, otherwise de. Explicit market must match the URL host.
+func (r ApiAutoscout24GetListingRequest) Market(market string) ApiAutoscout24GetListingRequest {
+	r.market = &market
+	return r
+}
+
+func (r ApiAutoscout24GetListingRequest) Execute() (*AutoScout24ListingResponse, *http.Response, error) {
+	return r.ApiService.Autoscout24GetListingExecute(r)
+}
+
+/*
+Autoscout24GetListing Get listing
+
+Full public vehicle specifications, equipment, photos, price and seller data.
+
+Exactly one of url or listing_id is required. Supported markets match
+/markets. Successful detail costs 10 credits; removed or missing listings
+return an unbilled 404. Invalid inputs return 422 and source failures 503.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiAutoscout24GetListingRequest
+*/
+func (a *AutoScout24APIService) Autoscout24GetListing(ctx context.Context) ApiAutoscout24GetListingRequest {
+	return ApiAutoscout24GetListingRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return AutoScout24ListingResponse
+func (a *AutoScout24APIService) Autoscout24GetListingExecute(r ApiAutoscout24GetListingRequest) (*AutoScout24ListingResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AutoScout24ListingResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AutoScout24APIService.Autoscout24GetListing")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/autoscout24/listing"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
+	if r.listingId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "listing_id", r.listingId, "form", "")
+	}
+	if r.market != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "market", r.market, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiAutoscout24ListMarketsRequest struct {
 	ctx context.Context
 	ApiService *AutoScout24APIService
@@ -531,8 +688,8 @@ Autoscout24SearchVehicles Search vehicles
 Search live vehicle cards, seller/location information and current filter taxonomy.
 
 Browsing is capped at 200 pages (normally 20 cards each). Narrow the query
-to reach more inventory. Empty results cost zero credits. Listing detail
-is not included in this API.
+to reach more inventory. Empty results cost zero credits. Pass a result's
+url or id to /listing for its full specifications and equipment.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiAutoscout24SearchVehiclesRequest

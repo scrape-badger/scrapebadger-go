@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **Url** | **string** |  | 
 **Snippet** | Pointer to [**Snippet**](Snippet.md) |  | [optional] 
-**Description** | Pointer to [**Description**](Description.md) |  | [optional] 
+**Description** | Pointer to [**NullableDescription**](Description.md) |  | [optional] 
 **DisplayUrl** | Pointer to [**DisplayUrl**](DisplayUrl.md) |  | [optional] 
 **SiteName** | Pointer to [**SiteName**](SiteName.md) |  | [optional] 
 **Language** | Pointer to [**Language**](Language.md) |  | [optional] 
@@ -176,6 +176,16 @@ SetDescription sets Description field to given value.
 
 HasDescription returns a boolean if a field has been set.
 
+### SetDescriptionNil
+
+`func (o *BraveResult) SetDescriptionNil(b bool)`
+
+ SetDescriptionNil sets the value for Description to be an explicit nil
+
+### UnsetDescription
+`func (o *BraveResult) UnsetDescription()`
+
+UnsetDescription ensures that no value is present for Description, not even an explicit nil
 ### GetDisplayUrl
 
 `func (o *BraveResult) GetDisplayUrl() DisplayUrl`
