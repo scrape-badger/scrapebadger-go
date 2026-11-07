@@ -2498,6 +2498,9 @@ type ApiGoogleGoogleLightWebSearchRequest struct {
 	filter *int32
 	nfpr *int32
 	output *string
+	oq *string
+	sourceid *string
+	ie *string
 	googleDomain *string
 	lat *float32
 	lon *float32
@@ -2609,6 +2612,24 @@ func (r ApiGoogleGoogleLightWebSearchRequest) Output(output string) ApiGoogleGoo
 	return r
 }
 
+// Original query sent to Google. Defaults to q; an empty string omits it.
+func (r ApiGoogleGoogleLightWebSearchRequest) Oq(oq string) ApiGoogleGoogleLightWebSearchRequest {
+	r.oq = &oq
+	return r
+}
+
+// Google source identifier. Defaults to chrome; an empty string omits it.
+func (r ApiGoogleGoogleLightWebSearchRequest) Sourceid(sourceid string) ApiGoogleGoogleLightWebSearchRequest {
+	r.sourceid = &sourceid
+	return r
+}
+
+// Google input encoding hint. Defaults to UTF-8; an empty string omits it.
+func (r ApiGoogleGoogleLightWebSearchRequest) Ie(ie string) ApiGoogleGoogleLightWebSearchRequest {
+	r.ie = &ie
+	return r
+}
+
 // Alias for domain; Google requests use google.com with country targeting.
 func (r ApiGoogleGoogleLightWebSearchRequest) GoogleDomain(googleDomain string) ApiGoogleGoogleLightWebSearchRequest {
 	r.googleDomain = &googleDomain
@@ -2645,7 +2666,7 @@ func (r ApiGoogleGoogleLightWebSearchRequest) Tbm(tbm string) ApiGoogleGoogleLig
 	return r
 }
 
-// Google result filter: 14 web, 18 forums. Other verticals require output&#x3D;html.
+// Google result filter: web or 14 for web, 18 for forums. Other verticals require output&#x3D;html.
 func (r ApiGoogleGoogleLightWebSearchRequest) Udm(udm string) ApiGoogleGoogleLightWebSearchRequest {
 	r.udm = &udm
 	return r
@@ -2885,6 +2906,15 @@ func (a *GoogleAPIService) GoogleGoogleLightWebSearchExecute(r ApiGoogleGoogleLi
 	} else {
 		var defaultValue string = "json"
 		r.output = &defaultValue
+	}
+	if r.oq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "oq", r.oq, "form", "")
+	}
+	if r.sourceid != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sourceid", r.sourceid, "form", "")
+	}
+	if r.ie != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ie", r.ie, "form", "")
 	}
 	if r.googleDomain != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "google_domain", r.googleDomain, "form", "")
@@ -3671,6 +3701,9 @@ type ApiGoogleGoogleWebSearchRequest struct {
 	aiOverview *bool
 	mode *string
 	expandRelatedQuestions *string
+	oq *string
+	sourceid *string
+	ie *string
 	googleDomain *string
 	lat *float32
 	lon *float32
@@ -3845,6 +3878,24 @@ func (r ApiGoogleGoogleWebSearchRequest) ExpandRelatedQuestions(expandRelatedQue
 	return r
 }
 
+// Original query sent to Google. Defaults to q; an empty string omits it.
+func (r ApiGoogleGoogleWebSearchRequest) Oq(oq string) ApiGoogleGoogleWebSearchRequest {
+	r.oq = &oq
+	return r
+}
+
+// Google source identifier. Defaults to chrome; an empty string omits it.
+func (r ApiGoogleGoogleWebSearchRequest) Sourceid(sourceid string) ApiGoogleGoogleWebSearchRequest {
+	r.sourceid = &sourceid
+	return r
+}
+
+// Google input encoding hint. Defaults to UTF-8; an empty string omits it.
+func (r ApiGoogleGoogleWebSearchRequest) Ie(ie string) ApiGoogleGoogleWebSearchRequest {
+	r.ie = &ie
+	return r
+}
+
 // Alias for domain; Google requests use google.com with country targeting.
 func (r ApiGoogleGoogleWebSearchRequest) GoogleDomain(googleDomain string) ApiGoogleGoogleWebSearchRequest {
 	r.googleDomain = &googleDomain
@@ -3881,7 +3932,7 @@ func (r ApiGoogleGoogleWebSearchRequest) Tbm(tbm string) ApiGoogleGoogleWebSearc
 	return r
 }
 
-// Google result filter: 14 web, 18 forums. Other verticals require output&#x3D;html.
+// Google result filter: web or 14 for web, 18 for forums. Other verticals require output&#x3D;html.
 func (r ApiGoogleGoogleWebSearchRequest) Udm(udm string) ApiGoogleGoogleWebSearchRequest {
 	r.udm = &udm
 	return r
@@ -4110,6 +4161,15 @@ func (a *GoogleAPIService) GoogleGoogleWebSearchExecute(r ApiGoogleGoogleWebSear
 	}
 	if r.expandRelatedQuestions != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "expand_related_questions", r.expandRelatedQuestions, "form", "")
+	}
+	if r.oq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "oq", r.oq, "form", "")
+	}
+	if r.sourceid != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sourceid", r.sourceid, "form", "")
+	}
+	if r.ie != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ie", r.ie, "form", "")
 	}
 	if r.googleDomain != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "google_domain", r.googleDomain, "form", "")
