@@ -2708,6 +2708,8 @@ type ApiFacebookSearchMarketplaceRequest struct {
 	deliveryMethod *string
 	radius *int32
 	after *string
+	strictFilters *bool
+	includeDetails *bool
 }
 
 // Search keywords
@@ -2763,6 +2765,18 @@ func (r ApiFacebookSearchMarketplaceRequest) After(after string) ApiFacebookSear
 	return r
 }
 
+// Verify radius in km and age locally; use bounded public search continuations with partial-coverage diagnostics
+func (r ApiFacebookSearchMarketplaceRequest) StrictFilters(strictFilters bool) ApiFacebookSearchMarketplaceRequest {
+	r.strictFilters = &strictFilters
+	return r
+}
+
+// Enrich returned listings with full public descriptions and photos; enables verified search
+func (r ApiFacebookSearchMarketplaceRequest) IncludeDetails(includeDetails bool) ApiFacebookSearchMarketplaceRequest {
+	r.includeDetails = &includeDetails
+	return r
+}
+
 func (r ApiFacebookSearchMarketplaceRequest) Execute() (interface{}, *http.Response, error) {
 	return r.ApiService.FacebookSearchMarketplaceExecute(r)
 }
@@ -2776,6 +2790,10 @@ Search Facebook Marketplace listings by keyword and location.
 or a numeric Facebook place id — the ``city_page_id`` on any listing is one.
 Human-readable names such as ``Durham, UK`` are rejected with a 400 rather than
 silently searching Facebook's San Francisco default.
+
+Set strict_filters=true for locally enforced radius (always km) and age.
+Public price-range continuations are bounded to eight pages; sort the full
+collected set for newest-first monitoring. Coverage and freshness are partial.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiFacebookSearchMarketplaceRequest
@@ -2841,6 +2859,18 @@ func (a *FacebookAPIService) FacebookSearchMarketplaceExecute(r ApiFacebookSearc
 	}
 	if r.after != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "after", r.after, "form", "")
+	}
+	if r.strictFilters != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "strict_filters", r.strictFilters, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.strictFilters = &defaultValue
+	}
+	if r.includeDetails != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "include_details", r.includeDetails, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.includeDetails = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

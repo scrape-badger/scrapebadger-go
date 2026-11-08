@@ -1372,7 +1372,7 @@ Name | Type | Description  | Notes
 
 ## FacebookSearchMarketplace
 
-> interface{} FacebookSearchMarketplace(ctx).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).Radius(radius).After(after).Execute()
+> interface{} FacebookSearchMarketplace(ctx).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).Radius(radius).After(after).StrictFilters(strictFilters).IncludeDetails(includeDetails).Execute()
 
 Search Marketplace
 
@@ -1401,10 +1401,12 @@ func main() {
 	deliveryMethod := "deliveryMethod_example" // string |  (optional)
 	radius := int32(56) // int32 | Search radius around the location (km, or miles in the US) (optional)
 	after := "after_example" // string |  (optional)
+	strictFilters := true // bool | Verify radius in km and age locally; use bounded public search continuations with partial-coverage diagnostics (optional) (default to false)
+	includeDetails := true // bool | Enrich returned listings with full public descriptions and photos; enables verified search (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.FacebookAPI.FacebookSearchMarketplace(context.Background()).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).Radius(radius).After(after).Execute()
+	resp, r, err := apiClient.FacebookAPI.FacebookSearchMarketplace(context.Background()).Query(query).Location(location).MinPrice(minPrice).MaxPrice(maxPrice).DaysSinceListed(daysSinceListed).SortBy(sortBy).ItemCondition(itemCondition).DeliveryMethod(deliveryMethod).Radius(radius).After(after).StrictFilters(strictFilters).IncludeDetails(includeDetails).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `FacebookAPI.FacebookSearchMarketplace``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1435,6 +1437,8 @@ Name | Type | Description  | Notes
  **deliveryMethod** | **string** |  | 
  **radius** | **int32** | Search radius around the location (km, or miles in the US) | 
  **after** | **string** |  | 
+ **strictFilters** | **bool** | Verify radius in km and age locally; use bounded public search continuations with partial-coverage diagnostics | [default to false]
+ **includeDetails** | **bool** | Enrich returned listings with full public descriptions and photos; enables verified search | [default to false]
 
 ### Return type
 
