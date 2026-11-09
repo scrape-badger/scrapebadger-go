@@ -22,13 +22,13 @@ func Test_scrapebadger_ResultsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test ResultsAPIService ResultsReReadAResult", func(t *testing.T) {
+	t.Run("Test ResultsAPIService ResultsReReadAResultRemoved", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		var resultId string
 
-		resp, httpRes, err := apiClient.ResultsAPI.ResultsReReadAResult(context.Background(), resultId).Execute()
+		resp, httpRes, err := apiClient.ResultsAPI.ResultsReReadAResultRemoved(context.Background(), resultId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

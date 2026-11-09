@@ -519,7 +519,7 @@ Class | Method | HTTP request | Description
 *RedfinAPI* | [**RedfinRegionAddressSuggestions**](docs/RedfinAPI.md#redfinregionaddresssuggestions) | **Get** /v1/redfin/autocomplete | Region/address suggestions
 *RedfinAPI* | [**RedfinSearchProperties**](docs/RedfinAPI.md#redfinsearchproperties) | **Get** /v1/redfin/search | Search properties
 *RequestsAPI* | [**RequestsPollAnAsyncRequest**](docs/RequestsAPI.md#requestspollanasyncrequest) | **Get** /v1/requests/{request_id} | Poll an async request
-*ResultsAPI* | [**ResultsReReadAResult**](docs/ResultsAPI.md#resultsrereadaresult) | **Get** /v1/results/{result_id} | Re-read a result
+*ResultsAPI* | [**ResultsReReadAResultRemoved**](docs/ResultsAPI.md#resultsrereadaresultremoved) | **Get** /v1/results/{result_id} | Re-read a result (removed)
 *TargetAPI* | [**TargetBrowseACategory**](docs/TargetAPI.md#targetbrowseacategory) | **Get** /v1/target/category | Browse a category
 *TargetAPI* | [**TargetFindNearbyStores**](docs/TargetAPI.md#targetfindnearbystores) | **Get** /v1/target/stores | Find nearby stores
 *TargetAPI* | [**TargetGetCategories**](docs/TargetAPI.md#targetgetcategories) | **Get** /v1/target/categories | Get categories

@@ -4,15 +4,15 @@ All URIs are relative to *https://scrapebadger.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ResultsReReadAResult**](ResultsAPI.md#ResultsReReadAResult) | **Get** /v1/results/{result_id} | Re-read a result
+[**ResultsReReadAResultRemoved**](ResultsAPI.md#ResultsReReadAResultRemoved) | **Get** /v1/results/{result_id} | Re-read a result (removed)
 
 
 
-## ResultsReReadAResult
+## ResultsReReadAResultRemoved
 
-> interface{} ResultsReReadAResult(ctx, resultId).Execute()
+> interface{} ResultsReReadAResultRemoved(ctx, resultId).Execute()
 
-Re-read a result
+Re-read a result (removed)
 
 
 
@@ -33,13 +33,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ResultsAPI.ResultsReReadAResult(context.Background(), resultId).Execute()
+	resp, r, err := apiClient.ResultsAPI.ResultsReReadAResultRemoved(context.Background(), resultId).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `ResultsAPI.ResultsReReadAResult``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `ResultsAPI.ResultsReReadAResultRemoved``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ResultsReReadAResult`: interface{}
-	fmt.Fprintf(os.Stdout, "Response from `ResultsAPI.ResultsReReadAResult`: %v\n", resp)
+	// response from `ResultsReReadAResultRemoved`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ResultsAPI.ResultsReReadAResultRemoved`: %v\n", resp)
 }
 ```
 
@@ -53,7 +53,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiResultsReReadAResultRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiResultsReReadAResultRemovedRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

@@ -23,28 +23,28 @@ import (
 // ResultsAPIService ResultsAPI service
 type ResultsAPIService service
 
-type ApiResultsReReadAResultRequest struct {
+type ApiResultsReReadAResultRemovedRequest struct {
 	ctx context.Context
 	ApiService *ResultsAPIService
 	resultId string
 }
 
-func (r ApiResultsReReadAResultRequest) Execute() (interface{}, *http.Response, error) {
-	return r.ApiService.ResultsReReadAResultExecute(r)
+func (r ApiResultsReReadAResultRemovedRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.ResultsReReadAResultRemovedExecute(r)
 }
 
 /*
-ResultsReReadAResult Re-read a result
+ResultsReReadAResultRemoved Re-read a result (removed)
 
-Replay a billed result (X-Result-ID) for free for ~15 minutes, optionally trimmed
-with jq / fields / max_items / summary. Never re-run a paid call just to reshape it.
+Removed (SCR-396): ScrapeBadger no longer stores results, so there is nothing to
+re-read. Always 410. Narrow a call with _jq / _fields / _max_items instead.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param resultId
- @return ApiResultsReReadAResultRequest
+ @return ApiResultsReReadAResultRemovedRequest
 */
-func (a *ResultsAPIService) ResultsReReadAResult(ctx context.Context, resultId string) ApiResultsReReadAResultRequest {
-	return ApiResultsReReadAResultRequest{
+func (a *ResultsAPIService) ResultsReReadAResultRemoved(ctx context.Context, resultId string) ApiResultsReReadAResultRemovedRequest {
+	return ApiResultsReReadAResultRemovedRequest{
 		ApiService: a,
 		ctx: ctx,
 		resultId: resultId,
@@ -53,7 +53,7 @@ func (a *ResultsAPIService) ResultsReReadAResult(ctx context.Context, resultId s
 
 // Execute executes the request
 //  @return interface{}
-func (a *ResultsAPIService) ResultsReReadAResultExecute(r ApiResultsReReadAResultRequest) (interface{}, *http.Response, error) {
+func (a *ResultsAPIService) ResultsReReadAResultRemovedExecute(r ApiResultsReReadAResultRemovedRequest) (interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
@@ -61,7 +61,7 @@ func (a *ResultsAPIService) ResultsReReadAResultExecute(r ApiResultsReReadAResul
 		localVarReturnValue  interface{}
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ResultsAPIService.ResultsReReadAResult")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ResultsAPIService.ResultsReReadAResultRemoved")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
