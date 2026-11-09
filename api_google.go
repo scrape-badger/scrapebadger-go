@@ -2672,7 +2672,7 @@ func (r ApiGoogleGoogleLightWebSearchRequest) Udm(udm string) ApiGoogleGoogleLig
 	return r
 }
 
-// Bypass result caches and request a fresh Google fetch.
+// Ignored: responses are never cached.
 func (r ApiGoogleGoogleLightWebSearchRequest) NoCache(noCache bool) ApiGoogleGoogleLightWebSearchRequest {
 	r.noCache = &noCache
 	return r
@@ -3938,7 +3938,7 @@ func (r ApiGoogleGoogleWebSearchRequest) Udm(udm string) ApiGoogleGoogleWebSearc
 	return r
 }
 
-// Bypass result caches and request a fresh Google fetch.
+// Ignored: responses are never cached.
 func (r ApiGoogleGoogleWebSearchRequest) NoCache(noCache bool) ApiGoogleGoogleWebSearchRequest {
 	r.noCache = &noCache
 	return r

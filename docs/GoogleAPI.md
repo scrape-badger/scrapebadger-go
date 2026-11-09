@@ -1060,7 +1060,7 @@ func main() {
 	colorScheme := "colorScheme_example" // string | Google color scheme. (optional)
 	tbm := "tbm_example" // string | Google search type. Use output=html for verticals; dedicated APIs provide parsed vertical results. (optional)
 	udm := "udm_example" // string | Google result filter: web or 14 for web, 18 for forums. Other verticals require output=html. (optional)
-	noCache := true // bool | Bypass result caches and request a fresh Google fetch. (optional) (default to false)
+	noCache := true // bool | Ignored: responses are never cached. (optional) (default to false)
 	asDt := "asDt_example" // string | Site restriction mode: i includes, e excludes as_sitesearch. (optional)
 	asEpq := "asEpq_example" // string | Exact phrase. (optional)
 	asEq := "asEq_example" // string | Words to exclude. (optional)
@@ -1129,7 +1129,7 @@ Name | Type | Description  | Notes
  **colorScheme** | **string** | Google color scheme. | 
  **tbm** | **string** | Google search type. Use output&#x3D;html for verticals; dedicated APIs provide parsed vertical results. | 
  **udm** | **string** | Google result filter: web or 14 for web, 18 for forums. Other verticals require output&#x3D;html. | 
- **noCache** | **bool** | Bypass result caches and request a fresh Google fetch. | [default to false]
+ **noCache** | **bool** | Ignored: responses are never cached. | [default to false]
  **asDt** | **string** | Site restriction mode: i includes, e excludes as_sitesearch. | 
  **asEpq** | **string** | Exact phrase. | 
  **asEq** | **string** | Words to exclude. | 
@@ -1494,7 +1494,7 @@ func main() {
 	colorScheme := "colorScheme_example" // string | Google color scheme. (optional)
 	tbm := "tbm_example" // string | Google search type. Use output=html for verticals; dedicated APIs provide parsed vertical results. (optional)
 	udm := "udm_example" // string | Google result filter: web or 14 for web, 18 for forums. Other verticals require output=html. (optional)
-	noCache := true // bool | Bypass result caches and request a fresh Google fetch. (optional) (default to false)
+	noCache := true // bool | Ignored: responses are never cached. (optional) (default to false)
 	asDt := "asDt_example" // string | Site restriction mode: i includes, e excludes as_sitesearch. (optional)
 	asEpq := "asEpq_example" // string | Exact phrase. (optional)
 	asEq := "asEq_example" // string | Words to exclude. (optional)
@@ -1566,7 +1566,7 @@ Name | Type | Description  | Notes
  **colorScheme** | **string** | Google color scheme. | 
  **tbm** | **string** | Google search type. Use output&#x3D;html for verticals; dedicated APIs provide parsed vertical results. | 
  **udm** | **string** | Google result filter: web or 14 for web, 18 for forums. Other verticals require output&#x3D;html. | 
- **noCache** | **bool** | Bypass result caches and request a fresh Google fetch. | [default to false]
+ **noCache** | **bool** | Ignored: responses are never cached. | [default to false]
  **asDt** | **string** | Site restriction mode: i includes, e excludes as_sitesearch. | 
  **asEpq** | **string** | Exact phrase. | 
  **asEq** | **string** | Words to exclude. | 
