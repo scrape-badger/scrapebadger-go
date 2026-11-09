@@ -5200,50 +5200,24 @@ type ApiTwitterListDeliveryLogsForAFilterRuleRequest struct {
 	ctx context.Context
 	ApiService *TwitterAPIService
 	ruleId string
-	deliveryStatus *string
-	authorUsername *string
-	page *int32
-	pageSize *int32
-	sort *string
 }
 
-func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) DeliveryStatus(deliveryStatus string) ApiTwitterListDeliveryLogsForAFilterRuleRequest {
-	r.deliveryStatus = &deliveryStatus
-	return r
-}
-
-func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) AuthorUsername(authorUsername string) ApiTwitterListDeliveryLogsForAFilterRuleRequest {
-	r.authorUsername = &authorUsername
-	return r
-}
-
-func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) Page(page int32) ApiTwitterListDeliveryLogsForAFilterRuleRequest {
-	r.page = &page
-	return r
-}
-
-func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) PageSize(pageSize int32) ApiTwitterListDeliveryLogsForAFilterRuleRequest {
-	r.pageSize = &pageSize
-	return r
-}
-
-func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) Sort(sort string) ApiTwitterListDeliveryLogsForAFilterRuleRequest {
-	r.sort = &sort
-	return r
-}
-
-func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) Execute() (*FilterRuleDeliveryLogListResponse, *http.Response, error) {
+func (r ApiTwitterListDeliveryLogsForAFilterRuleRequest) Execute() (*http.Response, error) {
 	return r.ApiService.TwitterListDeliveryLogsForAFilterRuleExecute(r)
 }
 
 /*
 TwitterListDeliveryLogsForAFilterRule List delivery logs for a filter rule
 
-List tweet delivery logs for a specific filter rule.
+Removed on 2026-11-09 (SCR-396): ScrapeBadger no longer stores delivered tweets.
+
+Always answers ``410 Gone`` with ``error: delivery_logs_removed``.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param ruleId
  @return ApiTwitterListDeliveryLogsForAFilterRuleRequest
+
+Deprecated
 */
 func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRule(ctx context.Context, ruleId string) ApiTwitterListDeliveryLogsForAFilterRuleRequest {
 	return ApiTwitterListDeliveryLogsForAFilterRuleRequest{
@@ -5254,18 +5228,17 @@ func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRule(ctx context.Co
 }
 
 // Execute executes the request
-//  @return FilterRuleDeliveryLogListResponse
-func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRuleExecute(r ApiTwitterListDeliveryLogsForAFilterRuleRequest) (*FilterRuleDeliveryLogListResponse, *http.Response, error) {
+// Deprecated
+func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRuleExecute(r ApiTwitterListDeliveryLogsForAFilterRuleRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *FilterRuleDeliveryLogListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TwitterAPIService.TwitterListDeliveryLogsForAFilterRule")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/v1/twitter/stream/filter-rules/{rule_id}/logs"
@@ -5275,30 +5248,6 @@ func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRuleExecute(r ApiTw
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.deliveryStatus != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery_status", r.deliveryStatus, "form", "")
-	}
-	if r.authorUsername != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "author_username", r.authorUsername, "form", "")
-	}
-	if r.page != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
-	} else {
-		var defaultValue int32 = 1
-		r.page = &defaultValue
-	}
-	if r.pageSize != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page_size", r.pageSize, "form", "")
-	} else {
-		var defaultValue int32 = 20
-		r.pageSize = &defaultValue
-	}
-	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
-	} else {
-		var defaultValue string = "desc"
-		r.sort = &defaultValue
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -5332,19 +5281,19 @@ func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRuleExecute(r ApiTw
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -5352,29 +5301,31 @@ func (a *TwitterAPIService) TwitterListDeliveryLogsForAFilterRuleExecute(r ApiTw
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 410 {
+			var v interface{}
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v HTTPValidationError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
+				return localVarHTTPResponse, newErr
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }
 
 type ApiTwitterListFilterRulesRequest struct {
@@ -5692,55 +5643,24 @@ func (a *TwitterAPIService) TwitterListStreamMonitorsExecute(r ApiTwitterListStr
 type ApiTwitterListTweetDeliveryLogsRequest struct {
 	ctx context.Context
 	ApiService *TwitterAPIService
-	monitorId *string
-	authorUsername *string
-	deliveryStatus *string
-	page *int32
-	pageSize *int32
-	sort *string
 }
 
-func (r ApiTwitterListTweetDeliveryLogsRequest) MonitorId(monitorId string) ApiTwitterListTweetDeliveryLogsRequest {
-	r.monitorId = &monitorId
-	return r
-}
-
-func (r ApiTwitterListTweetDeliveryLogsRequest) AuthorUsername(authorUsername string) ApiTwitterListTweetDeliveryLogsRequest {
-	r.authorUsername = &authorUsername
-	return r
-}
-
-func (r ApiTwitterListTweetDeliveryLogsRequest) DeliveryStatus(deliveryStatus string) ApiTwitterListTweetDeliveryLogsRequest {
-	r.deliveryStatus = &deliveryStatus
-	return r
-}
-
-func (r ApiTwitterListTweetDeliveryLogsRequest) Page(page int32) ApiTwitterListTweetDeliveryLogsRequest {
-	r.page = &page
-	return r
-}
-
-func (r ApiTwitterListTweetDeliveryLogsRequest) PageSize(pageSize int32) ApiTwitterListTweetDeliveryLogsRequest {
-	r.pageSize = &pageSize
-	return r
-}
-
-func (r ApiTwitterListTweetDeliveryLogsRequest) Sort(sort string) ApiTwitterListTweetDeliveryLogsRequest {
-	r.sort = &sort
-	return r
-}
-
-func (r ApiTwitterListTweetDeliveryLogsRequest) Execute() (*TweetDeliveryLogListResponse, *http.Response, error) {
+func (r ApiTwitterListTweetDeliveryLogsRequest) Execute() (*http.Response, error) {
 	return r.ApiService.TwitterListTweetDeliveryLogsExecute(r)
 }
 
 /*
 TwitterListTweetDeliveryLogs List tweet delivery logs
 
-List tweet delivery logs for the authenticated API key's monitors.
+Removed on 2026-11-09 (SCR-396): ScrapeBadger no longer stores delivered tweets.
+
+Always answers ``410 Gone`` with ``error: delivery_logs_removed``. Each tweet
+is delivered to your webhook or WebSocket only; keep your own log there.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiTwitterListTweetDeliveryLogsRequest
+
+Deprecated
 */
 func (a *TwitterAPIService) TwitterListTweetDeliveryLogs(ctx context.Context) ApiTwitterListTweetDeliveryLogsRequest {
 	return ApiTwitterListTweetDeliveryLogsRequest{
@@ -5750,18 +5670,17 @@ func (a *TwitterAPIService) TwitterListTweetDeliveryLogs(ctx context.Context) Ap
 }
 
 // Execute executes the request
-//  @return TweetDeliveryLogListResponse
-func (a *TwitterAPIService) TwitterListTweetDeliveryLogsExecute(r ApiTwitterListTweetDeliveryLogsRequest) (*TweetDeliveryLogListResponse, *http.Response, error) {
+// Deprecated
+func (a *TwitterAPIService) TwitterListTweetDeliveryLogsExecute(r ApiTwitterListTweetDeliveryLogsRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *TweetDeliveryLogListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TwitterAPIService.TwitterListTweetDeliveryLogs")
 	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/v1/twitter/stream/logs"
@@ -5770,33 +5689,6 @@ func (a *TwitterAPIService) TwitterListTweetDeliveryLogsExecute(r ApiTwitterList
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.monitorId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "monitor_id", r.monitorId, "form", "")
-	}
-	if r.authorUsername != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "author_username", r.authorUsername, "form", "")
-	}
-	if r.deliveryStatus != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery_status", r.deliveryStatus, "form", "")
-	}
-	if r.page != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
-	} else {
-		var defaultValue int32 = 1
-		r.page = &defaultValue
-	}
-	if r.pageSize != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page_size", r.pageSize, "form", "")
-	} else {
-		var defaultValue int32 = 20
-		r.pageSize = &defaultValue
-	}
-	if r.sort != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
-	} else {
-		var defaultValue string = "desc"
-		r.sort = &defaultValue
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -5830,19 +5722,19 @@ func (a *TwitterAPIService) TwitterListTweetDeliveryLogsExecute(r ApiTwitterList
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
+		return localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -5850,29 +5742,20 @@ func (a *TwitterAPIService) TwitterListTweetDeliveryLogsExecute(r ApiTwitterList
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v HTTPValidationError
+		if localVarHTTPResponse.StatusCode == 410 {
+			var v interface{}
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
+				return localVarHTTPResponse, newErr
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
 		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
+		return localVarHTTPResponse, newErr
 	}
 
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
+	return localVarHTTPResponse, nil
 }
 
 type ApiTwitterListWebhooksRequest struct {

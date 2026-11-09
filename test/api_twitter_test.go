@@ -552,10 +552,9 @@ func Test_scrapebadger_TwitterAPIService(t *testing.T) {
 
 		var ruleId string
 
-		resp, httpRes, err := apiClient.TwitterAPI.TwitterListDeliveryLogsForAFilterRule(context.Background(), ruleId).Execute()
+		httpRes, err := apiClient.TwitterAPI.TwitterListDeliveryLogsForAFilterRule(context.Background(), ruleId).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -588,10 +587,9 @@ func Test_scrapebadger_TwitterAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.TwitterAPI.TwitterListTweetDeliveryLogs(context.Background()).Execute()
+		httpRes, err := apiClient.TwitterAPI.TwitterListTweetDeliveryLogs(context.Background()).Execute()
 
 		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

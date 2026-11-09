@@ -2787,7 +2787,7 @@ Name | Type | Description  | Notes
 
 ## TwitterListDeliveryLogsForAFilterRule
 
-> FilterRuleDeliveryLogListResponse TwitterListDeliveryLogsForAFilterRule(ctx, ruleId).DeliveryStatus(deliveryStatus).AuthorUsername(authorUsername).Page(page).PageSize(pageSize).Sort(sort).Execute()
+> TwitterListDeliveryLogsForAFilterRule(ctx, ruleId).Execute()
 
 List delivery logs for a filter rule
 
@@ -2807,21 +2807,14 @@ import (
 
 func main() {
 	ruleId := "ruleId_example" // string | 
-	deliveryStatus := "deliveryStatus_example" // string |  (optional)
-	authorUsername := "authorUsername_example" // string |  (optional)
-	page := int32(56) // int32 |  (optional) (default to 1)
-	pageSize := int32(56) // int32 |  (optional) (default to 20)
-	sort := "sort_example" // string |  (optional) (default to "desc")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TwitterAPI.TwitterListDeliveryLogsForAFilterRule(context.Background(), ruleId).DeliveryStatus(deliveryStatus).AuthorUsername(authorUsername).Page(page).PageSize(pageSize).Sort(sort).Execute()
+	r, err := apiClient.TwitterAPI.TwitterListDeliveryLogsForAFilterRule(context.Background(), ruleId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TwitterAPI.TwitterListDeliveryLogsForAFilterRule``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TwitterListDeliveryLogsForAFilterRule`: FilterRuleDeliveryLogListResponse
-	fmt.Fprintf(os.Stdout, "Response from `TwitterAPI.TwitterListDeliveryLogsForAFilterRule`: %v\n", resp)
 }
 ```
 
@@ -2841,15 +2834,10 @@ Other parameters are passed through a pointer to a apiTwitterListDeliveryLogsFor
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **deliveryStatus** | **string** |  | 
- **authorUsername** | **string** |  | 
- **page** | **int32** |  | [default to 1]
- **pageSize** | **int32** |  | [default to 20]
- **sort** | **string** |  | [default to &quot;desc&quot;]
 
 ### Return type
 
-[**FilterRuleDeliveryLogListResponse**](FilterRuleDeliveryLogListResponse.md)
+ (empty response body)
 
 ### Authorization
 
@@ -3007,7 +2995,7 @@ Name | Type | Description  | Notes
 
 ## TwitterListTweetDeliveryLogs
 
-> TweetDeliveryLogListResponse TwitterListTweetDeliveryLogs(ctx).MonitorId(monitorId).AuthorUsername(authorUsername).DeliveryStatus(deliveryStatus).Page(page).PageSize(pageSize).Sort(sort).Execute()
+> TwitterListTweetDeliveryLogs(ctx).Execute()
 
 List tweet delivery logs
 
@@ -3026,46 +3014,29 @@ import (
 )
 
 func main() {
-	monitorId := "monitorId_example" // string |  (optional)
-	authorUsername := "authorUsername_example" // string |  (optional)
-	deliveryStatus := "deliveryStatus_example" // string |  (optional)
-	page := int32(56) // int32 |  (optional) (default to 1)
-	pageSize := int32(56) // int32 |  (optional) (default to 20)
-	sort := "sort_example" // string |  (optional) (default to "desc")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TwitterAPI.TwitterListTweetDeliveryLogs(context.Background()).MonitorId(monitorId).AuthorUsername(authorUsername).DeliveryStatus(deliveryStatus).Page(page).PageSize(pageSize).Sort(sort).Execute()
+	r, err := apiClient.TwitterAPI.TwitterListTweetDeliveryLogs(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TwitterAPI.TwitterListTweetDeliveryLogs``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `TwitterListTweetDeliveryLogs`: TweetDeliveryLogListResponse
-	fmt.Fprintf(os.Stdout, "Response from `TwitterAPI.TwitterListTweetDeliveryLogs`: %v\n", resp)
 }
 ```
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiTwitterListTweetDeliveryLogsRequest struct via the builder pattern
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **monitorId** | **string** |  | 
- **authorUsername** | **string** |  | 
- **deliveryStatus** | **string** |  | 
- **page** | **int32** |  | [default to 1]
- **pageSize** | **int32** |  | [default to 20]
- **sort** | **string** |  | [default to &quot;desc&quot;]
-
 ### Return type
 
-[**TweetDeliveryLogListResponse**](TweetDeliveryLogListResponse.md)
+ (empty response body)
 
 ### Authorization
 
