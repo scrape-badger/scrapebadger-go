@@ -1279,6 +1279,10 @@ type ApiGoogleGoogleAiModeSearchRequest struct {
 	gl *string
 	hl *string
 	includeHtml *bool
+	location *string
+	uule *string
+	lat *float32
+	lon *float32
 }
 
 // Search query for AI-generated response
@@ -1287,7 +1291,7 @@ func (r ApiGoogleGoogleAiModeSearchRequest) Q(q string) ApiGoogleGoogleAiModeSea
 	return r
 }
 
-// Country code
+// Google country (market) code. It shapes the answer; it does not pick the exit IP&#39;s country. Defaults to the &#x60;location&#x60;&#39;s country when &#x60;location&#x60; is set.
 func (r ApiGoogleGoogleAiModeSearchRequest) Gl(gl string) ApiGoogleGoogleAiModeSearchRequest {
 	r.gl = &gl
 	return r
@@ -1305,6 +1309,30 @@ func (r ApiGoogleGoogleAiModeSearchRequest) IncludeHtml(includeHtml bool) ApiGoo
 	return r
 }
 
+// Answer as if the user were here: a Google canonical location name (e.g. &#x60;Wonju-si,Gangwon-do,South Korea&#x60;), a Google criteria ID, or an unambiguous short name within &#x60;gl&#x60;. Use only one of location, uule, or lat/lon.
+func (r ApiGoogleGoogleAiModeSearchRequest) Location(location string) ApiGoogleGoogleAiModeSearchRequest {
+	r.location = &location
+	return r
+}
+
+// A Google UULE value in its &#x60;w+&#x60; (canonical name) or &#x60;j+&#x60; (coordinates) form.
+func (r ApiGoogleGoogleAiModeSearchRequest) Uule(uule string) ApiGoogleGoogleAiModeSearchRequest {
+	r.uule = &uule
+	return r
+}
+
+// Latitude of the user&#39;s location (with lon).
+func (r ApiGoogleGoogleAiModeSearchRequest) Lat(lat float32) ApiGoogleGoogleAiModeSearchRequest {
+	r.lat = &lat
+	return r
+}
+
+// Longitude of the user&#39;s location (with lat).
+func (r ApiGoogleGoogleAiModeSearchRequest) Lon(lon float32) ApiGoogleGoogleAiModeSearchRequest {
+	r.lon = &lon
+	return r
+}
+
 func (r ApiGoogleGoogleAiModeSearchRequest) Execute() (interface{}, *http.Response, error) {
 	return r.ApiService.GoogleGoogleAiModeSearchExecute(r)
 }
@@ -1318,6 +1346,10 @@ Returns the structured `text_blocks` (paragraphs, headings, comparison
 `table` blocks and lists), a flat `references` source list, a compact
 `markdown` rendering of the whole answer and — unless `include_html`
 is false — the raw `answer_html` body.
+
+`location`, `uule` or `lat`/`lon` localise the answer ("near me", local
+results) to that place, down to the city or district, wherever the
+request exits from. Located answers echo a `location` object.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGoogleGoogleAiModeSearchRequest
@@ -1371,6 +1403,18 @@ func (a *GoogleAPIService) GoogleGoogleAiModeSearchExecute(r ApiGoogleGoogleAiMo
 	} else {
 		var defaultValue bool = true
 		r.includeHtml = &defaultValue
+	}
+	if r.location != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
+	}
+	if r.uule != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "uule", r.uule, "form", "")
+	}
+	if r.lat != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lat", r.lat, "form", "")
+	}
+	if r.lon != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "lon", r.lon, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
