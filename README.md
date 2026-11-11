@@ -462,6 +462,11 @@ Class | Method | HTTP request | Description
 *LoopNetAPI* | [**LoopnetLoopnetScraperHealthCheck**](docs/LoopNetAPI.md#loopnetloopnetscraperhealthcheck) | **Get** /v1/loopnet/health | LoopNet scraper health check
 *LoopNetAPI* | [**LoopnetLoopnetScraperHealthCheckHead**](docs/LoopNetAPI.md#loopnetloopnetscraperhealthcheckhead) | **Head** /v1/loopnet/health | LoopNet scraper health check
 *LoopNetAPI* | [**LoopnetSearchCommercialRealEstate**](docs/LoopNetAPI.md#loopnetsearchcommercialrealestate) | **Get** /v1/loopnet/search | Search commercial real estate
+*MetaAiAPI* | [**MetaAiAskMetaAiAQuestion**](docs/MetaAiAPI.md#metaaiaskmetaaiaquestion) | **Get** /v1/meta-ai/ask | Ask Meta AI a question
+*MetaAiAPI* | [**MetaAiAskMetaAiAQuestionPost**](docs/MetaAiAPI.md#metaaiaskmetaaiaquestionpost) | **Post** /v1/meta-ai/ask | Ask Meta AI a question (POST)
+*MetaAiAPI* | [**MetaAiListMetaAiAssistantModes**](docs/MetaAiAPI.md#metaailistmetaaiassistantmodes) | **Get** /v1/meta-ai/models | List Meta AI assistant modes
+*MetaAiAPI* | [**MetaAiMetaAiScraperHealthCheck**](docs/MetaAiAPI.md#metaaimetaaiscraperhealthcheck) | **Get** /v1/meta-ai/health | Meta AI scraper health check
+*MetaAiAPI* | [**MetaAiMetaAiScraperHealthCheckHead**](docs/MetaAiAPI.md#metaaimetaaiscraperhealthcheckhead) | **Head** /v1/meta-ai/health | Meta AI scraper health check
 *NaverAPI* | [**NaverNaverBlogSearch**](docs/NaverAPI.md#navernaverblogsearch) | **Get** /v1/naver/blog | Naver blog search
 *NaverAPI* | [**NaverNaverDatalabShoppingKeywordInsight**](docs/NaverAPI.md#navernaverdatalabshoppingkeywordinsight) | **Get** /v1/naver/shopping/insight | Naver DataLab shopping keyword insight
 *NaverAPI* | [**NaverNaverNewsSearch**](docs/NaverAPI.md#navernavernewssearch) | **Get** /v1/naver/news | Naver news search

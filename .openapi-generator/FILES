@@ -36,6 +36,7 @@ api_instagram.go
 api_leboncoin.go
 api_linked_in.go
 api_loop_net.go
+api_meta_ai.go
 api_naver.go
 api_perplexity.go
 api_quote.go
@@ -188,6 +189,7 @@ docs/LinkedInAPI.md
 docs/Location.md
 docs/LoopNetAPI.md
 docs/MarketsResponse.md
+docs/MetaAiAPI.md
 docs/MetaUrl.md
 docs/NaverAPI.md
 docs/NextOffset.md
@@ -508,6 +510,7 @@ test/api_instagram_test.go
 test/api_leboncoin_test.go
 test/api_linked_in_test.go
 test/api_loop_net_test.go
+test/api_meta_ai_test.go
 test/api_naver_test.go
 test/api_perplexity_test.go
 test/api_quote_test.go
