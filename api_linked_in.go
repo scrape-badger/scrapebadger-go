@@ -736,6 +736,146 @@ func (a *LinkedInAPIService) LinkedinGetCompanyExecute(r ApiLinkedinGetCompanyRe
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest struct {
+	ctx context.Context
+	ApiService *LinkedInAPIService
+	publicId string
+	country *string
+}
+
+// Residential proxy country
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) Country(country string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.country = &country
+	return r
+}
+
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) Execute() (interface{}, *http.Response, error) {
+	return r.ApiService.LinkedinGetFullProfileThroughTheAuthenticatedProjectionExecute(r)
+}
+
+/*
+LinkedinGetFullProfileThroughTheAuthenticatedProjection Get full profile through the authenticated projection
+
+Full profile using the server-owned authenticated LinkedIn session.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param publicId
+ @return ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest
+*/
+func (a *LinkedInAPIService) LinkedinGetFullProfileThroughTheAuthenticatedProjection(ctx context.Context, publicId string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	return ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest{
+		ApiService: a,
+		ctx: ctx,
+		publicId: publicId,
+	}
+}
+
+// Execute executes the request
+//  @return interface{}
+func (a *LinkedInAPIService) LinkedinGetFullProfileThroughTheAuthenticatedProjectionExecute(r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) (interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "LinkedInAPIService.LinkedinGetFullProfileThroughTheAuthenticatedProjection")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/linkedin/profiles/{public_id}/full"
+	localVarPath = strings.Replace(localVarPath, "{"+"public_id"+"}", url.PathEscape(parameterValueToString(r.publicId, "publicId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.country != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "country", r.country, "form", "")
+	} else {
+		var defaultValue string = "us"
+		r.country = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiLinkedinGetJobDetailRequest struct {
 	ctx context.Context
 	ApiService *LinkedInAPIService

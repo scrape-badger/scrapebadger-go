@@ -101,6 +101,8 @@ type APIClient struct {
 
 	GooglePlayAPI *GooglePlayAPIService
 
+	GrokAPI *GrokAPIService
+
 	GumtreeAPI *GumtreeAPIService
 
 	IdealistaAPI *IdealistaAPIService
@@ -200,6 +202,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.GitHubAPI = (*GitHubAPIService)(&c.common)
 	c.GoogleAPI = (*GoogleAPIService)(&c.common)
 	c.GooglePlayAPI = (*GooglePlayAPIService)(&c.common)
+	c.GrokAPI = (*GrokAPIService)(&c.common)
 	c.GumtreeAPI = (*GumtreeAPIService)(&c.common)
 	c.IdealistaAPI = (*IdealistaAPIService)(&c.common)
 	c.ImmobiliareAPI = (*ImmobiliareAPIService)(&c.common)

@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**LinkedinGetAPublicArticle**](LinkedInAPI.md#LinkedinGetAPublicArticle) | **Get** /v1/linkedin/articles/{article_slug} | Get a public article
 [**LinkedinGetAPublicPost**](LinkedInAPI.md#LinkedinGetAPublicPost) | **Get** /v1/linkedin/posts/{post_slug} | Get a public post
 [**LinkedinGetCompany**](LinkedInAPI.md#LinkedinGetCompany) | **Get** /v1/linkedin/companies/{universal_name} | Get company
+[**LinkedinGetFullProfileThroughTheAuthenticatedProjection**](LinkedInAPI.md#LinkedinGetFullProfileThroughTheAuthenticatedProjection) | **Get** /v1/linkedin/profiles/{public_id}/full | Get full profile through the authenticated projection
 [**LinkedinGetJobDetail**](LinkedInAPI.md#LinkedinGetJobDetail) | **Get** /v1/linkedin/jobs/{job_id} | Get job detail
 [**LinkedinGetPublicProfile**](LinkedInAPI.md#LinkedinGetPublicProfile) | **Get** /v1/linkedin/profiles/{public_id} | Get public profile
 [**LinkedinGetSchool**](LinkedInAPI.md#LinkedinGetSchool) | **Get** /v1/linkedin/schools/{universal_name} | Get school
@@ -356,6 +357,78 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiLinkedinGetCompanyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **country** | **string** | Residential proxy country | [default to &quot;us&quot;]
+
+### Return type
+
+**interface{}**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## LinkedinGetFullProfileThroughTheAuthenticatedProjection
+
+> interface{} LinkedinGetFullProfileThroughTheAuthenticatedProjection(ctx, publicId).Country(country).Execute()
+
+Get full profile through the authenticated projection
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	publicId := "publicId_example" // string | 
+	country := "country_example" // string | Residential proxy country (optional) (default to "us")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.LinkedInAPI.LinkedinGetFullProfileThroughTheAuthenticatedProjection(context.Background(), publicId).Country(country).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `LinkedInAPI.LinkedinGetFullProfileThroughTheAuthenticatedProjection``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `LinkedinGetFullProfileThroughTheAuthenticatedProjection`: interface{}
+	fmt.Fprintf(os.Stdout, "Response from `LinkedInAPI.LinkedinGetFullProfileThroughTheAuthenticatedProjection`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**publicId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes

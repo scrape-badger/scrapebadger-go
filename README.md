@@ -377,6 +377,14 @@ Class | Method | HTTP request | Description
 *GooglePlayAPI* | [**GooglePlayListMarkets**](docs/GooglePlayAPI.md#googleplaylistmarkets) | **Get** /v1/google-play/markets | List markets
 *GooglePlayAPI* | [**GooglePlaySearchApps**](docs/GooglePlayAPI.md#googleplaysearchapps) | **Get** /v1/google-play/search | Search apps
 *GooglePlayAPI* | [**GooglePlayTopCharts**](docs/GooglePlayAPI.md#googleplaytopcharts) | **Get** /v1/google-play/collections/{collection} | Top charts
+*GrokAPI* | [**GrokAskGrokAQuestion**](docs/GrokAPI.md#grokaskgrokaquestion) | **Get** /v1/grok/ask | Ask Grok a question
+*GrokAPI* | [**GrokAskGrokAQuestionPost**](docs/GrokAPI.md#grokaskgrokaquestionpost) | **Post** /v1/grok/ask | Ask Grok a question (POST)
+*GrokAPI* | [**GrokGetAGrokConversation**](docs/GrokAPI.md#grokgetagrokconversation) | **Get** /v1/grok/conversations/{conversation_id} | Get a Grok conversation
+*GrokAPI* | [**GrokGrokScraperHealthCheck**](docs/GrokAPI.md#grokgrokscraperhealthcheck) | **Get** /v1/grok/health | Grok scraper health check
+*GrokAPI* | [**GrokGrokScraperHealthCheckHead**](docs/GrokAPI.md#grokgrokscraperhealthcheckhead) | **Head** /v1/grok/health | Grok scraper health check
+*GrokAPI* | [**GrokListGrokAssistantModes**](docs/GrokAPI.md#groklistgrokassistantmodes) | **Get** /v1/grok/models | List Grok assistant modes
+*GrokAPI* | [**GrokMeasureBrandVisibilityInGrok**](docs/GrokAPI.md#grokmeasurebrandvisibilityingrok) | **Get** /v1/grok/brand-visibility | Measure brand visibility in Grok
+*GrokAPI* | [**GrokMeasureBrandVisibilityInGrokPost**](docs/GrokAPI.md#grokmeasurebrandvisibilityingrokpost) | **Post** /v1/grok/brand-visibility | Measure brand visibility in Grok (POST)
 *GumtreeAPI* | [**GumtreeGetListing**](docs/GumtreeAPI.md#gumtreegetlisting) | **Get** /v1/gumtree/listings/{listing_id} | Get listing
 *GumtreeAPI* | [**GumtreeGetSearchFilters**](docs/GumtreeAPI.md#gumtreegetsearchfilters) | **Get** /v1/gumtree/search/filters | Get search filters
 *GumtreeAPI* | [**GumtreeGetSellerListings**](docs/GumtreeAPI.md#gumtreegetsellerlistings) | **Get** /v1/gumtree/listings/{listing_id}/seller-listings | Get seller listings
@@ -448,6 +456,7 @@ Class | Method | HTTP request | Description
 *LinkedInAPI* | [**LinkedinGetAPublicArticle**](docs/LinkedInAPI.md#linkedingetapublicarticle) | **Get** /v1/linkedin/articles/{article_slug} | Get a public article
 *LinkedInAPI* | [**LinkedinGetAPublicPost**](docs/LinkedInAPI.md#linkedingetapublicpost) | **Get** /v1/linkedin/posts/{post_slug} | Get a public post
 *LinkedInAPI* | [**LinkedinGetCompany**](docs/LinkedInAPI.md#linkedingetcompany) | **Get** /v1/linkedin/companies/{universal_name} | Get company
+*LinkedInAPI* | [**LinkedinGetFullProfileThroughTheAuthenticatedProjection**](docs/LinkedInAPI.md#linkedingetfullprofilethroughtheauthenticatedprojection) | **Get** /v1/linkedin/profiles/{public_id}/full | Get full profile through the authenticated projection
 *LinkedInAPI* | [**LinkedinGetJobDetail**](docs/LinkedInAPI.md#linkedingetjobdetail) | **Get** /v1/linkedin/jobs/{job_id} | Get job detail
 *LinkedInAPI* | [**LinkedinGetPublicProfile**](docs/LinkedInAPI.md#linkedingetpublicprofile) | **Get** /v1/linkedin/profiles/{public_id} | Get public profile
 *LinkedInAPI* | [**LinkedinGetSchool**](docs/LinkedInAPI.md#linkedingetschool) | **Get** /v1/linkedin/schools/{universal_name} | Get school

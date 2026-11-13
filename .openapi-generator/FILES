@@ -29,6 +29,7 @@ api_gemini.go
 api_git_hub.go
 api_google.go
 api_google_play.go
+api_grok.go
 api_gumtree.go
 api_idealista.go
 api_immobiliare.go
@@ -172,6 +173,7 @@ docs/GitHubStatus.md
 docs/GitHubTextLink.md
 docs/GoogleAPI.md
 docs/GooglePlayAPI.md
+docs/GrokAPI.md
 docs/GumtreeAPI.md
 docs/HTTPValidationError.md
 docs/IdealistaAPI.md
@@ -503,6 +505,7 @@ test/api_gemini_test.go
 test/api_git_hub_test.go
 test/api_google_play_test.go
 test/api_google_test.go
+test/api_grok_test.go
 test/api_gumtree_test.go
 test/api_idealista_test.go
 test/api_immobiliare_test.go
