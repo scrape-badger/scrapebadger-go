@@ -326,8 +326,10 @@ answers those with either the listing's start/Buy-It-Now price or the price
 it sold at, varying between identical requests with nothing to say which, so
 no number there is trustworthy — ``/v1/ebay/items/{item_id}`` carries the
 winning bid for them (before the fee). A listing that closed purely on an
-accepted Best Offer prices normally: eBay never publishes the accepted
-amount, so ``price`` is the listed one, exactly as its own item page shows.
+accepted Best Offer prices normally: eBay's sold index carries the listed
+price for it, not the accepted amount, so ``price`` is the listed one.
+``/v1/ebay/items/{item_id}`` carries the accepted amount where eBay's item
+page publishes it (``best_offer_accepted``, ``price``, ``original_price``).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiEbayCompletedSoldListingsRequest
@@ -729,6 +731,19 @@ func (r ApiEbayGetItemDetailRequest) Execute() (interface{}, *http.Response, err
 EbayGetItemDetail Get item detail
 
 Get a single eBay listing's full detail.
+
+``price`` is the price the listing's buy box shows. On a closed listing,
+``is_sold`` says it carries eBay's "Sold" label rather than "Ended", and
+``best_offer_accepted`` says it sold through an accepted Best Offer. eBay
+publishes the accepted amount on most such listings: then ``price`` is that
+amount, and ``original_price`` and ``buy_it_now_price`` are the listed
+price it was accepted against. Where eBay only strikes the listed price
+through, ``price`` stays the listed price and ``original_price`` is null,
+so ``best_offer_accepted`` with a null ``original_price`` means "sold
+below ``price``, amount not published on this read". On a listing from
+another eBay site the accepted amount is converted to the marketplace's
+currency at the rate eBay applied to the listed price on the same page;
+``price.raw`` keeps it as eBay rendered it ("US $300.00").
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param itemId
