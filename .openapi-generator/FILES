@@ -46,6 +46,7 @@ api_reddit.go
 api_redfin.go
 api_requests.go
 api_results.go
+api_rufus.go
 api_target.go
 api_tik_tok.go
 api_twitter.go
@@ -229,6 +230,8 @@ docs/RedfinAPI.md
 docs/RequestsAPI.md
 docs/ResultsAPI.md
 docs/Review.md
+docs/RufusAPI.md
+docs/RufusAskRequest.md
 docs/ScreenshotRequest.md
 docs/Searchterm.md
 docs/SiteName.md
@@ -424,6 +427,7 @@ model_rating.go
 model_ratings.go
 model_recipe.go
 model_review.go
+model_rufus_ask_request.go
 model_screenshot_request.go
 model_searchterm.go
 model_site_name.go
@@ -522,6 +526,7 @@ test/api_reddit_test.go
 test/api_redfin_test.go
 test/api_requests_test.go
 test/api_results_test.go
+test/api_rufus_test.go
 test/api_target_test.go
 test/api_tik_tok_test.go
 test/api_twitter_test.go

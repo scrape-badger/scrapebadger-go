@@ -135,6 +135,8 @@ type APIClient struct {
 
 	ResultsAPI *ResultsAPIService
 
+	RufusAPI *RufusAPIService
+
 	TargetAPI *TargetAPIService
 
 	TikTokAPI *TikTokAPIService
@@ -219,6 +221,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RedfinAPI = (*RedfinAPIService)(&c.common)
 	c.RequestsAPI = (*RequestsAPIService)(&c.common)
 	c.ResultsAPI = (*ResultsAPIService)(&c.common)
+	c.RufusAPI = (*RufusAPIService)(&c.common)
 	c.TargetAPI = (*TargetAPIService)(&c.common)
 	c.TikTokAPI = (*TikTokAPIService)(&c.common)
 	c.TwitterAPI = (*TwitterAPIService)(&c.common)
