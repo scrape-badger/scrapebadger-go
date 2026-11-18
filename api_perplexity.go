@@ -29,6 +29,8 @@ type ApiPerplexityAskPerplexityAQuestionRequest struct {
 	country *string
 	strictCountry *bool
 	location *string
+	html *bool
+	raw *bool
 	prefer *string
 	xCallbackURL *string
 	idempotencyKey *string
@@ -59,6 +61,18 @@ func (r ApiPerplexityAskPerplexityAQuestionRequest) StrictCountry(strictCountry 
 // Where the asker is: a city (tokyo, osaka, seoul, new-york, london, ...) or &#39;lat,lng&#39; in decimal degrees. Perplexity answers a local-sounding question for it instead of the exit IP&#39;s city. It does not pick the egress: &#x60;country&#x60; does.
 func (r ApiPerplexityAskPerplexityAQuestionRequest) Location(location string) ApiPerplexityAskPerplexityAQuestionRequest {
 	r.location = &location
+	return r
+}
+
+// Also return &#x60;answer_html&#x60;: the answer rendered as an HTML fragment, with each &#x60;[n]&#x60; citation linked to its source (&#x60;&lt;a class&#x3D;\&quot;citation\&quot; data-ref&#x3D;\&quot;n\&quot;&gt;&#x60;). Raw HTML and unsafe links in the answer are dropped. Same price.
+func (r ApiPerplexityAskPerplexityAQuestionRequest) Html(html bool) ApiPerplexityAskPerplexityAQuestionRequest {
+	r.html = &html
+	return r
+}
+
+// Also return &#x60;raw&#x60;: Perplexity&#39;s own final answer object as it sent it (answer blocks, web results, related queries, model and mode metadata), minus its thread write token. Every other field is parsed from it. Same price.
+func (r ApiPerplexityAskPerplexityAQuestionRequest) Raw(raw bool) ApiPerplexityAskPerplexityAQuestionRequest {
+	r.raw = &raw
 	return r
 }
 
@@ -159,6 +173,18 @@ func (a *PerplexityAPIService) PerplexityAskPerplexityAQuestionExecute(r ApiPerp
 	}
 	if r.location != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "location", r.location, "form", "")
+	}
+	if r.html != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "html", r.html, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.html = &defaultValue
+	}
+	if r.raw != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "raw", r.raw, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.raw = &defaultValue
 	}
 	if r.async != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
@@ -321,7 +347,8 @@ func (r ApiPerplexityAskPerplexityAQuestionPostRequest) Execute() (interface{}, 
 /*
 PerplexityAskPerplexityAQuestionPost Ask Perplexity a question (POST)
 
-POST form of `/ask`, for prompts too long for a query string.
+POST form of `/ask`, for prompts too long for a query string. The JSON body takes the
+same fields as the query (`prompt`, `country`, `strict_country`, `location`, `html`, `raw`).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiPerplexityAskPerplexityAQuestionPostRequest
