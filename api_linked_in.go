@@ -29,6 +29,13 @@ type ApiLinkedinGetACompanySJobPostingsRequest struct {
 	companyId string
 	start *int32
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Pagination offset (0, 25, 50, ...)
@@ -40,6 +47,48 @@ func (r ApiLinkedinGetACompanySJobPostingsRequest) Start(start int32) ApiLinkedi
 // Residential proxy country
 func (r ApiLinkedinGetACompanySJobPostingsRequest) Country(country string) ApiLinkedinGetACompanySJobPostingsRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) Prefer(prefer string) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) Async(async bool) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) AsyncWait(asyncWait int32) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetACompanySJobPostingsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetACompanySJobPostingsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -98,6 +147,18 @@ func (a *LinkedInAPIService) LinkedinGetACompanySJobPostingsExecute(r ApiLinkedi
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -114,6 +175,15 @@ func (a *LinkedInAPIService) LinkedinGetACompanySJobPostingsExecute(r ApiLinkedi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -160,6 +230,7 @@ func (a *LinkedInAPIService) LinkedinGetACompanySJobPostingsExecute(r ApiLinkedi
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -181,11 +252,60 @@ type ApiLinkedinGetACourseRequest struct {
 	ApiService *LinkedInAPIService
 	courseSlug string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetACourseRequest) Country(country string) ApiLinkedinGetACourseRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetACourseRequest) Prefer(prefer string) ApiLinkedinGetACourseRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetACourseRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetACourseRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetACourseRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetACourseRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetACourseRequest) Async(async bool) ApiLinkedinGetACourseRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetACourseRequest) AsyncWait(asyncWait int32) ApiLinkedinGetACourseRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetACourseRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetACourseRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetACourseRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetACourseRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -238,6 +358,18 @@ func (a *LinkedInAPIService) LinkedinGetACourseExecute(r ApiLinkedinGetACourseRe
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -254,6 +386,15 @@ func (a *LinkedInAPIService) LinkedinGetACourseExecute(r ApiLinkedinGetACourseRe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -300,6 +441,7 @@ func (a *LinkedInAPIService) LinkedinGetACourseExecute(r ApiLinkedinGetACourseRe
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -321,11 +463,60 @@ type ApiLinkedinGetAPublicArticleRequest struct {
 	ApiService *LinkedInAPIService
 	articleSlug string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetAPublicArticleRequest) Country(country string) ApiLinkedinGetAPublicArticleRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetAPublicArticleRequest) Prefer(prefer string) ApiLinkedinGetAPublicArticleRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetAPublicArticleRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetAPublicArticleRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetAPublicArticleRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetAPublicArticleRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetAPublicArticleRequest) Async(async bool) ApiLinkedinGetAPublicArticleRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetAPublicArticleRequest) AsyncWait(asyncWait int32) ApiLinkedinGetAPublicArticleRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetAPublicArticleRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetAPublicArticleRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetAPublicArticleRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetAPublicArticleRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -378,6 +569,18 @@ func (a *LinkedInAPIService) LinkedinGetAPublicArticleExecute(r ApiLinkedinGetAP
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -394,6 +597,15 @@ func (a *LinkedInAPIService) LinkedinGetAPublicArticleExecute(r ApiLinkedinGetAP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -440,6 +652,7 @@ func (a *LinkedInAPIService) LinkedinGetAPublicArticleExecute(r ApiLinkedinGetAP
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -461,11 +674,60 @@ type ApiLinkedinGetAPublicPostRequest struct {
 	ApiService *LinkedInAPIService
 	postSlug string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetAPublicPostRequest) Country(country string) ApiLinkedinGetAPublicPostRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetAPublicPostRequest) Prefer(prefer string) ApiLinkedinGetAPublicPostRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetAPublicPostRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetAPublicPostRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetAPublicPostRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetAPublicPostRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetAPublicPostRequest) Async(async bool) ApiLinkedinGetAPublicPostRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetAPublicPostRequest) AsyncWait(asyncWait int32) ApiLinkedinGetAPublicPostRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetAPublicPostRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetAPublicPostRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetAPublicPostRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetAPublicPostRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -518,6 +780,18 @@ func (a *LinkedInAPIService) LinkedinGetAPublicPostExecute(r ApiLinkedinGetAPubl
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -534,6 +808,15 @@ func (a *LinkedInAPIService) LinkedinGetAPublicPostExecute(r ApiLinkedinGetAPubl
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -580,6 +863,7 @@ func (a *LinkedInAPIService) LinkedinGetAPublicPostExecute(r ApiLinkedinGetAPubl
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -601,11 +885,60 @@ type ApiLinkedinGetCompanyRequest struct {
 	ApiService *LinkedInAPIService
 	universalName string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetCompanyRequest) Country(country string) ApiLinkedinGetCompanyRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetCompanyRequest) Prefer(prefer string) ApiLinkedinGetCompanyRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetCompanyRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetCompanyRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetCompanyRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetCompanyRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetCompanyRequest) Async(async bool) ApiLinkedinGetCompanyRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetCompanyRequest) AsyncWait(asyncWait int32) ApiLinkedinGetCompanyRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetCompanyRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetCompanyRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetCompanyRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetCompanyRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -658,6 +991,18 @@ func (a *LinkedInAPIService) LinkedinGetCompanyExecute(r ApiLinkedinGetCompanyRe
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -674,6 +1019,15 @@ func (a *LinkedInAPIService) LinkedinGetCompanyExecute(r ApiLinkedinGetCompanyRe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -720,6 +1074,7 @@ func (a *LinkedInAPIService) LinkedinGetCompanyExecute(r ApiLinkedinGetCompanyRe
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -741,11 +1096,60 @@ type ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest struct {
 	ApiService *LinkedInAPIService
 	publicId string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) Country(country string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) Prefer(prefer string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) Async(async bool) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) AsyncWait(asyncWait int32) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetFullProfileThroughTheAuthenticatedProjectionRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -798,6 +1202,18 @@ func (a *LinkedInAPIService) LinkedinGetFullProfileThroughTheAuthenticatedProjec
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -814,6 +1230,15 @@ func (a *LinkedInAPIService) LinkedinGetFullProfileThroughTheAuthenticatedProjec
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -860,6 +1285,7 @@ func (a *LinkedInAPIService) LinkedinGetFullProfileThroughTheAuthenticatedProjec
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -881,11 +1307,60 @@ type ApiLinkedinGetJobDetailRequest struct {
 	ApiService *LinkedInAPIService
 	jobId string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetJobDetailRequest) Country(country string) ApiLinkedinGetJobDetailRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetJobDetailRequest) Prefer(prefer string) ApiLinkedinGetJobDetailRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetJobDetailRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetJobDetailRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetJobDetailRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetJobDetailRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetJobDetailRequest) Async(async bool) ApiLinkedinGetJobDetailRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetJobDetailRequest) AsyncWait(asyncWait int32) ApiLinkedinGetJobDetailRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetJobDetailRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetJobDetailRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetJobDetailRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetJobDetailRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -938,6 +1413,18 @@ func (a *LinkedInAPIService) LinkedinGetJobDetailExecute(r ApiLinkedinGetJobDeta
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -954,6 +1441,15 @@ func (a *LinkedInAPIService) LinkedinGetJobDetailExecute(r ApiLinkedinGetJobDeta
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1000,6 +1496,7 @@ func (a *LinkedInAPIService) LinkedinGetJobDetailExecute(r ApiLinkedinGetJobDeta
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1021,11 +1518,60 @@ type ApiLinkedinGetPublicProfileRequest struct {
 	ApiService *LinkedInAPIService
 	publicId string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetPublicProfileRequest) Country(country string) ApiLinkedinGetPublicProfileRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetPublicProfileRequest) Prefer(prefer string) ApiLinkedinGetPublicProfileRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetPublicProfileRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetPublicProfileRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetPublicProfileRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetPublicProfileRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetPublicProfileRequest) Async(async bool) ApiLinkedinGetPublicProfileRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetPublicProfileRequest) AsyncWait(asyncWait int32) ApiLinkedinGetPublicProfileRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetPublicProfileRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetPublicProfileRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetPublicProfileRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetPublicProfileRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1079,6 +1625,18 @@ func (a *LinkedInAPIService) LinkedinGetPublicProfileExecute(r ApiLinkedinGetPub
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1095,6 +1653,15 @@ func (a *LinkedInAPIService) LinkedinGetPublicProfileExecute(r ApiLinkedinGetPub
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1141,6 +1708,7 @@ func (a *LinkedInAPIService) LinkedinGetPublicProfileExecute(r ApiLinkedinGetPub
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1162,11 +1730,60 @@ type ApiLinkedinGetSchoolRequest struct {
 	ApiService *LinkedInAPIService
 	universalName string
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Residential proxy country
 func (r ApiLinkedinGetSchoolRequest) Country(country string) ApiLinkedinGetSchoolRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinGetSchoolRequest) Prefer(prefer string) ApiLinkedinGetSchoolRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinGetSchoolRequest) XCallbackURL(xCallbackURL string) ApiLinkedinGetSchoolRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinGetSchoolRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinGetSchoolRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinGetSchoolRequest) Async(async bool) ApiLinkedinGetSchoolRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinGetSchoolRequest) AsyncWait(asyncWait int32) ApiLinkedinGetSchoolRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinGetSchoolRequest) CallbackUrl(callbackUrl string) ApiLinkedinGetSchoolRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinGetSchoolRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinGetSchoolRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1219,6 +1836,18 @@ func (a *LinkedInAPIService) LinkedinGetSchoolExecute(r ApiLinkedinGetSchoolRequ
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1235,6 +1864,15 @@ func (a *LinkedInAPIService) LinkedinGetSchoolExecute(r ApiLinkedinGetSchoolRequ
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1281,6 +1919,7 @@ func (a *LinkedInAPIService) LinkedinGetSchoolExecute(r ApiLinkedinGetSchoolRequ
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1537,6 +2176,13 @@ type ApiLinkedinSearchLinkedinJobsRequest struct {
 	sort *string
 	start *int32
 	country *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Job title / keywords
@@ -1602,6 +2248,48 @@ func (r ApiLinkedinSearchLinkedinJobsRequest) Start(start int32) ApiLinkedinSear
 // Residential proxy country
 func (r ApiLinkedinSearchLinkedinJobsRequest) Country(country string) ApiLinkedinSearchLinkedinJobsRequest {
 	r.country = &country
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinSearchLinkedinJobsRequest) Prefer(prefer string) ApiLinkedinSearchLinkedinJobsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinSearchLinkedinJobsRequest) XCallbackURL(xCallbackURL string) ApiLinkedinSearchLinkedinJobsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinSearchLinkedinJobsRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinSearchLinkedinJobsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinSearchLinkedinJobsRequest) Async(async bool) ApiLinkedinSearchLinkedinJobsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinSearchLinkedinJobsRequest) AsyncWait(asyncWait int32) ApiLinkedinSearchLinkedinJobsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinSearchLinkedinJobsRequest) CallbackUrl(callbackUrl string) ApiLinkedinSearchLinkedinJobsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinSearchLinkedinJobsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinSearchLinkedinJobsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1684,6 +2372,18 @@ func (a *LinkedInAPIService) LinkedinSearchLinkedinJobsExecute(r ApiLinkedinSear
 		var defaultValue string = "us"
 		r.country = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1700,6 +2400,15 @@ func (a *LinkedInAPIService) LinkedinSearchLinkedinJobsExecute(r ApiLinkedinSear
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1746,6 +2455,7 @@ func (a *LinkedInAPIService) LinkedinSearchLinkedinJobsExecute(r ApiLinkedinSear
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1767,6 +2477,13 @@ type ApiLinkedinSuggestLocationGeoIdsRequest struct {
 	ApiService *LinkedInAPIService
 	query *string
 	type_ *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Location text, e.g. &#39;London&#39;
@@ -1778,6 +2495,48 @@ func (r ApiLinkedinSuggestLocationGeoIdsRequest) Query(query string) ApiLinkedin
 // geo | company
 func (r ApiLinkedinSuggestLocationGeoIdsRequest) Type_(type_ string) ApiLinkedinSuggestLocationGeoIdsRequest {
 	r.type_ = &type_
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) Prefer(prefer string) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) XCallbackURL(xCallbackURL string) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) IdempotencyKey(idempotencyKey string) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) Async(async bool) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) AsyncWait(asyncWait int32) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) CallbackUrl(callbackUrl string) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLinkedinSuggestLocationGeoIdsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLinkedinSuggestLocationGeoIdsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1831,6 +2590,18 @@ func (a *LinkedInAPIService) LinkedinSuggestLocationGeoIdsExecute(r ApiLinkedinS
 		var defaultValue string = "geo"
 		r.type_ = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1847,6 +2618,15 @@ func (a *LinkedInAPIService) LinkedinSuggestLocationGeoIdsExecute(r ApiLinkedinS
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1893,6 +2673,7 @@ func (a *LinkedInAPIService) LinkedinSuggestLocationGeoIdsExecute(r ApiLinkedinS
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

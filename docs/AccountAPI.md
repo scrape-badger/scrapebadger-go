@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**AccountGetAccountInfo**](AccountAPI.md#AccountGetAccountInfo) | **Get** /v1/account/me | Get account info
 [**AccountGetTheWebhookSigningSecret**](AccountAPI.md#AccountGetTheWebhookSigningSecret) | **Get** /v1/account/webhook-secret | Get the webhook signing secret
 [**AccountRotateTheWebhookSigningSecret**](AccountAPI.md#AccountRotateTheWebhookSigningSecret) | **Post** /v1/account/webhook-secret/rotate | Rotate the webhook signing secret
+[**AccountWebhookDeliveries**](AccountAPI.md#AccountWebhookDeliveries) | **Get** /v1/account/webhook-deliveries | Webhook deliveries
 
 
 
@@ -178,6 +179,72 @@ Other parameters are passed through a pointer to a apiAccountRotateTheWebhookSig
 ### Return type
 
 [**WebhookSecret**](WebhookSecret.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## AccountWebhookDeliveries
+
+> WebhookDeliveries AccountWebhookDeliveries(ctx).Limit(limit).Execute()
+
+Webhook deliveries
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	limit := int32(56) // int32 | How many deliveries to return (1-200). (optional) (default to 50)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AccountAPI.AccountWebhookDeliveries(context.Background()).Limit(limit).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AccountAPI.AccountWebhookDeliveries``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AccountWebhookDeliveries`: WebhookDeliveries
+	fmt.Fprintf(os.Stdout, "Response from `AccountAPI.AccountWebhookDeliveries`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAccountWebhookDeliveriesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int32** | How many deliveries to return (1-200). | [default to 50]
+
+### Return type
+
+[**WebhookDeliveries**](WebhookDeliveries.md)
 
 ### Authorization
 

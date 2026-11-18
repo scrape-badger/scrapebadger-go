@@ -29,6 +29,13 @@ type ApiLeboncoinGetASellerSAdsRequest struct {
 	userId string
 	page *int32
 	limit *int32
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 func (r ApiLeboncoinGetASellerSAdsRequest) Page(page int32) ApiLeboncoinGetASellerSAdsRequest {
@@ -38,6 +45,48 @@ func (r ApiLeboncoinGetASellerSAdsRequest) Page(page int32) ApiLeboncoinGetASell
 
 func (r ApiLeboncoinGetASellerSAdsRequest) Limit(limit int32) ApiLeboncoinGetASellerSAdsRequest {
 	r.limit = &limit
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinGetASellerSAdsRequest) Prefer(prefer string) ApiLeboncoinGetASellerSAdsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinGetASellerSAdsRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinGetASellerSAdsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinGetASellerSAdsRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinGetASellerSAdsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinGetASellerSAdsRequest) Async(async bool) ApiLeboncoinGetASellerSAdsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinGetASellerSAdsRequest) AsyncWait(asyncWait int32) ApiLeboncoinGetASellerSAdsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinGetASellerSAdsRequest) CallbackUrl(callbackUrl string) ApiLeboncoinGetASellerSAdsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinGetASellerSAdsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinGetASellerSAdsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -96,6 +145,18 @@ func (a *LeboncoinAPIService) LeboncoinGetASellerSAdsExecute(r ApiLeboncoinGetAS
 		var defaultValue int32 = 35
 		r.limit = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -112,6 +173,15 @@ func (a *LeboncoinAPIService) LeboncoinGetASellerSAdsExecute(r ApiLeboncoinGetAS
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -158,6 +228,7 @@ func (a *LeboncoinAPIService) LeboncoinGetASellerSAdsExecute(r ApiLeboncoinGetAS
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -178,6 +249,55 @@ type ApiLeboncoinGetAdDetailRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
 	listId int32
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinGetAdDetailRequest) Prefer(prefer string) ApiLeboncoinGetAdDetailRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinGetAdDetailRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinGetAdDetailRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinGetAdDetailRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinGetAdDetailRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinGetAdDetailRequest) Async(async bool) ApiLeboncoinGetAdDetailRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinGetAdDetailRequest) AsyncWait(asyncWait int32) ApiLeboncoinGetAdDetailRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinGetAdDetailRequest) CallbackUrl(callbackUrl string) ApiLeboncoinGetAdDetailRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinGetAdDetailRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinGetAdDetailRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiLeboncoinGetAdDetailRequest) Execute() (interface{}, *http.Response, error) {
@@ -223,6 +343,18 @@ func (a *LeboncoinAPIService) LeboncoinGetAdDetailExecute(r ApiLeboncoinGetAdDet
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -239,6 +371,15 @@ func (a *LeboncoinAPIService) LeboncoinGetAdDetailExecute(r ApiLeboncoinGetAdDet
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -285,6 +426,7 @@ func (a *LeboncoinAPIService) LeboncoinGetAdDetailExecute(r ApiLeboncoinGetAdDet
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -305,6 +447,55 @@ type ApiLeboncoinGetSellerProfileRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
 	userId string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinGetSellerProfileRequest) Prefer(prefer string) ApiLeboncoinGetSellerProfileRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinGetSellerProfileRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinGetSellerProfileRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinGetSellerProfileRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinGetSellerProfileRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinGetSellerProfileRequest) Async(async bool) ApiLeboncoinGetSellerProfileRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinGetSellerProfileRequest) AsyncWait(asyncWait int32) ApiLeboncoinGetSellerProfileRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinGetSellerProfileRequest) CallbackUrl(callbackUrl string) ApiLeboncoinGetSellerProfileRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinGetSellerProfileRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinGetSellerProfileRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiLeboncoinGetSellerProfileRequest) Execute() (interface{}, *http.Response, error) {
@@ -350,6 +541,18 @@ func (a *LeboncoinAPIService) LeboncoinGetSellerProfileExecute(r ApiLeboncoinGet
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -366,6 +569,15 @@ func (a *LeboncoinAPIService) LeboncoinGetSellerProfileExecute(r ApiLeboncoinGet
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -412,6 +624,7 @@ func (a *LeboncoinAPIService) LeboncoinGetSellerProfileExecute(r ApiLeboncoinGet
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -433,10 +646,59 @@ type ApiLeboncoinGetSimilarAdsRequest struct {
 	ApiService *LeboncoinAPIService
 	listId int32
 	limit *int32
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 func (r ApiLeboncoinGetSimilarAdsRequest) Limit(limit int32) ApiLeboncoinGetSimilarAdsRequest {
 	r.limit = &limit
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinGetSimilarAdsRequest) Prefer(prefer string) ApiLeboncoinGetSimilarAdsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinGetSimilarAdsRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinGetSimilarAdsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinGetSimilarAdsRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinGetSimilarAdsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinGetSimilarAdsRequest) Async(async bool) ApiLeboncoinGetSimilarAdsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinGetSimilarAdsRequest) AsyncWait(asyncWait int32) ApiLeboncoinGetSimilarAdsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinGetSimilarAdsRequest) CallbackUrl(callbackUrl string) ApiLeboncoinGetSimilarAdsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinGetSimilarAdsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinGetSimilarAdsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -489,6 +751,18 @@ func (a *LeboncoinAPIService) LeboncoinGetSimilarAdsExecute(r ApiLeboncoinGetSim
 		var defaultValue int32 = 20
 		r.limit = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -505,6 +779,15 @@ func (a *LeboncoinAPIService) LeboncoinGetSimilarAdsExecute(r ApiLeboncoinGetSim
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -551,6 +834,7 @@ func (a *LeboncoinAPIService) LeboncoinGetSimilarAdsExecute(r ApiLeboncoinGetSim
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -796,6 +1080,55 @@ func (a *LeboncoinAPIService) LeboncoinLeboncoinScraperHealthCheckHeadExecute(r 
 type ApiLeboncoinListCategoriesRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinListCategoriesRequest) Prefer(prefer string) ApiLeboncoinListCategoriesRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinListCategoriesRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinListCategoriesRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinListCategoriesRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinListCategoriesRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinListCategoriesRequest) Async(async bool) ApiLeboncoinListCategoriesRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinListCategoriesRequest) AsyncWait(asyncWait int32) ApiLeboncoinListCategoriesRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinListCategoriesRequest) CallbackUrl(callbackUrl string) ApiLeboncoinListCategoriesRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinListCategoriesRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinListCategoriesRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiLeboncoinListCategoriesRequest) Execute() (interface{}, *http.Response, error) {
@@ -836,6 +1169,18 @@ func (a *LeboncoinAPIService) LeboncoinListCategoriesExecute(r ApiLeboncoinListC
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -852,6 +1197,15 @@ func (a *LeboncoinAPIService) LeboncoinListCategoriesExecute(r ApiLeboncoinListC
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -908,10 +1262,59 @@ type ApiLeboncoinListDepartmentsRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
 	regionId *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 func (r ApiLeboncoinListDepartmentsRequest) RegionId(regionId string) ApiLeboncoinListDepartmentsRequest {
 	r.regionId = &regionId
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinListDepartmentsRequest) Prefer(prefer string) ApiLeboncoinListDepartmentsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinListDepartmentsRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinListDepartmentsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinListDepartmentsRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinListDepartmentsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinListDepartmentsRequest) Async(async bool) ApiLeboncoinListDepartmentsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinListDepartmentsRequest) AsyncWait(asyncWait int32) ApiLeboncoinListDepartmentsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinListDepartmentsRequest) CallbackUrl(callbackUrl string) ApiLeboncoinListDepartmentsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinListDepartmentsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinListDepartmentsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -956,6 +1359,18 @@ func (a *LeboncoinAPIService) LeboncoinListDepartmentsExecute(r ApiLeboncoinList
 	if r.regionId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "region_id", r.regionId, "form", "")
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -972,6 +1387,15 @@ func (a *LeboncoinAPIService) LeboncoinListDepartmentsExecute(r ApiLeboncoinList
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1018,6 +1442,7 @@ func (a *LeboncoinAPIService) LeboncoinListDepartmentsExecute(r ApiLeboncoinList
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1037,6 +1462,55 @@ func (a *LeboncoinAPIService) LeboncoinListDepartmentsExecute(r ApiLeboncoinList
 type ApiLeboncoinListMarketsRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinListMarketsRequest) Prefer(prefer string) ApiLeboncoinListMarketsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinListMarketsRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinListMarketsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinListMarketsRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinListMarketsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinListMarketsRequest) Async(async bool) ApiLeboncoinListMarketsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinListMarketsRequest) AsyncWait(asyncWait int32) ApiLeboncoinListMarketsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinListMarketsRequest) CallbackUrl(callbackUrl string) ApiLeboncoinListMarketsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinListMarketsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinListMarketsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiLeboncoinListMarketsRequest) Execute() (interface{}, *http.Response, error) {
@@ -1077,6 +1551,18 @@ func (a *LeboncoinAPIService) LeboncoinListMarketsExecute(r ApiLeboncoinListMark
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1093,6 +1579,15 @@ func (a *LeboncoinAPIService) LeboncoinListMarketsExecute(r ApiLeboncoinListMark
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1148,6 +1643,55 @@ func (a *LeboncoinAPIService) LeboncoinListMarketsExecute(r ApiLeboncoinListMark
 type ApiLeboncoinListRegionsRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinListRegionsRequest) Prefer(prefer string) ApiLeboncoinListRegionsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinListRegionsRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinListRegionsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinListRegionsRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinListRegionsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinListRegionsRequest) Async(async bool) ApiLeboncoinListRegionsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinListRegionsRequest) AsyncWait(asyncWait int32) ApiLeboncoinListRegionsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinListRegionsRequest) CallbackUrl(callbackUrl string) ApiLeboncoinListRegionsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinListRegionsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinListRegionsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiLeboncoinListRegionsRequest) Execute() (interface{}, *http.Response, error) {
@@ -1188,6 +1732,18 @@ func (a *LeboncoinAPIService) LeboncoinListRegionsExecute(r ApiLeboncoinListRegi
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1204,6 +1760,15 @@ func (a *LeboncoinAPIService) LeboncoinListRegionsExecute(r ApiLeboncoinListRegi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1260,11 +1825,60 @@ type ApiLeboncoinLocationAutocompleteRequest struct {
 	ctx context.Context
 	ApiService *LeboncoinAPIService
 	q *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Place name
 func (r ApiLeboncoinLocationAutocompleteRequest) Q(q string) ApiLeboncoinLocationAutocompleteRequest {
 	r.q = &q
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinLocationAutocompleteRequest) Prefer(prefer string) ApiLeboncoinLocationAutocompleteRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinLocationAutocompleteRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinLocationAutocompleteRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinLocationAutocompleteRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinLocationAutocompleteRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinLocationAutocompleteRequest) Async(async bool) ApiLeboncoinLocationAutocompleteRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinLocationAutocompleteRequest) AsyncWait(asyncWait int32) ApiLeboncoinLocationAutocompleteRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinLocationAutocompleteRequest) CallbackUrl(callbackUrl string) ApiLeboncoinLocationAutocompleteRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinLocationAutocompleteRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinLocationAutocompleteRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1310,6 +1924,18 @@ func (a *LeboncoinAPIService) LeboncoinLocationAutocompleteExecute(r ApiLeboncoi
 	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1326,6 +1952,15 @@ func (a *LeboncoinAPIService) LeboncoinLocationAutocompleteExecute(r ApiLeboncoi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1372,6 +2007,7 @@ func (a *LeboncoinAPIService) LeboncoinLocationAutocompleteExecute(r ApiLeboncoi
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1404,6 +2040,13 @@ type ApiLeboncoinSearchLeboncoinAdsRequest struct {
 	sort *string
 	page *int32
 	limit *int32
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Free-text query
@@ -1475,6 +2118,48 @@ func (r ApiLeboncoinSearchLeboncoinAdsRequest) Page(page int32) ApiLeboncoinSear
 
 func (r ApiLeboncoinSearchLeboncoinAdsRequest) Limit(limit int32) ApiLeboncoinSearchLeboncoinAdsRequest {
 	r.limit = &limit
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) Prefer(prefer string) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) XCallbackURL(xCallbackURL string) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) IdempotencyKey(idempotencyKey string) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) Async(async bool) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) AsyncWait(asyncWait int32) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) CallbackUrl(callbackUrl string) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiLeboncoinSearchLeboncoinAdsRequest) IdempotencyKey2(idempotencyKey2 string) ApiLeboncoinSearchLeboncoinAdsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1572,6 +2257,18 @@ func (a *LeboncoinAPIService) LeboncoinSearchLeboncoinAdsExecute(r ApiLeboncoinS
 		var defaultValue int32 = 35
 		r.limit = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1588,6 +2285,15 @@ func (a *LeboncoinAPIService) LeboncoinSearchLeboncoinAdsExecute(r ApiLeboncoinS
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1634,6 +2340,7 @@ func (a *LeboncoinAPIService) LeboncoinSearchLeboncoinAdsExecute(r ApiLeboncoinS
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

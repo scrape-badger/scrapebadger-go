@@ -29,6 +29,13 @@ type ApiCopilotAskCopilotAQuestionRequest struct {
 	country *string
 	market *string
 	strictCountry *bool
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // The prompt to send to Copilot (max 2000 characters).
@@ -52,6 +59,48 @@ func (r ApiCopilotAskCopilotAQuestionRequest) Market(market string) ApiCopilotAs
 // Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;.
 func (r ApiCopilotAskCopilotAQuestionRequest) StrictCountry(strictCountry bool) ApiCopilotAskCopilotAQuestionRequest {
 	r.strictCountry = &strictCountry
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiCopilotAskCopilotAQuestionRequest) Prefer(prefer string) ApiCopilotAskCopilotAQuestionRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiCopilotAskCopilotAQuestionRequest) XCallbackURL(xCallbackURL string) ApiCopilotAskCopilotAQuestionRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiCopilotAskCopilotAQuestionRequest) IdempotencyKey(idempotencyKey string) ApiCopilotAskCopilotAQuestionRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionRequest) Async(async bool) ApiCopilotAskCopilotAQuestionRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionRequest) AsyncWait(asyncWait int32) ApiCopilotAskCopilotAQuestionRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionRequest) CallbackUrl(callbackUrl string) ApiCopilotAskCopilotAQuestionRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionRequest) IdempotencyKey2(idempotencyKey2 string) ApiCopilotAskCopilotAQuestionRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -111,6 +160,18 @@ func (a *CopilotAPIService) CopilotAskCopilotAQuestionExecute(r ApiCopilotAskCop
 		var defaultValue bool = false
 		r.strictCountry = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -127,6 +188,15 @@ func (a *CopilotAPIService) CopilotAskCopilotAQuestionExecute(r ApiCopilotAskCop
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -173,6 +243,7 @@ func (a *CopilotAPIService) CopilotAskCopilotAQuestionExecute(r ApiCopilotAskCop
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -192,6 +263,55 @@ func (a *CopilotAPIService) CopilotAskCopilotAQuestionExecute(r ApiCopilotAskCop
 type ApiCopilotAskCopilotAQuestionPostRequest struct {
 	ctx context.Context
 	ApiService *CopilotAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) Prefer(prefer string) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) XCallbackURL(xCallbackURL string) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) IdempotencyKey(idempotencyKey string) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) Async(async bool) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) AsyncWait(asyncWait int32) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) CallbackUrl(callbackUrl string) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiCopilotAskCopilotAQuestionPostRequest) IdempotencyKey2(idempotencyKey2 string) ApiCopilotAskCopilotAQuestionPostRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiCopilotAskCopilotAQuestionPostRequest) Execute() (interface{}, *http.Response, error) {
@@ -234,6 +354,18 @@ func (a *CopilotAPIService) CopilotAskCopilotAQuestionPostExecute(r ApiCopilotAs
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -250,6 +382,15 @@ func (a *CopilotAPIService) CopilotAskCopilotAQuestionPostExecute(r ApiCopilotAs
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -531,6 +672,55 @@ func (a *CopilotAPIService) CopilotCopilotScraperHealthCheckHeadExecute(r ApiCop
 type ApiCopilotListCopilotMarketsRequest struct {
 	ctx context.Context
 	ApiService *CopilotAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiCopilotListCopilotMarketsRequest) Prefer(prefer string) ApiCopilotListCopilotMarketsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiCopilotListCopilotMarketsRequest) XCallbackURL(xCallbackURL string) ApiCopilotListCopilotMarketsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiCopilotListCopilotMarketsRequest) IdempotencyKey(idempotencyKey string) ApiCopilotListCopilotMarketsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiCopilotListCopilotMarketsRequest) Async(async bool) ApiCopilotListCopilotMarketsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiCopilotListCopilotMarketsRequest) AsyncWait(asyncWait int32) ApiCopilotListCopilotMarketsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiCopilotListCopilotMarketsRequest) CallbackUrl(callbackUrl string) ApiCopilotListCopilotMarketsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiCopilotListCopilotMarketsRequest) IdempotencyKey2(idempotencyKey2 string) ApiCopilotListCopilotMarketsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiCopilotListCopilotMarketsRequest) Execute() (interface{}, *http.Response, error) {
@@ -573,6 +763,18 @@ func (a *CopilotAPIService) CopilotListCopilotMarketsExecute(r ApiCopilotListCop
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -589,6 +791,15 @@ func (a *CopilotAPIService) CopilotListCopilotMarketsExecute(r ApiCopilotListCop
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -652,6 +863,13 @@ type ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest struct {
 	country *string
 	market *string
 	strictCountry *bool
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // The prompt to ask Copilot.
@@ -699,6 +917,48 @@ func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) Market(market
 // Answer only from an exit in &#x60;country&#x60;, never another one; 503 &#x60;country_unavailable&#x60; (not billed) when none answers. Requires &#x60;country&#x60;.
 func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) StrictCountry(strictCountry bool) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
 	r.strictCountry = &strictCountry
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) Prefer(prefer string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) XCallbackURL(xCallbackURL string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) IdempotencyKey(idempotencyKey string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) Async(async bool) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) AsyncWait(asyncWait int32) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) CallbackUrl(callbackUrl string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest) IdempotencyKey2(idempotencyKey2 string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -771,6 +1031,18 @@ func (a *CopilotAPIService) CopilotMeasureABrandSVisibilityInACopilotAnswerExecu
 		var defaultValue bool = false
 		r.strictCountry = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -787,6 +1059,15 @@ func (a *CopilotAPIService) CopilotMeasureABrandSVisibilityInACopilotAnswerExecu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -833,6 +1114,7 @@ func (a *CopilotAPIService) CopilotMeasureABrandSVisibilityInACopilotAnswerExecu
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -852,6 +1134,55 @@ func (a *CopilotAPIService) CopilotMeasureABrandSVisibilityInACopilotAnswerExecu
 type ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest struct {
 	ctx context.Context
 	ApiService *CopilotAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) Prefer(prefer string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) XCallbackURL(xCallbackURL string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) IdempotencyKey(idempotencyKey string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) Async(async bool) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) AsyncWait(asyncWait int32) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) CallbackUrl(callbackUrl string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) IdempotencyKey2(idempotencyKey2 string) ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiCopilotMeasureABrandSVisibilityInACopilotAnswerPostRequest) Execute() (interface{}, *http.Response, error) {
@@ -894,6 +1225,18 @@ func (a *CopilotAPIService) CopilotMeasureABrandSVisibilityInACopilotAnswerPostE
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -910,6 +1253,15 @@ func (a *CopilotAPIService) CopilotMeasureABrandSVisibilityInACopilotAnswerPostE
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication

@@ -260,6 +260,13 @@ type ApiDuckduckgoImageSearchRequest struct {
 	imageType *string
 	layout *string
 	license *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Search query
@@ -313,6 +320,48 @@ func (r ApiDuckduckgoImageSearchRequest) Layout(layout string) ApiDuckduckgoImag
 // Any | Public | Share | ShareCommercially | Modify
 func (r ApiDuckduckgoImageSearchRequest) License(license string) ApiDuckduckgoImageSearchRequest {
 	r.license = &license
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoImageSearchRequest) Prefer(prefer string) ApiDuckduckgoImageSearchRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoImageSearchRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoImageSearchRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoImageSearchRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoImageSearchRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoImageSearchRequest) Async(async bool) ApiDuckduckgoImageSearchRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoImageSearchRequest) AsyncWait(asyncWait int32) ApiDuckduckgoImageSearchRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoImageSearchRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoImageSearchRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoImageSearchRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoImageSearchRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -408,6 +457,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoImageSearchExecute(r ApiDuckduckgoImage
 		var defaultValue string = ""
 		r.license = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -424,6 +485,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoImageSearchExecute(r ApiDuckduckgoImage
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -470,6 +540,7 @@ func (a *DuckDuckGoAPIService) DuckduckgoImageSearchExecute(r ApiDuckduckgoImage
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -490,11 +561,60 @@ type ApiDuckduckgoInstantAnswerRequest struct {
 	ctx context.Context
 	ApiService *DuckDuckGoAPIService
 	query *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Query for the Instant Answer API
 func (r ApiDuckduckgoInstantAnswerRequest) Query(query string) ApiDuckduckgoInstantAnswerRequest {
 	r.query = &query
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoInstantAnswerRequest) Prefer(prefer string) ApiDuckduckgoInstantAnswerRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoInstantAnswerRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoInstantAnswerRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoInstantAnswerRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoInstantAnswerRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoInstantAnswerRequest) Async(async bool) ApiDuckduckgoInstantAnswerRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoInstantAnswerRequest) AsyncWait(asyncWait int32) ApiDuckduckgoInstantAnswerRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoInstantAnswerRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoInstantAnswerRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoInstantAnswerRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoInstantAnswerRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -542,6 +662,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoInstantAnswerExecute(r ApiDuckduckgoIns
 	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -558,6 +690,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoInstantAnswerExecute(r ApiDuckduckgoIns
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -604,6 +745,7 @@ func (a *DuckDuckGoAPIService) DuckduckgoInstantAnswerExecute(r ApiDuckduckgoIns
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -623,6 +765,55 @@ func (a *DuckDuckGoAPIService) DuckduckgoInstantAnswerExecute(r ApiDuckduckgoIns
 type ApiDuckduckgoListSupportedRegionsRequest struct {
 	ctx context.Context
 	ApiService *DuckDuckGoAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoListSupportedRegionsRequest) Prefer(prefer string) ApiDuckduckgoListSupportedRegionsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoListSupportedRegionsRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoListSupportedRegionsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoListSupportedRegionsRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoListSupportedRegionsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoListSupportedRegionsRequest) Async(async bool) ApiDuckduckgoListSupportedRegionsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoListSupportedRegionsRequest) AsyncWait(asyncWait int32) ApiDuckduckgoListSupportedRegionsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoListSupportedRegionsRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoListSupportedRegionsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoListSupportedRegionsRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoListSupportedRegionsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiDuckduckgoListSupportedRegionsRequest) Execute() (interface{}, *http.Response, error) {
@@ -665,6 +856,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoListSupportedRegionsExecute(r ApiDuckdu
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -681,6 +884,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoListSupportedRegionsExecute(r ApiDuckdu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -741,6 +953,13 @@ type ApiDuckduckgoNewsSearchRequest struct {
 	safesearch *string
 	timelimit *string
 	page *int32
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Search query
@@ -770,6 +989,48 @@ func (r ApiDuckduckgoNewsSearchRequest) Timelimit(timelimit string) ApiDuckduckg
 // 30 results per page
 func (r ApiDuckduckgoNewsSearchRequest) Page(page int32) ApiDuckduckgoNewsSearchRequest {
 	r.page = &page
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoNewsSearchRequest) Prefer(prefer string) ApiDuckduckgoNewsSearchRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoNewsSearchRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoNewsSearchRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoNewsSearchRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoNewsSearchRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoNewsSearchRequest) Async(async bool) ApiDuckduckgoNewsSearchRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoNewsSearchRequest) AsyncWait(asyncWait int32) ApiDuckduckgoNewsSearchRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoNewsSearchRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoNewsSearchRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoNewsSearchRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoNewsSearchRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -841,6 +1102,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoNewsSearchExecute(r ApiDuckduckgoNewsSe
 		var defaultValue int32 = 1
 		r.page = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -857,6 +1130,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoNewsSearchExecute(r ApiDuckduckgoNewsSe
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -903,6 +1185,7 @@ func (a *DuckDuckGoAPIService) DuckduckgoNewsSearchExecute(r ApiDuckduckgoNewsSe
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -924,6 +1207,13 @@ type ApiDuckduckgoSearchSuggestionsRequest struct {
 	ApiService *DuckDuckGoAPIService
 	query *string
 	region *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Partial query to complete
@@ -935,6 +1225,48 @@ func (r ApiDuckduckgoSearchSuggestionsRequest) Query(query string) ApiDuckduckgo
 // DuckDuckGo region code (kl), e.g. us-en, uk-en, de-de. wt-wt &#x3D; all regions.
 func (r ApiDuckduckgoSearchSuggestionsRequest) Region(region string) ApiDuckduckgoSearchSuggestionsRequest {
 	r.region = &region
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoSearchSuggestionsRequest) Prefer(prefer string) ApiDuckduckgoSearchSuggestionsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoSearchSuggestionsRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoSearchSuggestionsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoSearchSuggestionsRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoSearchSuggestionsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoSearchSuggestionsRequest) Async(async bool) ApiDuckduckgoSearchSuggestionsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoSearchSuggestionsRequest) AsyncWait(asyncWait int32) ApiDuckduckgoSearchSuggestionsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoSearchSuggestionsRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoSearchSuggestionsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoSearchSuggestionsRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoSearchSuggestionsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -988,6 +1320,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoSearchSuggestionsExecute(r ApiDuckduckg
 		var defaultValue string = "wt-wt"
 		r.region = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1004,6 +1348,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoSearchSuggestionsExecute(r ApiDuckduckg
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1050,6 +1403,7 @@ func (a *DuckDuckGoAPIService) DuckduckgoSearchSuggestionsExecute(r ApiDuckduckg
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1075,6 +1429,13 @@ type ApiDuckduckgoVideoSearchRequest struct {
 	page *int32
 	duration *string
 	resolution *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Search query
@@ -1110,6 +1471,48 @@ func (r ApiDuckduckgoVideoSearchRequest) Duration(duration string) ApiDuckduckgo
 // high | standard
 func (r ApiDuckduckgoVideoSearchRequest) Resolution(resolution string) ApiDuckduckgoVideoSearchRequest {
 	r.resolution = &resolution
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoVideoSearchRequest) Prefer(prefer string) ApiDuckduckgoVideoSearchRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoVideoSearchRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoVideoSearchRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoVideoSearchRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoVideoSearchRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoVideoSearchRequest) Async(async bool) ApiDuckduckgoVideoSearchRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoVideoSearchRequest) AsyncWait(asyncWait int32) ApiDuckduckgoVideoSearchRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoVideoSearchRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoVideoSearchRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoVideoSearchRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoVideoSearchRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1187,6 +1590,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoVideoSearchExecute(r ApiDuckduckgoVideo
 		var defaultValue string = ""
 		r.resolution = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1203,6 +1618,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoVideoSearchExecute(r ApiDuckduckgoVideo
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1249,6 +1673,7 @@ func (a *DuckDuckGoAPIService) DuckduckgoVideoSearchExecute(r ApiDuckduckgoVideo
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1273,6 +1698,13 @@ type ApiDuckduckgoWebSearchRequest struct {
 	safesearch *string
 	timelimit *string
 	page *int32
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Search query
@@ -1301,6 +1733,48 @@ func (r ApiDuckduckgoWebSearchRequest) Timelimit(timelimit string) ApiDuckduckgo
 
 func (r ApiDuckduckgoWebSearchRequest) Page(page int32) ApiDuckduckgoWebSearchRequest {
 	r.page = &page
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDuckduckgoWebSearchRequest) Prefer(prefer string) ApiDuckduckgoWebSearchRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDuckduckgoWebSearchRequest) XCallbackURL(xCallbackURL string) ApiDuckduckgoWebSearchRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDuckduckgoWebSearchRequest) IdempotencyKey(idempotencyKey string) ApiDuckduckgoWebSearchRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDuckduckgoWebSearchRequest) Async(async bool) ApiDuckduckgoWebSearchRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDuckduckgoWebSearchRequest) AsyncWait(asyncWait int32) ApiDuckduckgoWebSearchRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDuckduckgoWebSearchRequest) CallbackUrl(callbackUrl string) ApiDuckduckgoWebSearchRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDuckduckgoWebSearchRequest) IdempotencyKey2(idempotencyKey2 string) ApiDuckduckgoWebSearchRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -1372,6 +1846,18 @@ func (a *DuckDuckGoAPIService) DuckduckgoWebSearchExecute(r ApiDuckduckgoWebSear
 		var defaultValue int32 = 1
 		r.page = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1388,6 +1874,15 @@ func (a *DuckDuckGoAPIService) DuckduckgoWebSearchExecute(r ApiDuckduckgoWebSear
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1434,6 +1929,7 @@ func (a *DuckDuckGoAPIService) DuckduckgoWebSearchExecute(r ApiDuckduckgoWebSear
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

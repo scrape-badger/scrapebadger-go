@@ -256,6 +256,13 @@ type ApiDepopGetAUserSProductsRequest struct {
 	market *string
 	perPage *int32
 	cursor *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Market code
@@ -272,6 +279,48 @@ func (r ApiDepopGetAUserSProductsRequest) PerPage(perPage int32) ApiDepopGetAUse
 // Pagination cursor
 func (r ApiDepopGetAUserSProductsRequest) Cursor(cursor string) ApiDepopGetAUserSProductsRequest {
 	r.cursor = &cursor
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDepopGetAUserSProductsRequest) Prefer(prefer string) ApiDepopGetAUserSProductsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDepopGetAUserSProductsRequest) XCallbackURL(xCallbackURL string) ApiDepopGetAUserSProductsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDepopGetAUserSProductsRequest) IdempotencyKey(idempotencyKey string) ApiDepopGetAUserSProductsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDepopGetAUserSProductsRequest) Async(async bool) ApiDepopGetAUserSProductsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDepopGetAUserSProductsRequest) AsyncWait(asyncWait int32) ApiDepopGetAUserSProductsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDepopGetAUserSProductsRequest) CallbackUrl(callbackUrl string) ApiDepopGetAUserSProductsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDepopGetAUserSProductsRequest) IdempotencyKey2(idempotencyKey2 string) ApiDepopGetAUserSProductsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -333,6 +382,18 @@ func (a *DepopAPIService) DepopGetAUserSProductsExecute(r ApiDepopGetAUserSProdu
 	if r.cursor != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -349,6 +410,15 @@ func (a *DepopAPIService) DepopGetAUserSProductsExecute(r ApiDepopGetAUserSProdu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -395,6 +465,7 @@ func (a *DepopAPIService) DepopGetAUserSProductsExecute(r ApiDepopGetAUserSProdu
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -416,11 +487,60 @@ type ApiDepopGetProductDetailRequest struct {
 	ApiService *DepopAPIService
 	productId string
 	market *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Market code
 func (r ApiDepopGetProductDetailRequest) Market(market string) ApiDepopGetProductDetailRequest {
 	r.market = &market
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDepopGetProductDetailRequest) Prefer(prefer string) ApiDepopGetProductDetailRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDepopGetProductDetailRequest) XCallbackURL(xCallbackURL string) ApiDepopGetProductDetailRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDepopGetProductDetailRequest) IdempotencyKey(idempotencyKey string) ApiDepopGetProductDetailRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDepopGetProductDetailRequest) Async(async bool) ApiDepopGetProductDetailRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDepopGetProductDetailRequest) AsyncWait(asyncWait int32) ApiDepopGetProductDetailRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDepopGetProductDetailRequest) CallbackUrl(callbackUrl string) ApiDepopGetProductDetailRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDepopGetProductDetailRequest) IdempotencyKey2(idempotencyKey2 string) ApiDepopGetProductDetailRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -473,6 +593,18 @@ func (a *DepopAPIService) DepopGetProductDetailExecute(r ApiDepopGetProductDetai
 		var defaultValue string = "us"
 		r.market = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -489,6 +621,15 @@ func (a *DepopAPIService) DepopGetProductDetailExecute(r ApiDepopGetProductDetai
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -535,6 +676,7 @@ func (a *DepopAPIService) DepopGetProductDetailExecute(r ApiDepopGetProductDetai
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -556,11 +698,60 @@ type ApiDepopGetShopUserProfileRequest struct {
 	ApiService *DepopAPIService
 	username string
 	market *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Market code
 func (r ApiDepopGetShopUserProfileRequest) Market(market string) ApiDepopGetShopUserProfileRequest {
 	r.market = &market
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDepopGetShopUserProfileRequest) Prefer(prefer string) ApiDepopGetShopUserProfileRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDepopGetShopUserProfileRequest) XCallbackURL(xCallbackURL string) ApiDepopGetShopUserProfileRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDepopGetShopUserProfileRequest) IdempotencyKey(idempotencyKey string) ApiDepopGetShopUserProfileRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDepopGetShopUserProfileRequest) Async(async bool) ApiDepopGetShopUserProfileRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDepopGetShopUserProfileRequest) AsyncWait(asyncWait int32) ApiDepopGetShopUserProfileRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDepopGetShopUserProfileRequest) CallbackUrl(callbackUrl string) ApiDepopGetShopUserProfileRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDepopGetShopUserProfileRequest) IdempotencyKey2(idempotencyKey2 string) ApiDepopGetShopUserProfileRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -613,6 +804,18 @@ func (a *DepopAPIService) DepopGetShopUserProfileExecute(r ApiDepopGetShopUserPr
 		var defaultValue string = "us"
 		r.market = &defaultValue
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -629,6 +832,15 @@ func (a *DepopAPIService) DepopGetShopUserProfileExecute(r ApiDepopGetShopUserPr
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -675,6 +887,7 @@ func (a *DepopAPIService) DepopGetShopUserProfileExecute(r ApiDepopGetShopUserPr
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -694,6 +907,55 @@ func (a *DepopAPIService) DepopGetShopUserProfileExecute(r ApiDepopGetShopUserPr
 type ApiDepopListMarketsRequest struct {
 	ctx context.Context
 	ApiService *DepopAPIService
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDepopListMarketsRequest) Prefer(prefer string) ApiDepopListMarketsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDepopListMarketsRequest) XCallbackURL(xCallbackURL string) ApiDepopListMarketsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDepopListMarketsRequest) IdempotencyKey(idempotencyKey string) ApiDepopListMarketsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDepopListMarketsRequest) Async(async bool) ApiDepopListMarketsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDepopListMarketsRequest) AsyncWait(asyncWait int32) ApiDepopListMarketsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDepopListMarketsRequest) CallbackUrl(callbackUrl string) ApiDepopListMarketsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDepopListMarketsRequest) IdempotencyKey2(idempotencyKey2 string) ApiDepopListMarketsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
+	return r
 }
 
 func (r ApiDepopListMarketsRequest) Execute() (interface{}, *http.Response, error) {
@@ -736,6 +998,18 @@ func (a *DepopAPIService) DepopListMarketsExecute(r ApiDepopListMarketsRequest) 
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -752,6 +1026,15 @@ func (a *DepopAPIService) DepopListMarketsExecute(r ApiDepopListMarketsRequest) 
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -819,6 +1102,13 @@ type ApiDepopSearchDepopProductsRequest struct {
 	conditions *string
 	gender *string
 	sort *string
+	prefer *string
+	xCallbackURL *string
+	idempotencyKey *string
+	async *bool
+	asyncWait *int32
+	callbackUrl *string
+	idempotencyKey2 *string
 }
 
 // Search text, e.g. &#39;nike vintage&#39;
@@ -890,6 +1180,48 @@ func (r ApiDepopSearchDepopProductsRequest) Gender(gender string) ApiDepopSearch
 // relevance (default) | priceAscending | priceDescending
 func (r ApiDepopSearchDepopProductsRequest) Sort(sort string) ApiDepopSearchDepopProductsRequest {
 	r.sort = &sort
+	return r
+}
+
+// &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait.
+func (r ApiDepopSearchDepopProductsRequest) Prefer(prefer string) ApiDepopSearchDepopProductsRequest {
+	r.prefer = &prefer
+	return r
+}
+
+// An &#x60;https&#x60; URL that receives the signed &#x60;request.completed&#x60; webhook when the call finishes. Implies async: on its own (no &#x60;Prefer&#x60;, &#x60;async&#x60; or &#x60;async_wait&#x60;) the answer is an immediate &#x60;202&#x60;; with &#x60;Prefer: respond-async&#x60; or &#x60;async&#x3D;true&#x60; the call still waits 25 s unless a wait is given. Wins over &#x60;callback_url&#x60;.
+func (r ApiDepopSearchDepopProductsRequest) XCallbackURL(xCallbackURL string) ApiDepopSearchDepopProductsRequest {
+	r.xCallbackURL = &xCallbackURL
+	return r
+}
+
+// 1-200 visible ASCII characters, per account, kept as long as the result (about 15 minutes). The same key on the same call returns that call&#39;s current state (&#x60;Idempotent-Replayed: true&#x60;) without running or billing it again; on a different call it is &#x60;409 idempotency_key_reused&#x60;. Applies to async calls only; on a synchronous call it is ignored. Wins over &#x60;idempotency_key&#x60;.
+func (r ApiDepopSearchDepopProductsRequest) IdempotencyKey(idempotencyKey string) ApiDepopSearchDepopProductsRequest {
+	r.idempotencyKey = &idempotencyKey
+	return r
+}
+
+// Query form of &#x60;Prefer: respond-async&#x60;: &#x60;true&#x60; or &#x60;1&#x60; (also &#x60;yes&#x60;, &#x60;on&#x60;; &#x60;false&#x60;, &#x60;0&#x60;, &#x60;no&#x60;, &#x60;off&#x60; leave the call synchronous). Waits 25 s unless &#x60;async_wait&#x60; is given. Not sent to the scraper.
+func (r ApiDepopSearchDepopProductsRequest) Async(async bool) ApiDepopSearchDepopProductsRequest {
+	r.async = &async
+	return r
+}
+
+// Seconds (0-120; values outside are clamped) to wait for the result before answering &#x60;202&#x60;. Implies async. Not sent to the scraper.
+func (r ApiDepopSearchDepopProductsRequest) AsyncWait(asyncWait int32) ApiDepopSearchDepopProductsRequest {
+	r.asyncWait = &asyncWait
+	return r
+}
+
+// Query form of &#x60;X-Callback-URL&#x60; (URL-encode it). Implies async; on its own the answer is an immediate &#x60;202&#x60; (wait 0). Not sent to the scraper.
+func (r ApiDepopSearchDepopProductsRequest) CallbackUrl(callbackUrl string) ApiDepopSearchDepopProductsRequest {
+	r.callbackUrl = &callbackUrl
+	return r
+}
+
+// Query form of &#x60;Idempotency-Key&#x60;. Not sent to the scraper.
+func (r ApiDepopSearchDepopProductsRequest) IdempotencyKey2(idempotencyKey2 string) ApiDepopSearchDepopProductsRequest {
+	r.idempotencyKey2 = &idempotencyKey2
 	return r
 }
 
@@ -976,6 +1308,18 @@ func (a *DepopAPIService) DepopSearchDepopProductsExecute(r ApiDepopSearchDepopP
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
+	if r.async != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async", r.async, "form", "")
+	}
+	if r.asyncWait != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "async_wait", r.asyncWait, "form", "")
+	}
+	if r.callbackUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "callback_url", r.callbackUrl, "form", "")
+	}
+	if r.idempotencyKey2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "idempotency_key", r.idempotencyKey2, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -992,6 +1336,15 @@ func (a *DepopAPIService) DepopSearchDepopProductsExecute(r ApiDepopSearchDepopP
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.prefer != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Prefer", r.prefer, "simple", "")
+	}
+	if r.xCallbackURL != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Callback-URL", r.xCallbackURL, "simple", "")
+	}
+	if r.idempotencyKey != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "Idempotency-Key", r.idempotencyKey, "simple", "")
 	}
 	if r.ctx != nil {
 		// API Key Authentication
@@ -1038,6 +1391,7 @@ func (a *DepopAPIService) DepopSearchDepopProductsExecute(r ApiDepopSearchDepopP
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

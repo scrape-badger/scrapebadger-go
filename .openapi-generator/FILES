@@ -64,6 +64,7 @@ configuration.go
 docs/ASOSAPI.md
 docs/AccountAPI.md
 docs/AccountInfo.md
+docs/AccountWebhookDeliveries403Response.md
 docs/Age.md
 docs/AgentTrialInfo.md
 docs/AirbnbAPI.md
@@ -72,6 +73,9 @@ docs/AmazonAPI.md
 docs/ApartmentsAPI.md
 docs/AppStoreAPI.md
 docs/Article.md
+docs/AsyncAccepted.md
+docs/AsyncAcceptedNextAction.md
+docs/AsyncCallbackStatus.md
 docs/AutoScout24API.md
 docs/AutoScout24FiltersResponse.md
 docs/AutoScout24Listing.md
@@ -277,6 +281,9 @@ docs/WallapopAPI.md
 docs/WalmartAPI.md
 docs/WebAPI.md
 docs/WebhookCreate.md
+docs/WebhookDeliveries.md
+docs/WebhookDelivery.md
+docs/WebhookEvent.md
 docs/WebhookListItem.md
 docs/WebhookListResponse.md
 docs/WebhookResponse.md
@@ -302,9 +309,13 @@ git_push.sh
 go.mod
 go.sum
 model_account_info.go
+model_account_webhook_deliveries_403_response.go
 model_age.go
 model_agent_trial_info.go
 model_article.go
+model_async_accepted.go
+model_async_accepted_next_action.go
+model_async_callback_status.go
 model_auto_scout24_filters_response.go
 model_auto_scout24_listing.go
 model_auto_scout24_listing_detail.go
@@ -466,6 +477,9 @@ model_vinted_status.go
 model_vinted_user_profile.go
 model_vinted_user_summary.go
 model_webhook_create.go
+model_webhook_deliveries.go
+model_webhook_delivery.go
+model_webhook_event.go
 model_webhook_list_item.go
 model_webhook_list_response.go
 model_webhook_response.go
