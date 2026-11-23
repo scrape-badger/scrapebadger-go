@@ -31,6 +31,7 @@ Method | HTTP request | Description
 [**GoogleNewsByTopic**](GoogleAPI.md#GoogleNewsByTopic) | **Get** /v1/google/news/topics | News by topic
 [**GooglePatentDetails**](GoogleAPI.md#GooglePatentDetails) | **Get** /v1/google/patents/detail | Patent details
 [**GoogleRelatedTopicsQueries**](GoogleAPI.md#GoogleRelatedTopicsQueries) | **Get** /v1/google/trends/related | Related topics &amp; queries
+[**GoogleResolve**](GoogleAPI.md#GoogleResolve) | **Post** /v1/google/resolve | Resolve
 [**GoogleSearchGoogleImages**](GoogleAPI.md#GoogleSearchGoogleImages) | **Get** /v1/google/images/search | Search Google Images
 [**GoogleSearchGoogleJobs**](GoogleAPI.md#GoogleSearchGoogleJobs) | **Get** /v1/google/jobs/search | Search Google Jobs
 [**GoogleSearchGoogleMapsPlaces**](GoogleAPI.md#GoogleSearchGoogleMapsPlaces) | **Get** /v1/google/maps/search | Search Google Maps places
@@ -2508,6 +2509,72 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GoogleResolve
+
+> GoogleResolveResponse GoogleResolve(ctx).GoogleResolveRequest(googleResolveRequest).Execute()
+
+Resolve
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/scrape-badger/scrapebadger-go"
+)
+
+func main() {
+	googleResolveRequest := *openapiclient.NewGoogleResolveRequest([]openapiclient.GoogleResolveItem{*openapiclient.NewGoogleResolveItem("LinkToken_example")}) // GoogleResolveRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.GoogleAPI.GoogleResolve(context.Background()).GoogleResolveRequest(googleResolveRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleResolve``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GoogleResolve`: GoogleResolveResponse
+	fmt.Fprintf(os.Stdout, "Response from `GoogleAPI.GoogleResolve`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGoogleResolveRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **googleResolveRequest** | [**GoogleResolveRequest**](GoogleResolveRequest.md) |  | 
+
+### Return type
+
+[**GoogleResolveResponse**](GoogleResolveResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

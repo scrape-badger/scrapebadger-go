@@ -7445,6 +7445,164 @@ func (a *GoogleAPIService) GoogleRelatedTopicsQueriesExecute(r ApiGoogleRelatedT
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGoogleResolveRequest struct {
+	ctx context.Context
+	ApiService *GoogleAPIService
+	googleResolveRequest *GoogleResolveRequest
+}
+
+func (r ApiGoogleResolveRequest) GoogleResolveRequest(googleResolveRequest GoogleResolveRequest) ApiGoogleResolveRequest {
+	r.googleResolveRequest = &googleResolveRequest
+	return r
+}
+
+func (r ApiGoogleResolveRequest) Execute() (*GoogleResolveResponse, *http.Response, error) {
+	return r.ApiService.GoogleResolveExecute(r)
+}
+
+/*
+GoogleResolve Resolve
+
+Get the URLs of search results whose `link` is still a Google redirect. Costs 0 credits.
+
+Google hides a result's URL behind a redirect (`https://www.google.com/goto?url=...`)
+and paces how fast a result page's links can be followed. `GET /v1/google/search` and
+`GET /v1/google/light/search` give every organic result whose `link` is still such a
+redirect a `link_token` and `retry_after_seconds` (0 means it can be resolved right
+away). Both are null on a result whose `link` is already the real URL. Send the
+results that have a `link_token` here, 1 to 25 per call.
+
+Each row comes back in the order sent, in one of three states:
+
+- Resolved: `link` is the result's own URL and there is no `link_token`.
+- Not ready: `link_token` is the token to send next time (it can differ from the one
+  sent) and `retry_after_seconds` is how long to wait, at least 1.
+- Failed: `link_token` and `error`. Do not send this token again.
+
+The top-level `retry_after_seconds` is the smallest wait among the rows that are not
+ready, or null. Wait that long, then send the rows that are not ready again. A token
+sent early is not an error: its row comes back not ready with the wait that is left.
+
+Typical timing: calling again after each `retry_after_seconds`, all ten links of a
+result page are known 45 to 70 seconds after the search. Once the result page is
+about 160 seconds old, one call returns every remaining link.
+
+An invalid body answers 422. The async request forms do not apply to this endpoint.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGoogleResolveRequest
+*/
+func (a *GoogleAPIService) GoogleResolve(ctx context.Context) ApiGoogleResolveRequest {
+	return ApiGoogleResolveRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GoogleResolveResponse
+func (a *GoogleAPIService) GoogleResolveExecute(r ApiGoogleResolveRequest) (*GoogleResolveResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GoogleResolveResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "GoogleAPIService.GoogleResolve")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/google/resolve"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.googleResolveRequest == nil {
+		return localVarReturnValue, nil, reportError("googleResolveRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.googleResolveRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v HTTPValidationError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGoogleSearchGoogleImagesRequest struct {
 	ctx context.Context
 	ApiService *GoogleAPIService
