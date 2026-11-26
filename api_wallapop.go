@@ -1336,7 +1336,7 @@ func (r ApiWallapopListFilterOptionsRequest) CategoryId(categoryId int32) ApiWal
 	return r
 }
 
-// Comma-separated subcategory ids to scope options to
+// Comma-separated subcategory ids (needs their category_id)
 func (r ApiWallapopListFilterOptionsRequest) SubcategoryIds(subcategoryIds string) ApiWallapopListFilterOptionsRequest {
 	r.subcategoryIds = &subcategoryIds
 	return r
@@ -1759,7 +1759,7 @@ func (r ApiWallapopListSearchFiltersRequest) CategoryId(categoryId int32) ApiWal
 	return r
 }
 
-// Comma-separated subcategory ids the filters apply to
+// Comma-separated subcategory ids (needs their category_id)
 func (r ApiWallapopListSearchFiltersRequest) SubcategoryIds(subcategoryIds string) ApiWallapopListSearchFiltersRequest {
 	r.subcategoryIds = &subcategoryIds
 	return r

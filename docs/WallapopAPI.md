@@ -552,7 +552,7 @@ import (
 func main() {
 	filterId := "filterId_example" // string | 
 	categoryId := int32(56) // int32 | Category to scope options to (optional)
-	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids to scope options to (optional)
+	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids (needs their category_id) (optional)
 	query := "query_example" // string | Search text to scope options to (optional)
 	market := "market_example" // string | Market: es (Spain), it (Italy), pt (Portugal) (optional) (default to "es")
 	prefer := "respond-async, wait=25" // string | `respond-async[, wait=N]` (RFC 7240): run the call async. If it has not finished after `wait` seconds (0-120, default 25) the answer is `202` with a `request_id`; poll `GET /v1/requests/{request_id}`. Its `wait=` wins over `async_wait`; without one, `async_wait` sets the wait. (optional)
@@ -592,7 +592,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **categoryId** | **int32** | Category to scope options to | 
- **subcategoryIds** | **string** | Comma-separated subcategory ids to scope options to | 
+ **subcategoryIds** | **string** | Comma-separated subcategory ids (needs their category_id) | 
  **query** | **string** | Search text to scope options to | 
  **market** | **string** | Market: es (Spain), it (Italy), pt (Portugal) | [default to &quot;es&quot;]
  **prefer** | **string** | &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait. | 
@@ -721,7 +721,7 @@ import (
 
 func main() {
 	categoryId := int32(56) // int32 | Category the filters apply to (optional)
-	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids the filters apply to (optional)
+	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids (needs their category_id) (optional)
 	query := "query_example" // string | Search text the filters apply to (optional)
 	market := "market_example" // string | Market: es (Spain), it (Italy), pt (Portugal) (optional) (default to "es")
 	prefer := "respond-async, wait=25" // string | `respond-async[, wait=N]` (RFC 7240): run the call async. If it has not finished after `wait` seconds (0-120, default 25) the answer is `202` with a `request_id`; poll `GET /v1/requests/{request_id}`. Its `wait=` wins over `async_wait`; without one, `async_wait` sets the wait. (optional)
@@ -756,7 +756,7 @@ Other parameters are passed through a pointer to a apiWallapopListSearchFiltersR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **categoryId** | **int32** | Category the filters apply to | 
- **subcategoryIds** | **string** | Comma-separated subcategory ids the filters apply to | 
+ **subcategoryIds** | **string** | Comma-separated subcategory ids (needs their category_id) | 
  **query** | **string** | Search text the filters apply to | 
  **market** | **string** | Market: es (Spain), it (Italy), pt (Portugal) | [default to &quot;es&quot;]
  **prefer** | **string** | &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait. | 
