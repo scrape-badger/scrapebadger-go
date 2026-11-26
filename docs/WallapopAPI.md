@@ -531,7 +531,7 @@ Name | Type | Description  | Notes
 
 ## WallapopListFilterOptions
 
-> interface{} WallapopListFilterOptions(ctx, filterId).CategoryId(categoryId).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+> interface{} WallapopListFilterOptions(ctx, filterId).CategoryId(categoryId).SubcategoryIds(subcategoryIds).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 
 List filter options
 
@@ -552,6 +552,7 @@ import (
 func main() {
 	filterId := "filterId_example" // string | 
 	categoryId := int32(56) // int32 | Category to scope options to (optional)
+	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids to scope options to (optional)
 	query := "query_example" // string | Search text to scope options to (optional)
 	market := "market_example" // string | Market: es (Spain), it (Italy), pt (Portugal) (optional) (default to "es")
 	prefer := "respond-async, wait=25" // string | `respond-async[, wait=N]` (RFC 7240): run the call async. If it has not finished after `wait` seconds (0-120, default 25) the answer is `202` with a `request_id`; poll `GET /v1/requests/{request_id}`. Its `wait=` wins over `async_wait`; without one, `async_wait` sets the wait. (optional)
@@ -564,7 +565,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WallapopAPI.WallapopListFilterOptions(context.Background(), filterId).CategoryId(categoryId).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+	resp, r, err := apiClient.WallapopAPI.WallapopListFilterOptions(context.Background(), filterId).CategoryId(categoryId).SubcategoryIds(subcategoryIds).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WallapopAPI.WallapopListFilterOptions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -591,6 +592,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **categoryId** | **int32** | Category to scope options to | 
+ **subcategoryIds** | **string** | Comma-separated subcategory ids to scope options to | 
  **query** | **string** | Search text to scope options to | 
  **market** | **string** | Market: es (Spain), it (Italy), pt (Portugal) | [default to &quot;es&quot;]
  **prefer** | **string** | &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait. | 
@@ -699,7 +701,7 @@ Name | Type | Description  | Notes
 
 ## WallapopListSearchFilters
 
-> interface{} WallapopListSearchFilters(ctx).CategoryId(categoryId).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+> interface{} WallapopListSearchFilters(ctx).CategoryId(categoryId).SubcategoryIds(subcategoryIds).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 
 List search filters
 
@@ -719,6 +721,7 @@ import (
 
 func main() {
 	categoryId := int32(56) // int32 | Category the filters apply to (optional)
+	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids the filters apply to (optional)
 	query := "query_example" // string | Search text the filters apply to (optional)
 	market := "market_example" // string | Market: es (Spain), it (Italy), pt (Portugal) (optional) (default to "es")
 	prefer := "respond-async, wait=25" // string | `respond-async[, wait=N]` (RFC 7240): run the call async. If it has not finished after `wait` seconds (0-120, default 25) the answer is `202` with a `request_id`; poll `GET /v1/requests/{request_id}`. Its `wait=` wins over `async_wait`; without one, `async_wait` sets the wait. (optional)
@@ -731,7 +734,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WallapopAPI.WallapopListSearchFilters(context.Background()).CategoryId(categoryId).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+	resp, r, err := apiClient.WallapopAPI.WallapopListSearchFilters(context.Background()).CategoryId(categoryId).SubcategoryIds(subcategoryIds).Query(query).Market(market).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WallapopAPI.WallapopListSearchFilters``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -753,6 +756,7 @@ Other parameters are passed through a pointer to a apiWallapopListSearchFiltersR
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **categoryId** | **int32** | Category the filters apply to | 
+ **subcategoryIds** | **string** | Comma-separated subcategory ids the filters apply to | 
  **query** | **string** | Search text the filters apply to | 
  **market** | **string** | Market: es (Spain), it (Italy), pt (Portugal) | [default to &quot;es&quot;]
  **prefer** | **string** | &#x60;respond-async[, wait&#x3D;N]&#x60; (RFC 7240): run the call async. If it has not finished after &#x60;wait&#x60; seconds (0-120, default 25) the answer is &#x60;202&#x60; with a &#x60;request_id&#x60;; poll &#x60;GET /v1/requests/{request_id}&#x60;. Its &#x60;wait&#x3D;&#x60; wins over &#x60;async_wait&#x60;; without one, &#x60;async_wait&#x60; sets the wait. | 
@@ -783,7 +787,7 @@ Name | Type | Description  | Notes
 
 ## WallapopSearchListings
 
-> interface{} WallapopSearchListings(ctx).Query(query).Market(market).Latitude(latitude).Longitude(longitude).DistanceKm(distanceKm).CategoryId(categoryId).MinPrice(minPrice).MaxPrice(maxPrice).Condition(condition).Brand(brand).Model(model).Color(color).TimeFilter(timeFilter).Shippable(shippable).HasWarranty(hasWarranty).Refurbished(refurbished).MinYear(minYear).MaxYear(maxYear).MinKm(minKm).MaxKm(maxKm).Gearbox(gearbox).MinHorsepower(minHorsepower).MaxHorsepower(maxHorsepower).OrderBy(orderBy).NextPage(nextPage).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+> interface{} WallapopSearchListings(ctx).Query(query).Market(market).Latitude(latitude).Longitude(longitude).DistanceKm(distanceKm).CategoryId(categoryId).SubcategoryIds(subcategoryIds).MinPrice(minPrice).MaxPrice(maxPrice).Condition(condition).Brand(brand).Model(model).Color(color).TimeFilter(timeFilter).Shippable(shippable).HasWarranty(hasWarranty).Refurbished(refurbished).MinYear(minYear).MaxYear(maxYear).MinKm(minKm).MaxKm(maxKm).Gearbox(gearbox).MinHorsepower(minHorsepower).MaxHorsepower(maxHorsepower).OrderBy(orderBy).NextPage(nextPage).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 
 Search listings
 
@@ -808,6 +812,7 @@ func main() {
 	longitude := float32(8.14) // float32 | Search centre longitude (optional)
 	distanceKm := int32(56) // int32 | Search radius (optional)
 	categoryId := int32(56) // int32 | Category id from /categories (optional)
+	subcategoryIds := "subcategoryIds_example" // string | Comma-separated subcategory ids from /categories (any level of the tree), e.g. 9447 (Smartphones) or 9447,10310 (optional)
 	minPrice := float32(8.14) // float32 | Minimum price (EUR) (optional)
 	maxPrice := float32(8.14) // float32 | Maximum price (EUR) (optional)
 	condition := "condition_example" // string | Comma-separated: un_opened, in_box, new, as_good_as_new, good, fair, has_given_it_all (optional)
@@ -837,7 +842,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.WallapopAPI.WallapopSearchListings(context.Background()).Query(query).Market(market).Latitude(latitude).Longitude(longitude).DistanceKm(distanceKm).CategoryId(categoryId).MinPrice(minPrice).MaxPrice(maxPrice).Condition(condition).Brand(brand).Model(model).Color(color).TimeFilter(timeFilter).Shippable(shippable).HasWarranty(hasWarranty).Refurbished(refurbished).MinYear(minYear).MaxYear(maxYear).MinKm(minKm).MaxKm(maxKm).Gearbox(gearbox).MinHorsepower(minHorsepower).MaxHorsepower(maxHorsepower).OrderBy(orderBy).NextPage(nextPage).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+	resp, r, err := apiClient.WallapopAPI.WallapopSearchListings(context.Background()).Query(query).Market(market).Latitude(latitude).Longitude(longitude).DistanceKm(distanceKm).CategoryId(categoryId).SubcategoryIds(subcategoryIds).MinPrice(minPrice).MaxPrice(maxPrice).Condition(condition).Brand(brand).Model(model).Color(color).TimeFilter(timeFilter).Shippable(shippable).HasWarranty(hasWarranty).Refurbished(refurbished).MinYear(minYear).MaxYear(maxYear).MinKm(minKm).MaxKm(maxKm).Gearbox(gearbox).MinHorsepower(minHorsepower).MaxHorsepower(maxHorsepower).OrderBy(orderBy).NextPage(nextPage).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `WallapopAPI.WallapopSearchListings``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -864,6 +869,7 @@ Name | Type | Description  | Notes
  **longitude** | **float32** | Search centre longitude | 
  **distanceKm** | **int32** | Search radius | 
  **categoryId** | **int32** | Category id from /categories | 
+ **subcategoryIds** | **string** | Comma-separated subcategory ids from /categories (any level of the tree), e.g. 9447 (Smartphones) or 9447,10310 | 
  **minPrice** | **float32** | Minimum price (EUR) | 
  **maxPrice** | **float32** | Maximum price (EUR) | 
  **condition** | **string** | Comma-separated: un_opened, in_box, new, as_good_as_new, good, fair, has_given_it_all | 

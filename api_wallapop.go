@@ -1173,7 +1173,8 @@ func (r ApiWallapopListCategoriesRequest) Execute() (interface{}, *http.Response
 /*
 WallapopListCategories List categories
 
-The full category tree; ids are usable as the search category_id.
+The full category tree; top-level ids are the search category_id, nested
+subcategory ids go in subcategory_ids.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiWallapopListCategoriesRequest
@@ -1317,6 +1318,7 @@ type ApiWallapopListFilterOptionsRequest struct {
 	ApiService *WallapopAPIService
 	filterId string
 	categoryId *int32
+	subcategoryIds *string
 	query *string
 	market *string
 	prefer *string
@@ -1331,6 +1333,12 @@ type ApiWallapopListFilterOptionsRequest struct {
 // Category to scope options to
 func (r ApiWallapopListFilterOptionsRequest) CategoryId(categoryId int32) ApiWallapopListFilterOptionsRequest {
 	r.categoryId = &categoryId
+	return r
+}
+
+// Comma-separated subcategory ids to scope options to
+func (r ApiWallapopListFilterOptionsRequest) SubcategoryIds(subcategoryIds string) ApiWallapopListFilterOptionsRequest {
+	r.subcategoryIds = &subcategoryIds
 	return r
 }
 
@@ -1433,6 +1441,9 @@ func (a *WallapopAPIService) WallapopListFilterOptionsExecute(r ApiWallapopListF
 
 	if r.categoryId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "category_id", r.categoryId, "form", "")
+	}
+	if r.subcategoryIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "subcategory_ids", r.subcategoryIds, "form", "")
 	}
 	if r.query != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
@@ -1730,6 +1741,7 @@ type ApiWallapopListSearchFiltersRequest struct {
 	ctx context.Context
 	ApiService *WallapopAPIService
 	categoryId *int32
+	subcategoryIds *string
 	query *string
 	market *string
 	prefer *string
@@ -1744,6 +1756,12 @@ type ApiWallapopListSearchFiltersRequest struct {
 // Category the filters apply to
 func (r ApiWallapopListSearchFiltersRequest) CategoryId(categoryId int32) ApiWallapopListSearchFiltersRequest {
 	r.categoryId = &categoryId
+	return r
+}
+
+// Comma-separated subcategory ids the filters apply to
+func (r ApiWallapopListSearchFiltersRequest) SubcategoryIds(subcategoryIds string) ApiWallapopListSearchFiltersRequest {
+	r.subcategoryIds = &subcategoryIds
 	return r
 }
 
@@ -1843,6 +1861,9 @@ func (a *WallapopAPIService) WallapopListSearchFiltersExecute(r ApiWallapopListS
 
 	if r.categoryId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "category_id", r.categoryId, "form", "")
+	}
+	if r.subcategoryIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "subcategory_ids", r.subcategoryIds, "form", "")
 	}
 	if r.query != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "query", r.query, "form", "")
@@ -1962,6 +1983,7 @@ type ApiWallapopSearchListingsRequest struct {
 	longitude *float32
 	distanceKm *int32
 	categoryId *int32
+	subcategoryIds *string
 	minPrice *float32
 	maxPrice *float32
 	condition *string
@@ -2023,6 +2045,12 @@ func (r ApiWallapopSearchListingsRequest) DistanceKm(distanceKm int32) ApiWallap
 // Category id from /categories
 func (r ApiWallapopSearchListingsRequest) CategoryId(categoryId int32) ApiWallapopSearchListingsRequest {
 	r.categoryId = &categoryId
+	return r
+}
+
+// Comma-separated subcategory ids from /categories (any level of the tree), e.g. 9447 (Smartphones) or 9447,10310
+func (r ApiWallapopSearchListingsRequest) SubcategoryIds(subcategoryIds string) ApiWallapopSearchListingsRequest {
+	r.subcategoryIds = &subcategoryIds
 	return r
 }
 
@@ -2189,7 +2217,8 @@ func (r ApiWallapopSearchListingsRequest) Execute() (interface{}, *http.Response
 /*
 WallapopSearchListings Search listings
 
-Search Wallapop listings (40 per page). Needs a query, a category_id, or both.
+Search Wallapop listings (40 per page). Needs a query, a category_id, subcategory_ids,
+or a combination.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiWallapopSearchListingsRequest
@@ -2242,6 +2271,9 @@ func (a *WallapopAPIService) WallapopSearchListingsExecute(r ApiWallapopSearchLi
 	}
 	if r.categoryId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "category_id", r.categoryId, "form", "")
+	}
+	if r.subcategoryIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "subcategory_ids", r.subcategoryIds, "form", "")
 	}
 	if r.minPrice != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "min_price", r.minPrice, "form", "")
