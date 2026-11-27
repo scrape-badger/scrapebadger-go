@@ -3464,6 +3464,7 @@ type ApiGoogleGoogleLightWebSearchRequest struct {
 	safe *string
 	filter *int32
 	nfpr *int32
+	requireResolvedLinks *bool
 	output *string
 	oq *string
 	sourceid *string
@@ -3578,6 +3579,12 @@ func (r ApiGoogleGoogleLightWebSearchRequest) Filter(filter int32) ApiGoogleGoog
 // Disable auto-correction
 func (r ApiGoogleGoogleLightWebSearchRequest) Nfpr(nfpr int32) ApiGoogleGoogleLightWebSearchRequest {
 	r.nfpr = &nfpr
+	return r
+}
+
+// Require direct organic result URLs and resolve Google redirects in returned result links. JSON only. The handler returns HTTP 503 on a budget miss (2 s fast, 2.5 s full).
+func (r ApiGoogleGoogleLightWebSearchRequest) RequireResolvedLinks(requireResolvedLinks bool) ApiGoogleGoogleLightWebSearchRequest {
+	r.requireResolvedLinks = &requireResolvedLinks
 	return r
 }
 
@@ -3916,6 +3923,12 @@ func (a *GoogleAPIService) GoogleGoogleLightWebSearchExecute(r ApiGoogleGoogleLi
 	} else {
 		var defaultValue int32 = 0
 		r.nfpr = &defaultValue
+	}
+	if r.requireResolvedLinks != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "require_resolved_links", r.requireResolvedLinks, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.requireResolvedLinks = &defaultValue
 	}
 	if r.output != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "output", r.output, "form", "")
@@ -4863,6 +4876,7 @@ type ApiGoogleGoogleWebSearchRequest struct {
 	domain *string
 	device *string
 	userAgent *string
+	requireResolvedLinks *bool
 	output *string
 	location *string
 	lr *string
@@ -4956,6 +4970,12 @@ func (r ApiGoogleGoogleWebSearchRequest) Device(device string) ApiGoogleGoogleWe
 // Custom User-Agent (overrides device)
 func (r ApiGoogleGoogleWebSearchRequest) UserAgent(userAgent string) ApiGoogleGoogleWebSearchRequest {
 	r.userAgent = &userAgent
+	return r
+}
+
+// Require direct organic result URLs and resolve Google redirects in returned result links. JSON only. The handler returns HTTP 503 on a budget miss (2 s fast, 2.5 s full).
+func (r ApiGoogleGoogleWebSearchRequest) RequireResolvedLinks(requireResolvedLinks bool) ApiGoogleGoogleWebSearchRequest {
+	r.requireResolvedLinks = &requireResolvedLinks
 	return r
 }
 
@@ -5321,6 +5341,12 @@ func (a *GoogleAPIService) GoogleGoogleWebSearchExecute(r ApiGoogleGoogleWebSear
 	}
 	if r.userAgent != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "user_agent", r.userAgent, "form", "")
+	}
+	if r.requireResolvedLinks != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "require_resolved_links", r.requireResolvedLinks, "form", "")
+	} else {
+		var defaultValue bool = false
+		r.requireResolvedLinks = &defaultValue
 	}
 	if r.output != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "output", r.output, "form", "")

@@ -1208,7 +1208,7 @@ Name | Type | Description  | Notes
 
 ## GoogleGoogleLightWebSearch
 
-> interface{} GoogleGoogleLightWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Device(device).UserAgent(userAgent).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+> interface{} GoogleGoogleLightWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).RequireResolvedLinks(requireResolvedLinks).Output(output).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Device(device).UserAgent(userAgent).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 
 Google Light web search
 
@@ -1240,6 +1240,7 @@ func main() {
 	safe := "safe_example" // string | Safe search: off or active (optional) (default to "off")
 	filter := int32(56) // int32 |  (optional)
 	nfpr := int32(56) // int32 | Disable auto-correction (optional) (default to 0)
+	requireResolvedLinks := true // bool | Require direct organic result URLs and resolve Google redirects in returned result links. JSON only. The handler returns HTTP 503 on a budget miss (2 s fast, 2.5 s full). (optional) (default to false)
 	output := "output_example" // string |  (optional) (default to "json")
 	oq := "oq_example" // string | Original query sent to Google. Defaults to q; an empty string omits it. (optional)
 	sourceid := "sourceid_example" // string | Google source identifier. Defaults to chrome; an empty string omits it. (optional)
@@ -1282,7 +1283,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GoogleAPI.GoogleGoogleLightWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).Output(output).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Device(device).UserAgent(userAgent).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+	resp, r, err := apiClient.GoogleAPI.GoogleGoogleLightWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Location(location).Uule(uule).Lr(lr).Tbs(tbs).Safe(safe).Filter(filter).Nfpr(nfpr).RequireResolvedLinks(requireResolvedLinks).Output(output).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Device(device).UserAgent(userAgent).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleGoogleLightWebSearch``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1316,6 +1317,7 @@ Name | Type | Description  | Notes
  **safe** | **string** | Safe search: off or active | [default to &quot;off&quot;]
  **filter** | **int32** |  | 
  **nfpr** | **int32** | Disable auto-correction | [default to 0]
+ **requireResolvedLinks** | **bool** | Require direct organic result URLs and resolve Google redirects in returned result links. JSON only. The handler returns HTTP 503 on a budget miss (2 s fast, 2.5 s full). | [default to false]
  **output** | **string** |  | [default to &quot;json&quot;]
  **oq** | **string** | Original query sent to Google. Defaults to q; an empty string omits it. | 
  **sourceid** | **string** | Google source identifier. Defaults to chrome; an empty string omits it. | 
@@ -1672,7 +1674,7 @@ Name | Type | Description  | Notes
 
 ## GoogleGoogleWebSearch
 
-> interface{} GoogleGoogleWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Mode(mode).ExpandRelatedQuestions(expandRelatedQuestions).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+> interface{} GoogleGoogleWebSearch(ctx).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).RequireResolvedLinks(requireResolvedLinks).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Mode(mode).ExpandRelatedQuestions(expandRelatedQuestions).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 
 Google web search
 
@@ -1699,6 +1701,7 @@ func main() {
 	domain := "domain_example" // string | Google domain (optional) (default to "google.com")
 	device := "device_example" // string | Device target: desktop, mobile, iphone, android, tablet (optional) (default to "desktop")
 	userAgent := "userAgent_example" // string | Custom User-Agent (overrides device) (optional)
+	requireResolvedLinks := true // bool | Require direct organic result URLs and resolve Google redirects in returned result links. JSON only. The handler returns HTTP 503 on a budget miss (2 s fast, 2.5 s full). (optional) (default to false)
 	output := "output_example" // string | Response format: json (parsed) or html (raw SERP) (optional) (default to "json")
 	location := "location_example" // string | City-level geo-targeting (optional)
 	lr := "lr_example" // string | Language restrict (e.g. lang_en) (optional)
@@ -1749,7 +1752,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.GoogleAPI.GoogleGoogleWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Mode(mode).ExpandRelatedQuestions(expandRelatedQuestions).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
+	resp, r, err := apiClient.GoogleAPI.GoogleGoogleWebSearch(context.Background()).Q(q).Gl(gl).Hl(hl).Num(num).Start(start).Domain(domain).Device(device).UserAgent(userAgent).RequireResolvedLinks(requireResolvedLinks).Output(output).Location(location).Lr(lr).Tbs(tbs).Safe(safe).Uule(uule).Filter(filter).Nfpr(nfpr).Cr(cr).Ludocid(ludocid).Lsig(lsig).Kgmid(kgmid).Si(si).Ibp(ibp).Uds(uds).AiOverview(aiOverview).Mode(mode).ExpandRelatedQuestions(expandRelatedQuestions).Oq(oq).Sourceid(sourceid).Ie(ie).GoogleDomain(googleDomain).Lat(lat).Lon(lon).Radius(radius).ColorScheme(colorScheme).Tbm(tbm).Udm(udm).NoCache(noCache).AsDt(asDt).AsEpq(asEpq).AsEq(asEq).AsLq(asLq).AsNlo(asNlo).AsNhi(asNhi).AsOq(asOq).AsQ(asQ).AsQdr(asQdr).AsRq(asRq).AsSitesearch(asSitesearch).Prefer(prefer).XCallbackURL(xCallbackURL).IdempotencyKey(idempotencyKey).Async(async).AsyncWait(asyncWait).CallbackUrl(callbackUrl).IdempotencyKey2(idempotencyKey2).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `GoogleAPI.GoogleGoogleWebSearch``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1778,6 +1781,7 @@ Name | Type | Description  | Notes
  **domain** | **string** | Google domain | [default to &quot;google.com&quot;]
  **device** | **string** | Device target: desktop, mobile, iphone, android, tablet | [default to &quot;desktop&quot;]
  **userAgent** | **string** | Custom User-Agent (overrides device) | 
+ **requireResolvedLinks** | **bool** | Require direct organic result URLs and resolve Google redirects in returned result links. JSON only. The handler returns HTTP 503 on a budget miss (2 s fast, 2.5 s full). | [default to false]
  **output** | **string** | Response format: json (parsed) or html (raw SERP) | [default to &quot;json&quot;]
  **location** | **string** | City-level geo-targeting | 
  **lr** | **string** | Language restrict (e.g. lang_en) | 
